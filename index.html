@@ -12,7 +12,37 @@
 
     <title>Test yaratish</title>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js">
+/* Nusxa olish / uzun bosish menyusini cheklash */
+document.addEventListener("contextmenu", function (event) {
+    event.preventDefault();
+});
+document.addEventListener("copy", function (event) {
+    event.preventDefault();
+});
+document.addEventListener("cut", function (event) {
+    event.preventDefault();
+});
+document.addEventListener("dragstart", function (event) {
+    event.preventDefault();
+});
+document.addEventListener("selectstart", function (event) {
+    if (!event.target.matches("input, textarea")) {
+        event.preventDefault();
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const codeInput = document.getElementById("testCode");
+    if (codeInput) {
+        codeInput.addEventListener("input", function () {
+            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+        });
+    }
+});
+
+</script>
 
 
     <style>
@@ -762,7 +792,21 @@
             margin-top: 8px;
         }
 
-    </style>
+    
+/* Nusxa olish / matn belgilashni cheklash */
+html, body, .modal, .modal-box, .card, button, input, textarea {
+    -webkit-user-select: none;
+    user-select: none;
+}
+input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+}
+img {
+    -webkit-user-drag: none;
+}
+
+</style>
 
 </head>
 
@@ -916,7 +960,7 @@
             type="button"
             id="continueButton"
             class="create-button"
-
+            onclick="continueCreate()"
         >
 
             Davom etish ➜
@@ -1347,16 +1391,14 @@ async function checkProStatus() {
             );
 
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
-        if (!response.ok) {
-            return {
-                success: false,
-                message: data.message || ("Server HTTP xatosi: " + response.status)
-            };
-        }
 
-        currentProData = data;
+        currentProData =
+            data;
+
+
         return data;
 
     } catch (error) {
@@ -1368,10 +1410,11 @@ async function checkProStatus() {
 
 
         return {
+
             success: false,
+
             message:
-                "Server bilan bog‘lanib bo‘lmadi.\n" +
-                "API: " + API_BASE
+                "Server bilan bog‘lanib bo‘lmadi."
         };
     }
 }
@@ -1740,7 +1783,7 @@ async function paidProPayment() {
 ===================================== */
 
 async function continueCreate() {
-    const testCode = document.getElementById("testCode").value.trim();
+    const testCode = document.getElementById("testCode").value.trim().toUpperCase();
     const channel = document.getElementById("channel").value.trim();
     const duration = document.getElementById("duration").value;
     const questionCount = document.getElementById("questionCount").value;
@@ -1807,22 +1850,6 @@ async function continueCreate() {
 window.currentTestDraft = null;
 window.answerKey = {};
 window.currentPaymentId = null;
-
-document.addEventListener("DOMContentLoaded", function () {
-    const continueButton = document.getElementById("continueButton");
-
-    if (continueButton) {
-        continueButton.addEventListener("click", function () {
-            if (continueButton.dataset.running === "1") return;
-            continueButton.dataset.running = "1";
-
-            Promise.resolve(continueCreate())
-                .finally(function () {
-                    continueButton.dataset.running = "0";
-                });
-        });
-    }
-});
 
 function openAnswerKey() {
     const draft = window.currentTestDraft;
@@ -1899,13 +1926,15 @@ function closeAnswerKey() {
     document.getElementById("answerKeyModal").classList.remove("show");
 }
 
-function saveAnswerKey() {
+async function saveAnswerKey() {
     const draft = window.currentTestDraft;
     if (!draft) return;
 
     const missing = [];
     for (let i = 1; i <= draft.questionCount; i++) {
-        if (!window.answerKey[i]) missing.push(i);
+        if (!String(window.answerKey[i] || "").trim()) {
+            missing.push(i);
+        }
     }
 
     if (missing.length) {
@@ -1917,15 +1946,66 @@ function saveAnswerKey() {
         return;
     }
 
-    closeAnswerKey();
-    showMessage(
-        "✅ Javoblar kaliti tayyor!\n\n" +
-        "🔑 Test kodi: " + draft.code + "\n" +
-        "📢 Kanal: " + draft.channel + "\n" +
-        "⏱ Davomiyligi: " + draft.duration + " daqiqa\n" +
-        "📝 Savollar: " + draft.questionCount + " ta\n\n" +
-        "Javoblar kaliti saqlandi."
-    );
+    const button = document.querySelector(".answer-save-button");
+    if (button) {
+        button.disabled = true;
+        button.textContent = "Saqlanmoqda...";
+    }
+
+    try {
+        if (!tg.initData) {
+            throw new Error("Telegram ma'lumotlari topilmadi.");
+        }
+
+        const payload = {
+            code: draft.code,
+            channel: draft.channel,
+            duration: Number(draft.duration),
+            question_count: Number(draft.questionCount),
+            answer_key: window.answerKey
+        };
+
+        const response = await fetch(API_BASE + "/api/create-test", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Telegram-Init-Data": tg.initData
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Test yaratilmadi.");
+        }
+
+        closeAnswerKey();
+
+        showMessage(
+            "✅ Test muvaffaqiyatli yaratildi!\n\n" +
+            "🔑 Test kodi: " + data.code + "\n" +
+            "📢 Kanal: " + data.channel + "\n" +
+            "⏱ Davomiyligi: " + data.duration + " daqiqa\n" +
+            "📝 Savollar: " + data.question_count + " ta\n\n" +
+            "🤖 Bot sizga test holati haqida xabar yubordi."
+        );
+
+        window.currentTestDraft = null;
+        window.answerKey = {};
+
+    } catch (error) {
+        console.error("CREATE TEST ERROR:", error);
+        showMessage(
+            "❌ Test yaratishda xatolik:\n\n" +
+            error.message
+        );
+    } finally {
+        if (button) {
+            button.disabled = false;
+            button.textContent = "✅ Javoblar kalitini saqlash";
+        }
+    }
 }
 
 
