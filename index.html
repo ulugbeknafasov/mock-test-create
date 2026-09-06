@@ -610,144 +610,140 @@
 
 
         /* =========================
-           TEST EDITOR
+           DTM JAVOBLAR KALITI
         ========================= */
-
-        .editor-info {
-            background: #f6f8fb;
+        .answer-key-info {
+            background: #f5f6f8;
             border-radius: 14px;
             padding: 14px;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             color: #555;
+            font-size: 14px;
             line-height: 1.5;
         }
 
-        .editor-top {
-            background: linear-gradient(135deg, #6c63ff, #a855f7);
-            color: white;
-            border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 15px;
+        .answer-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            max-height: 58vh;
+            overflow-y: auto;
+            padding: 2px 2px 8px;
         }
 
-        .editor-top-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
+        .answer-row {
+            display: grid;
+            grid-template-columns: 34px 1fr;
+            align-items: center;
+            min-height: 44px;
+            border-bottom: 1px solid #eee;
         }
 
-        .editor-top-text {
-            font-size: 14px;
-            opacity: 0.95;
-        }
-
-        .question-card {
-            background: #fff;
-            border: 1px solid #e1e5ea;
-            border-radius: 17px;
-            padding: 16px;
-            margin-bottom: 15px;
-        }
-
-        .question-number {
-            font-size: 17px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .question-type {
-            display: inline-block;
-            font-size: 12px;
-            background: #f0f2f5;
-            padding: 5px 9px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .question-input {
-            width: 100%;
-            min-height: 90px;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 12px;
+        .answer-number {
+            font-weight: 700;
+            color: #333;
             font-size: 15px;
-            resize: vertical;
-            outline: none;
-            box-sizing: border-box;
-            margin-bottom: 12px;
-            font-family: inherit;
         }
 
-        .question-input:focus,
-        .answer-input:focus {
-            border-color: #6c63ff;
-        }
-
-        .option-row {
+        .answer-options {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 8px;
-            margin-bottom: 9px;
         }
 
-        .option-letter {
+        .answer-option {
             width: 34px;
             height: 34px;
+            border: 2px solid #bfc3c9;
             border-radius: 50%;
-            background: #f0f2f5;
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
+            cursor: pointer;
+            font-size: 0;
+            padding: 0;
+            transition: .15s ease;
+            position: relative;
         }
 
-        .answer-input {
-            flex: 1;
-            min-width: 0;
-            height: 44px;
-            padding: 10px 12px;
+        .answer-option.selected {
+            border-color: #2481cc;
+            background: #2481cc;
+        }
+
+        .answer-option.selected::after {
+            content: "";
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+        }
+
+        .answer-option:active {
+            transform: scale(.94);
+        }
+
+        .answer-labels {
+            display: grid;
+            grid-template-columns: 34px 1fr;
+            margin-bottom: 3px;
+        }
+
+        .answer-label-options {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 0 2px;
+        }
+
+        .answer-label-options span {
+            width: 34px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #777;
+        }
+
+        .exact-answer {
+            width: 100%;
+            height: 40px;
             border: 1px solid #ddd;
             border-radius: 11px;
+            padding: 0 12px;
             font-size: 15px;
             outline: none;
             box-sizing: border-box;
-            font-family: inherit;
         }
 
-        .correct-label {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            color: #555;
-            white-space: nowrap;
+        .exact-answer:focus {
+            border-color: #2481cc;
         }
 
-        .correct-radio {
-            width: 18px;
-            height: 18px;
+        .answer-save-button {
+            width: 100%;
+            height: 48px;
+            border: 0;
+            border-radius: 13px;
+            background: #2481cc;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
         }
 
-        .exact-answer-label {
-            font-size: 13px;
-            color: #777;
-            margin-bottom: 7px;
-        }
-
-        @media (max-width: 480px) {
-            .option-row {
-                flex-wrap: wrap;
-            }
-
-            .answer-input {
-                width: calc(100% - 42px);
-                flex: 1 1 calc(100% - 42px);
-            }
-
-            .correct-label {
-                margin-left: 42px;
-            }
+        .answer-back-button {
+            width: 100%;
+            height: 44px;
+            border: 0;
+            border-radius: 13px;
+            background: #f0f1f3;
+            color: #333;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 8px;
         }
 
     </style>
@@ -1067,13 +1063,18 @@
      PRO MODAL
 ========================= -->
 
-<div id="proModal" class="modal">
+<div
+    id="proModal"
+    class="modal"
+>
 
     <div class="modal-box">
 
         <div class="modal-header">
 
-            <h2>⭐ PRO</h2>
+            <h2>
+                ⭐ PRO
+            </h2>
 
             <button
                 class="close-button"
@@ -1084,119 +1085,97 @@
 
         </div>
 
+
         <div class="pro-intro">
-            Test yaratish uchun PRO imkoniyatlaridan foydalaning.
-        </div>
 
-        <div id="proPlansContainer">
-
-            <div class="tariff">
-
-                <div class="tariff-title">
-                    ⭐ PRO tariflar
-                </div>
-
-                <div style="color:#777; text-align:center; padding:15px 0;">
-                    Tariflar yuklanmoqda...
-                </div>
-
-            </div>
+            Test yaratish va PRO imkoniyatlaridan foydalaning.
 
         </div>
 
-        <div
-            id="pendingPaymentBox"
-            style="
-                display:none;
-                margin-top:15px;
-                padding:15px;
-                border-radius:14px;
-                background:#fff8e1;
-                border:1px solid #ffe082;
-            "
-        >
 
-            <div style="font-weight:bold; margin-bottom:8px;">
-                ⏳ Kutilayotgan PRO to‘lov
+        <!--
+            Hozirgi serverda narx va muddat
+            admin tomonidan boshqariladi.
+
+            Keyingi bosqichda 1/3/6/12 oylik
+            tariflarni alohida serverdan oladigan qilamiz.
+        -->
+
+
+        <div class="tariff">
+
+            <div class="tariff-title">
+                ⭐ PRO
             </div>
 
             <div
-                id="pendingPaymentText"
-                style="color:#666; line-height:1.5; margin-bottom:12px;"
-            ></div>
+                id="proTariffPrice"
+                class="tariff-price"
+            >
+                Yuklanmoqda...
+            </div>
+
+            <div
+                id="proTariffDuration"
+                style="color:#777; margin-bottom:12px;"
+            >
+                —
+            </div>
 
             <button
-                class="cancel-button"
-                onclick="cancelPendingPayment()"
+                class="tariff-button"
+                onclick="buyPro()"
             >
-                ❌ To‘lovni bekor qilish
+
+                ⭐ PRO sotib olish
+
             </button>
 
         </div>
+
 
         <button
             class="cancel-button"
             onclick="closeProModal()"
-            style="margin-top:12px;"
         >
+
             Keyinroq
+
         </button>
 
     </div>
 
 </div>
+
 
 
 <!-- =========================
-     TEST EDITOR MODAL
+     DTM JAVOBLAR KALITI
 ========================= -->
-
-<div id="testEditorModal" class="modal">
-
+<div id="answerKeyModal" class="modal">
     <div class="modal-box">
-
         <div class="modal-header">
-
-            <h2>📝 Savollar</h2>
-
-            <button
-                class="close-button"
-                onclick="closeTestEditor()"
-            >
-                ✕
-            </button>
-
+            <h2>📝 Javoblar kaliti</h2>
+            <button class="close-button" onclick="closeAnswerKey()">✕</button>
         </div>
 
-        <div
-            id="testEditorInfo"
-            class="editor-info"
-        >
-            Savollarni kiriting.
+        <div class="answer-key-info">
+            Savol matnlari bu yerga kiritilmaydi. Savollar Telegram kanalida bo‘ladi.
+            Bu oynada faqat to‘g‘ri javoblar belgilanadi.
         </div>
 
-        <div id="questionsContainer"></div>
+        <div id="answerLabels" class="answer-labels"></div>
+        <div id="answerGrid" class="answer-grid"></div>
 
-        <button
-            id="createTestButton"
-            class="create-button"
-            onclick="createTestFromEditor()"
-        >
-            ✅ Testni yaratish
+        <button class="answer-save-button" onclick="saveAnswerKey()">
+            ✅ Javoblar kalitini saqlash
         </button>
 
-        <button
-            class="cancel-button"
-            onclick="closeTestEditor()"
-            style="margin-top:10px;"
-        >
-            Bekor qilish
+        <button class="answer-back-button" onclick="closeAnswerKey()">
+            ← Orqaga
         </button>
-
     </div>
-
 </div>
-
 
 <!-- =========================
      MESSAGE MODAL
@@ -1267,7 +1246,7 @@ tg.expand();
 ===================================== */
 
 const API_BASE =
-    "https://contractors-places-notifications-adopt.trycloudflare.com";
+    "https://metals-java-archive-commitments.trycloudflare.com";
 
 
 /* =====================================
@@ -1627,233 +1606,98 @@ function closeProfile() {
 
 async function openProModal() {
 
-    document
-        .getElementById("proModal")
-        .classList.add("show");
-
-    const container =
-        document.getElementById("proPlansContainer");
-
-    container.innerHTML = `
-        <div class="tariff">
-            <div class="tariff-title">⭐ PRO tariflar</div>
-            <div style="color:#777; text-align:center; padding:15px 0;">
-                Tariflar yuklanmoqda...
-            </div>
-        </div>
-    `;
-
-    await loadPendingPayment();
-
-    const status = await checkProStatus();
-
-    if (!status.success) {
-        container.innerHTML = `
-            <div class="tariff">
-                ❌ Server bilan bog‘lanib bo‘lmadi.
-            </div>
-        `;
-        return;
-    }
-
-    if (status.admin) {
-        container.innerHTML = `
-            <div class="tariff">
-                <div class="tariff-title">👑 Admin</div>
-                <div class="tariff-price">Cheksiz PRO</div>
-            </div>
-        `;
-        return;
-    }
-
-    if (status.pro) {
-        container.innerHTML = `
-            <div class="tariff">
-                <div class="tariff-title">✅ PRO faol</div>
-                <div style="color:#777; margin-top:8px;">
-                    PRO sizda allaqachon faol.
-                </div>
-            </div>
-        `;
-        return;
-    }
-
-    try {
-
-        const response = await fetch(
-            API_BASE + "/api/pro-plans",
-            {
-                method: "GET",
-                headers: {
-                    "X-Telegram-Init-Data": tg.initData
-                }
-            }
-        );
-
-        const data = await response.json();
-
-        if (!data.success || !Array.isArray(data.plans)) {
-            throw new Error(
-                data.message || "Tariflar topilmadi."
-            );
-        }
-
-        if (data.plans.length === 0) {
-            container.innerHTML = `
-                <div class="tariff">
-                    Hozircha faol PRO tariflar mavjud emas.
-                </div>
-            `;
-            return;
-        }
-
-        container.innerHTML = "";
-
-        data.plans.forEach(function(plan) {
-
-            const tariff = document.createElement("div");
-            tariff.className = "tariff";
-
-            tariff.innerHTML = `
-                <div class="tariff-title">
-                    ⭐ PRO — ${plan.duration_days} kun
-                </div>
-
-                <div class="tariff-price">
-                    ${Number(plan.price).toLocaleString("uz-UZ")} so‘m
-                </div>
-
-                <div style="color:#777; margin-bottom:12px;">
-                    ${plan.duration_days} kun PRO
-                </div>
-
-                <button class="tariff-button">
-                    ⭐ PRO sotib olish
-                </button>
-            `;
-
-            const button =
-                tariff.querySelector(".tariff-button");
-
-            button.addEventListener("click", function() {
-                buyPro(plan.id, button);
-            });
-
-            container.appendChild(tariff);
-        });
-
-    } catch (error) {
-
-        console.error("PRO plans error:", error);
-
-        container.innerHTML = `
-            <div class="tariff">
-                ❌ Tariflarni yuklab bo‘lmadi.
-            </div>
-        `;
-    }
-}
+    document.getElementById(
+        "proModal"
+    ).classList.add("show");
 
 
-async function loadPendingPayment() {
-
-    const box =
-        document.getElementById("pendingPaymentBox");
-
-    const text =
-        document.getElementById("pendingPaymentText");
-
-    box.style.display = "none";
-    text.textContent = "";
-
-    try {
-
-        const response = await fetch(
-            API_BASE + "/api/pro-pending",
-            {
-                method: "GET",
-                headers: {
-                    "X-Telegram-Init-Data": tg.initData
-                }
-            }
-        );
-
-        const data = await response.json();
-
-        if (!data.success || !data.pending) {
-            return;
-        }
-
-        const payment = data.payment;
-
-        text.textContent =
-            "🆔 To‘lov ID: " + payment.id +
-            "\n💰 Summa: " +
-            Number(payment.amount).toLocaleString("uz-UZ") +
-            " so‘m" +
-            "\n⭐ Muddat: " + payment.duration_days + " kun" +
-            (payment.proof_received
-                ? "\n📷 Chek yuborilgan. Admin tekshiradi."
-                : "\n📷 Hali chek yuborilmagan.");
-
-        box.style.display = "block";
-
-    } catch (error) {
-        console.error("Pending payment error:", error);
-    }
-}
-
-
-async function cancelPendingPayment() {
-
-    try {
-
-        const response = await fetch(
-            API_BASE + "/api/pro-cancel",
-            {
-                method: "POST",
-                headers: {
-                    "X-Telegram-Init-Data": tg.initData
-                }
-            }
-        );
-
-        const data = await response.json();
-
-        if (!data.success) {
-            showMessage(
-                "❌ " +
-                (data.message || "To‘lovni bekor qilib bo‘lmadi.")
-            );
-            return;
-        }
-
+    const priceElement =
         document.getElementById(
-            "pendingPaymentBox"
-        ).style.display = "none";
-
-        showMessage(
-            "✅ PRO to‘lov bekor qilindi."
+            "proTariffPrice"
         );
 
-        await openProModal();
 
-    } catch (error) {
-
-        console.error("Cancel payment error:", error);
-
-        showMessage(
-            "❌ Server bilan bog‘lanib bo‘lmadi."
+    const durationElement =
+        document.getElementById(
+            "proTariffDuration"
         );
+
+
+    priceElement.textContent =
+        "Yuklanmoqda...";
+
+
+    durationElement.textContent =
+        "—";
+
+
+    const data =
+        await checkProStatus();
+
+
+    if (!data.success) {
+
+        priceElement.textContent =
+            "Server bilan bog‘lanib bo‘lmadi.";
+
+        return;
     }
+
+
+    if (data.admin) {
+
+        priceElement.textContent =
+            "Admin";
+
+
+        durationElement.textContent =
+            "Cheksiz PRO";
+
+        return;
+    }
+
+
+    if (data.pro) {
+
+        priceElement.textContent =
+            "PRO faol";
+
+
+        durationElement.textContent =
+            data.pro_until
+                ? "Amal qilish muddati mavjud"
+                : "—";
+
+        return;
+    }
+
+
+    const price =
+        data.price || 0;
+
+
+    const duration =
+        data.duration_days || 30;
+
+
+    priceElement.textContent =
+        Number(price).toLocaleString(
+            "uz-UZ"
+        ) +
+        " so‘m";
+
+
+    durationElement.textContent =
+        duration +
+        " kun";
 }
 
 
 function closeProModal() {
 
-    document
-        .getElementById("proModal")
-        .classList.remove("show");
+    document.getElementById(
+        "proModal"
+    ).classList.remove("show");
 }
 
 
@@ -1861,11 +1705,11 @@ function closeProModal() {
    PRO SOTIB OLISH
 ===================================== */
 
-async function buyPro(planId, button) {
+async function buyPro() {
 
-    if (!button) {
-        return;
-    }
+    const button = document.querySelector(
+        ".tariff-button"
+    );
 
     button.disabled = true;
     button.textContent = "Yuborilmoqda...";
@@ -1876,85 +1720,61 @@ async function buyPro(planId, button) {
             API_BASE + "/api/pro-purchase",
             {
                 method: "POST",
+
                 headers: {
-                    "Content-Type": "application/json",
                     "X-Telegram-Init-Data": tg.initData
-                },
-                body: JSON.stringify({
-                    plan_id: planId
-                })
+                }
             }
         );
 
         const data = await response.json();
 
+        button.disabled = false;
+        button.textContent = "⭐ PRO sotib olish";
+
         if (!data.success) {
 
-            if (data.code === "PENDING_PAYMENT") {
-
-                await loadPendingPayment();
-
-                showMessage(
-                    "⏳ Sizda allaqachon kutilayotgan PRO to‘lov mavjud."
-                );
-
-            } else {
-
-                showMessage(
-                    "❌ Xatolik\n\n" +
-                    (data.message || "So‘rov yuborilmadi.")
-                );
-            }
+            showMessage(
+                "❌ Xatolik\n\n" +
+                (data.message || "So'rov yuborilmadi.")
+            );
 
             return;
         }
 
-        let paymentText =
-            "✅ PRO uchun to‘lov yaratildi!\n\n" +
-            "🆔 To‘lov ID: " + data.payment_id +
+        closeProModal();
+
+        showMessage(
+            "✅ PRO so‘rovi yuborildi!\n\n" +
+
+            "🆔 To‘lov ID: " +
+            data.payment_id +
+
             "\n💰 Summa: " +
             Number(data.amount).toLocaleString("uz-UZ") +
             " so‘m" +
-            "\n⭐ Muddat: " + data.duration_days + " kun";
 
-        if (data.card) {
+            "\n⭐ Muddat: " +
+            data.duration_days +
+            " kun" +
 
-            if (data.card.card_number) {
-                paymentText +=
-                    "\n\n💳 Karta: " + data.card.card_number;
-            }
-
-            if (data.card.card_holder) {
-                paymentText +=
-                    "\n👤 Karta egasi: " + data.card.card_holder;
-            }
-
-            if (data.card.bank_name) {
-                paymentText +=
-                    "\n🏦 Bank: " + data.card.bank_name;
-            }
-        }
-
-        paymentText +=
-            "\n\n📷 To‘lovni amalga oshirgach, chekni botga rasm yoki fayl qilib yuboring." +
-            "\n\n⏳ Admin tekshiradi. Tasdiqlangandan keyin PRO avtomatik faollashadi.";
-
-        closeProModal();
-        showMessage(paymentText);
+            "\n\n⏳ Admin tasdiqlashini kuting."
+        );
 
     } catch (error) {
 
-        console.error("PRO purchase error:", error);
+        console.error(
+            "PRO purchase error:",
+            error
+        );
+
+        button.disabled = false;
+        button.textContent = "⭐ PRO sotib olish";
 
         showMessage(
             "❌ Server bilan bog‘lanib bo‘lmadi.\n\n" +
             "Internet yoki serverni tekshiring."
         );
-
-    } finally {
-
-        button.disabled = false;
-        button.textContent = "⭐ PRO sotib olish";
     }
 }
 
@@ -1963,470 +1783,280 @@ async function buyPro(planId, button) {
    TEST YARATISH
 ===================================== */
 
-let currentTestDraft = null;
-
-
 async function continueCreate() {
 
     const testCode =
-        document.getElementById("testCode").value.trim().toUpperCase();
+        document.getElementById(
+            "testCode"
+        ).value.trim();
+
 
     const channel =
-        document.getElementById("channel").value.trim();
+        document.getElementById(
+            "channel"
+        ).value.trim();
+
 
     const duration =
-        document.getElementById("duration").value;
+        document.getElementById(
+            "duration"
+        ).value;
+
 
     const questionCount =
-        document.getElementById("questionCount").value;
+        document.getElementById(
+            "questionCount"
+        ).value;
+
 
     const button =
-        document.getElementById("continueButton");
+        document.getElementById(
+            "continueButton"
+        );
+
+
+    /* TEST KODI */
 
     if (!testCode) {
-        showMessage("❗ Test kodini kiriting.");
+
+        showMessage(
+            "❗ Test kodini kiriting."
+        );
+
         return;
     }
 
-    if (testCode.length < 4 || testCode.length > 10) {
-        showMessage(
-            "❗ Test kodi 4–10 ta belgidan iborat bo‘lishi kerak."
-        );
-        return;
-    }
-
-    if (!/^[A-Z0-9]+$/.test(testCode)) {
-        showMessage(
-            "❗ Test kodi faqat harflar va raqamlardan iborat bo‘lishi kerak."
-        );
-        return;
-    }
-
-    if (!channel) {
-        showMessage(
-            "❗ Test e’lon qilinadigan kanalni kiriting."
-        );
-        return;
-    }
 
     if (
-        !channel.startsWith("@") &&
-        !channel.startsWith("https://t.me/")
+        testCode.length < 4 ||
+        testCode.length > 10
     ) {
+
         showMessage(
-            "❗ Kanalni @kanal_nomi yoki https://t.me/kanal_nomi ko‘rinishida kiriting."
+            "❗ Test kodi 4–10 ta " +
+            "belgidan iborat bo‘lishi kerak."
         );
+
         return;
     }
+
+
+    /* KANAL */
+
+    if (!channel) {
+
+        showMessage(
+            "❗ Test e’lon qilinadigan " +
+            "kanalni kiriting."
+        );
+
+        return;
+    }
+
+
+    /* DAVOMIYLIK */
 
     if (!duration) {
-        showMessage("❗ Test davomiyligini tanlang.");
+
+        showMessage(
+            "❗ Test davomiyligini tanlang."
+        );
+
         return;
     }
+
+
+    /* SAVOLLAR */
 
     if (!questionCount) {
-        showMessage("❗ Savollar sonini tanlang.");
+
+        showMessage(
+            "❗ Savollar sonini tanlang."
+        );
+
         return;
     }
 
-    button.disabled = true;
-    button.textContent = "Tekshirilmoqda...";
 
-    let proData;
+    /* SERVER */
 
-    try {
-        proData = await checkProStatus();
-    } catch (error) {
-        console.error(error);
-        proData = {
-            success: false,
-            message: "Server bilan bog‘lanib bo‘lmadi."
-        };
-    }
+    button.disabled =
+        true;
 
-    button.disabled = false;
-    button.textContent = "Davom etish ➜";
+
+    button.textContent =
+        "Tekshirilmoqda...";
+
+
+    const proData =
+        await checkProStatus();
+
+
+    button.disabled =
+        false;
+
+
+    button.textContent =
+        "Davom etish ➜";
+
 
     if (!proData.success) {
+
         showMessage(
             "❌ " +
-            (proData.message || "PRO holatini aniqlab bo‘lmadi.")
+            proData.message
         );
+
         return;
     }
 
-    if (!proData.pro && !proData.admin) {
+
+    /* PRO YO‘Q */
+
+    if (
+        !proData.pro &&
+        !proData.admin
+    ) {
+
         openProModal();
+
         return;
     }
 
-    currentTestDraft = {
+
+    /* ADMIN yoki PRO */
+
+    window.currentTestDraft = {
         code: testCode,
         channel: channel,
         duration: Number(duration),
-        question_count: Number(questionCount),
-        questions: []
+        questionCount: Number(questionCount)
     };
 
-    openTestEditor();
+    openAnswerKey();
+
 }
 
 
-function openTestEditor() {
+/* =====================================
+   DTM JAVOBLAR KALITI
+===================================== */
 
-    if (!currentTestDraft) {
-        return;
-    }
+window.currentTestDraft = null;
+window.answerKey = {};
 
-    const modal =
-        document.getElementById("testEditorModal");
+function openAnswerKey() {
+    const draft = window.currentTestDraft;
+    if (!draft) return;
 
-    const info =
-        document.getElementById("testEditorInfo");
+    window.answerKey = {};
 
-    const container =
-        document.getElementById("questionsContainer");
+    const labels = document.getElementById("answerLabels");
+    const grid = document.getElementById("answerGrid");
 
-    info.innerHTML = `
-        <div class="editor-top">
-            <div class="editor-top-title">
-                🔑 ${escapeHtml(currentTestDraft.code)}
-            </div>
-            <div class="editor-top-text">
-                📢 ${escapeHtml(currentTestDraft.channel)}<br>
-                ⏱ ${currentTestDraft.duration} daqiqa<br>
-                📝 ${currentTestDraft.question_count} ta savol
-            </div>
-        </div>
+    labels.innerHTML = "";
+    grid.innerHTML = "";
 
-        <b>Javoblar tuzilishi:</b><br>
-        1–32 → A/B/C/D<br>
-        33–35 → A/B/C/D/E/F<br>
-        36–45 → aniq javob
-    `;
+    const count = Number(draft.questionCount);
 
-    container.innerHTML = "";
+    for (let i = 1; i <= count; i++) {
+        const row = document.createElement("div");
+        row.className = "answer-row";
 
-    for (
-        let i = 1;
-        i <= currentTestDraft.question_count;
-        i++
-    ) {
-        container.insertAdjacentHTML(
-            "beforeend",
-            createQuestionCard(i)
-        );
-    }
-
-    modal.classList.add("show");
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-
-function closeTestEditor() {
-    document
-        .getElementById("testEditorModal")
-        .classList.remove("show");
-}
-
-
-function createQuestionCard(number) {
-
-    const letters =
-        number <= 32
-            ? ["A", "B", "C", "D"]
-            : number <= 35
-                ? ["A", "B", "C", "D", "E", "F"]
-                : [];
-
-    if (letters.length > 0) {
-
-        const typeText =
-            letters.length === 4
-                ? "A / B / C / D"
-                : "A / B / C / D / E / F";
-
-        let optionsHtml = "";
-
-        letters.forEach(function(letter) {
-
-            optionsHtml += `
-                <div class="option-row">
-
-                    <div class="option-letter">
-                        ${letter}
-                    </div>
-
-                    <input
-                        class="answer-input"
-                        id="answer_${number}_${letter}"
-                        type="text"
-                        placeholder="${letter} javob"
-                    >
-
-                    <label class="correct-label">
-
-                        <input
-                            class="correct-radio"
-                            type="radio"
-                            name="correct_${number}"
-                            value="${letter}"
-                        >
-
-                        To‘g‘ri
-
-                    </label>
-
-                </div>
-            `;
-        });
-
-        return `
-            <div class="question-card">
-
-                <div class="question-number">
-                    ${number}-savol
-                </div>
-
-                <div class="question-type">
-                    ${typeText}
-                </div>
-
-                <textarea
-                    class="question-input"
-                    id="question_${number}"
-                    placeholder="Savol matnini kiriting..."
-                ></textarea>
-
-                ${optionsHtml}
-
-            </div>
-        `;
-    }
-
-    return `
-        <div class="question-card">
-
-            <div class="question-number">
-                ${number}-savol
-            </div>
-
-            <div class="question-type">
-                Aniq javob
-            </div>
-
-            <textarea
-                class="question-input"
-                id="question_${number}"
-                placeholder="Savol matnini kiriting..."
-            ></textarea>
-
-            <div class="exact-answer-label">
-                To‘g‘ri javob:
-            </div>
-
-            <input
-                class="answer-input"
-                id="exact_${number}"
-                type="text"
-                placeholder="Aniq javobni kiriting..."
-            >
-
-        </div>
-    `;
-}
-
-
-function createTestFromEditor() {
-
-    if (!currentTestDraft) {
-        showMessage("❌ Test ma’lumotlari topilmadi.");
-        return;
-    }
-
-    const questions = [];
-
-    for (
-        let i = 1;
-        i <= currentTestDraft.question_count;
-        i++
-    ) {
-
-        const questionElement =
-            document.getElementById(`question_${i}`);
-
-        const question =
-            questionElement.value.trim();
-
-        if (!question) {
-            showMessage(
-                `❗ ${i}-savol matni kiritilmagan.`
-            );
-            questionElement.focus();
-            return;
-        }
-
-        if (i <= 32) {
-
-            const letters =
-                ["A", "B", "C", "D"];
-
-            const options = {};
-
-            for (const letter of letters) {
-
-                const input =
-                    document.getElementById(
-                        `answer_${i}_${letter}`
-                    );
-
-                const value =
-                    input.value.trim();
-
-                if (!value) {
-                    showMessage(
-                        `❗ ${i}-savolning ${letter} javobi kiritilmagan.`
-                    );
-                    input.focus();
-                    return;
-                }
-
-                options[letter] = value;
-            }
-
-            const correct =
-                document.querySelector(
-                    `input[name="correct_${i}"]:checked`
-                );
-
-            if (!correct) {
-                showMessage(
-                    `❗ ${i}-savol uchun to‘g‘ri javobni belgilang.`
-                );
-                return;
-            }
-
-            questions.push({
-                number: i,
-                type: "multiple_choice",
-                text: question,
-                options: options,
-                correct_answer: correct.value
-            });
-
-            continue;
-        }
+        const number = document.createElement("div");
+        number.className = "answer-number";
+        number.textContent = i + ".";
+        row.appendChild(number);
 
         if (i <= 35) {
+            const optionCount = i <= 32 ? 4 : 6;
+            const options = document.createElement("div");
+            options.className = "answer-options";
 
-            const letters =
-                ["A", "B", "C", "D", "E", "F"];
+            for (let j = 0; j < optionCount; j++) {
+                const letter = String.fromCharCode(65 + j);
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "answer-option";
+                button.setAttribute("aria-label", i + "-savol " + letter);
+                button.dataset.question = i;
+                button.dataset.answer = letter;
 
-            const options = {};
+                button.addEventListener("click", function () {
+                    options.querySelectorAll(".answer-option").forEach(function (item) {
+                        item.classList.remove("selected");
+                    });
+                    button.classList.add("selected");
+                    window.answerKey[i] = letter;
+                });
 
-            for (const letter of letters) {
-
-                const input =
-                    document.getElementById(
-                        `answer_${i}_${letter}`
-                    );
-
-                const value =
-                    input.value.trim();
-
-                if (!value) {
-                    showMessage(
-                        `❗ ${i}-savolning ${letter} javobi kiritilmagan.`
-                    );
-                    input.focus();
-                    return;
-                }
-
-                options[letter] = value;
+                options.appendChild(button);
             }
 
-            const correct =
-                document.querySelector(
-                    `input[name="correct_${i}"]:checked`
-                );
-
-            if (!correct) {
-                showMessage(
-                    `❗ ${i}-savol uchun to‘g‘ri javobni belgilang.`
-                );
-                return;
-            }
-
-            questions.push({
-                number: i,
-                type: "multiple_choice_6",
-                text: question,
-                options: options,
-                correct_answer: correct.value
+            row.appendChild(options);
+        } else {
+            const input = document.createElement("input");
+            input.type = "text";
+            input.className = "exact-answer";
+            input.placeholder = "Aniq javob";
+            input.autocomplete = "off";
+            input.dataset.question = i;
+            input.addEventListener("input", function () {
+                window.answerKey[i] = input.value.trim();
             });
-
-            continue;
+            row.appendChild(input);
         }
 
-        const exactInput =
-            document.getElementById(`exact_${i}`);
-
-        const exactAnswer =
-            exactInput.value.trim();
-
-        if (!exactAnswer) {
-            showMessage(
-                `❗ ${i}-savol uchun aniq javob kiritilmagan.`
-            );
-            exactInput.focus();
-            return;
-        }
-
-        questions.push({
-            number: i,
-            type: "exact",
-            text: question,
-            correct_answer: exactAnswer
-        });
+        grid.appendChild(row);
     }
 
-    currentTestDraft.questions = questions;
+    // A/B/C/D ustun nomlari
+    const labelOptions = document.createElement("div");
+    labelOptions.className = "answer-label-options";
+    const maxOptions = count >= 33 ? 6 : 4;
+    for (let j = 0; j < maxOptions; j++) {
+        const span = document.createElement("span");
+        span.textContent = String.fromCharCode(65 + j);
+        labelOptions.appendChild(span);
+    }
+    labels.appendChild(document.createElement("div"));
+    labels.appendChild(labelOptions);
 
-    localStorage.setItem(
-        "mock_test_draft",
-        JSON.stringify(currentTestDraft)
-    );
-
-    console.log(
-        "TEST DRAFT:",
-        currentTestDraft
-    );
-
-    closeTestEditor();
-
-    showMessage(
-        "✅ Test muvaffaqiyatli tayyorlandi!\n\n" +
-        "🔑 Kod: " + currentTestDraft.code +
-        "\n📢 Kanal: " + currentTestDraft.channel +
-        "\n⏱ Davomiyligi: " + currentTestDraft.duration + " daqiqa" +
-        "\n📝 Savollar: " + currentTestDraft.questions.length + " ta" +
-        "\n\n🚀 Keyingi bosqichda testni serverga saqlashni ulaymiz."
-    );
+    document.getElementById("answerKeyModal").classList.add("show");
 }
 
+function closeAnswerKey() {
+    document.getElementById("answerKeyModal").classList.remove("show");
+}
 
-function escapeHtml(text) {
+function saveAnswerKey() {
+    const draft = window.currentTestDraft;
+    if (!draft) return;
 
-    return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    const missing = [];
+    for (let i = 1; i <= draft.questionCount; i++) {
+        if (!window.answerKey[i]) missing.push(i);
+    }
+
+    if (missing.length) {
+        showMessage(
+            "❗ Quyidagi savollarning javobi belgilanmagan:\n" +
+            missing.slice(0, 15).join(", ") +
+            (missing.length > 15 ? " ..." : "")
+        );
+        return;
+    }
+
+    // Hozircha HTML bosqichi. Keyingi bosqichda shu ma'lumot /api/create-test ga yuboriladi.
+    closeAnswerKey();
+    showMessage(
+        "✅ Javoblar kaliti tayyor!\n\n" +
+        "🔑 Test kodi: " + draft.code + "\n" +
+        "📢 Kanal: " + draft.channel + "\n" +
+        "⏱ Davomiyligi: " + draft.duration + " daqiqa\n" +
+        "📝 Savollar: " + draft.questionCount + " ta\n\n" +
+        "Keyingi bosqichda bu javoblar serverga saqlanadi."
+    );
 }
 
 
@@ -2491,6 +2121,18 @@ function closeMessage() {
 ===================================== */
 
 document
+    .getElementById("answerKeyModal")
+    .addEventListener(
+        "click",
+        function(event) {
+            if (event.target === this) {
+                closeAnswerKey();
+            }
+        }
+    );
+
+
+document
     .getElementById("profileModal")
     .addEventListener(
         "click",
@@ -2517,19 +2159,6 @@ document
             ) {
 
                 closeProModal();
-            }
-        }
-    );
-
-
-document
-    .getElementById("testEditorModal")
-    .addEventListener(
-        "click",
-        function(event) {
-
-            if (event.target === this) {
-                closeTestEditor();
             }
         }
     );
