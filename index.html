@@ -916,7 +916,7 @@
             type="button"
             id="continueButton"
             class="create-button"
-            onclick="continueCreate()"
+
         >
 
             Davom etish ➜
@@ -1347,14 +1347,16 @@ async function checkProStatus() {
             );
 
 
-        const data =
-            await response.json();
+        const data = await response.json();
 
+        if (!response.ok) {
+            return {
+                success: false,
+                message: data.message || ("Server HTTP xatosi: " + response.status)
+            };
+        }
 
-        currentProData =
-            data;
-
-
+        currentProData = data;
         return data;
 
     } catch (error) {
@@ -1366,11 +1368,10 @@ async function checkProStatus() {
 
 
         return {
-
             success: false,
-
             message:
-                "Server bilan bog‘lanib bo‘lmadi."
+                "Server bilan bog‘lanib bo‘lmadi.\n" +
+                "API: " + API_BASE
         };
     }
 }
@@ -1807,16 +1808,34 @@ window.currentTestDraft = null;
 window.answerKey = {};
 window.currentPaymentId = null;
 
+document.addEventListener("DOMContentLoaded", function () {
+    const continueButton = document.getElementById("continueButton");
+
+    if (continueButton) {
+        continueButton.addEventListener("click", function () {
+            if (continueButton.dataset.running === "1") return;
+            continueButton.dataset.running = "1";
+
+            Promise.resolve(continueCreate())
+                .finally(function () {
+                    continueButton.dataset.running = "0";
+                });
+        });
+    }
+});
+
 function openAnswerKey() {
     const draft = window.currentTestDraft;
     if (!draft) return;
 
     window.answerKey = {};
 
-    const labels = document.getElementById("answerLabels");
     const grid = document.getElementById("answerGrid");
 
-    labels.innerHTML = "";
+    if (!grid) {
+        throw new Error("answerGrid elementi topilmadi.");
+    }
+
     grid.innerHTML = "";
 
     const count = Number(draft.questionCount);
