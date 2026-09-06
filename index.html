@@ -913,6 +913,7 @@
 
 
         <button
+            type="button"
             id="continueButton"
             class="create-button"
             onclick="continueCreate()"
@@ -1738,159 +1739,65 @@ async function paidProPayment() {
 ===================================== */
 
 async function continueCreate() {
-
-    const testCode =
-        document.getElementById(
-            "testCode"
-        ).value.trim();
-
-
-    const channel =
-        document.getElementById(
-            "channel"
-        ).value.trim();
-
-
-    const duration =
-        document.getElementById(
-            "duration"
-        ).value;
-
-
-    const questionCount =
-        document.getElementById(
-            "questionCount"
-        ).value;
-
-
-    const button =
-        document.getElementById(
-            "continueButton"
-        );
-
-
-    /* TEST KODI */
+    const testCode = document.getElementById("testCode").value.trim();
+    const channel = document.getElementById("channel").value.trim();
+    const duration = document.getElementById("duration").value;
+    const questionCount = document.getElementById("questionCount").value;
+    const button = document.getElementById("continueButton");
 
     if (!testCode) {
-
-        showMessage(
-            "❗ Test kodini kiriting."
-        );
-
+        showMessage("❗ Test kodini kiriting.");
         return;
     }
-
-
-    if (
-        testCode.length < 4 ||
-        testCode.length > 10
-    ) {
-
-        showMessage(
-            "❗ Test kodi 4–10 ta " +
-            "belgidan iborat bo‘lishi kerak."
-        );
-
+    if (testCode.length < 4 || testCode.length > 10) {
+        showMessage("❗ Test kodi 4–10 ta belgidan iborat bo‘lishi kerak.");
         return;
     }
-
-
-    /* KANAL */
-
     if (!channel) {
-
-        showMessage(
-            "❗ Test e’lon qilinadigan " +
-            "kanalni kiriting."
-        );
-
+        showMessage("❗ Test e’lon qilinadigan kanalni kiriting.");
         return;
     }
-
-
-    /* DAVOMIYLIK */
-
     if (!duration) {
-
-        showMessage(
-            "❗ Test davomiyligini tanlang."
-        );
-
+        showMessage("❗ Test davomiyligini tanlang.");
         return;
     }
-
-
-    /* SAVOLLAR */
-
     if (!questionCount) {
-
-        showMessage(
-            "❗ Savollar sonini tanlang."
-        );
-
+        showMessage("❗ Savollar sonini tanlang.");
         return;
     }
 
+    button.disabled = true;
+    button.textContent = "Tekshirilmoqda...";
 
-    /* SERVER */
+    try {
+        const proData = await checkProStatus();
 
-    button.disabled =
-        true;
+        if (!proData || !proData.success) {
+            showMessage("❌ " + (proData?.message || "Server bilan bog‘lanib bo‘lmadi."));
+            return;
+        }
 
+        if (!proData.pro && !proData.admin) {
+            openProModal();
+            return;
+        }
 
-    button.textContent =
-        "Tekshirilmoqda...";
+        window.currentTestDraft = {
+            code: testCode,
+            channel: channel,
+            duration: Number(duration),
+            questionCount: Number(questionCount)
+        };
 
-
-    const proData =
-        await checkProStatus();
-
-
-    button.disabled =
-        false;
-
-
-    button.textContent =
-        "Davom etish ➜";
-
-
-    if (!proData.success) {
-
-        showMessage(
-            "❌ " +
-            proData.message
-        );
-
-        return;
+        openAnswerKey();
+    } catch (error) {
+        console.error("Test yaratish xatosi:", error);
+        showMessage("❌ Test yaratishni boshlashda xatolik yuz berdi.");
+    } finally {
+        button.disabled = false;
+        button.textContent = "Davom etish ➜";
     }
-
-
-    /* PRO YO‘Q */
-
-    if (
-        !proData.pro &&
-        !proData.admin
-    ) {
-
-        openProModal();
-
-        return;
-    }
-
-
-    /* ADMIN yoki PRO */
-
-    window.currentTestDraft = {
-        code: testCode,
-        channel: channel,
-        duration: Number(duration),
-        questionCount: Number(questionCount)
-    };
-
-    openAnswerKey();
-
 }
-
 
 /* =====================================
    DTM JAVOBLAR KALITI
