@@ -1,162 +1,653 @@
 <!DOCTYPE html>
 <html lang="uz">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Test yaratish</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
+
             padding: 20px;
+
             padding-bottom: 90px;
+
             font-family: Arial, sans-serif;
+
             background: #f5f7fb;
+
             color: #222;
         }
 
+
         .container {
+
             max-width: 500px;
+
             margin: auto;
         }
 
+
         .welcome {
+
             margin: 10px 5px 25px;
         }
 
+
         .welcome h1 {
+
             margin: 0 0 8px;
+
             font-size: 24px;
         }
 
+
         .welcome p {
+
             margin: 0;
+
             color: #777;
         }
 
+
         .card {
+
             background: white;
+
             padding: 20px;
+
             border-radius: 18px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.07);
+
+            box-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, 0.07);
         }
 
+
         .card h2 {
+
             margin: 0 0 20px;
+
             font-size: 20px;
         }
 
+
         .field {
+
             margin-bottom: 17px;
         }
 
+
         .field label {
+
             display: block;
+
             margin-bottom: 8px;
+
             font-size: 14px;
+
             font-weight: bold;
         }
+
 
         .field input,
         .field select {
+
             width: 100%;
+
             height: 50px;
+
             padding: 0 14px;
+
             border: 1px solid #ddd;
+
             border-radius: 12px;
+
             outline: none;
+
             font-size: 16px;
+
             background: white;
         }
+
 
         .field input:focus,
         .field select:focus {
+
             border-color: #2481cc;
         }
 
+
         .create-button {
+
             width: 100%;
+
             height: 55px;
+
             border: 0;
+
             border-radius: 14px;
+
             background: #2481cc;
+
             color: white;
+
             font-size: 16px;
+
             font-weight: bold;
+
             cursor: pointer;
         }
+
 
         .create-button:disabled {
+
             opacity: 0.6;
+
+            cursor: not-allowed;
         }
 
-        .message {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            background: white;
-            border-radius: 14px;
-            text-align: center;
-            white-space: pre-line;
-        }
+
+        /* =========================
+           BOTTOM NAV
+        ========================= */
 
         .bottom-nav {
+
             position: fixed;
+
             left: 0;
+
             right: 0;
+
             bottom: 0;
+
             height: 70px;
+
             background: white;
+
             border-top: 1px solid #e5e5e5;
+
             display: flex;
+
             justify-content: center;
+
             gap: 60px;
+
             align-items: center;
+
+            z-index: 20;
         }
 
+
         .nav-button {
+
             border: 0;
+
             background: none;
+
             font-size: 14px;
+
             color: #555;
+
             cursor: pointer;
         }
 
+
         .nav-icon {
+
             display: block;
+
             font-size: 22px;
+
             margin-bottom: 3px;
         }
 
+
         .active {
+
             color: #2481cc;
+
             font-weight: bold;
         }
+
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal {
+
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0, 0, 0, 0.55);
+
+            z-index: 100;
+
+            padding: 20px;
+
+            align-items: flex-end;
+
+            justify-content: center;
+        }
+
+
+        .modal.show {
+
+            display: flex;
+        }
+
+
+        .modal-box {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            background: white;
+
+            border-radius: 24px;
+
+            padding: 24px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            animation:
+                modalOpen 0.2s ease;
+        }
+
+
+        @keyframes modalOpen {
+
+            from {
+
+                transform:
+                    translateY(30px);
+
+                opacity: 0;
+            }
+
+            to {
+
+                transform:
+                    translateY(0);
+
+                opacity: 1;
+            }
+        }
+
+
+        .modal-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+
+        .modal-header h2 {
+
+            margin: 0;
+
+            font-size: 23px;
+        }
+
+
+        .close-button {
+
+            width: 38px;
+
+            height: 38px;
+
+            border: 0;
+
+            border-radius: 50%;
+
+            background: #f1f1f1;
+
+            font-size: 22px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           PROFILE
+        ========================= */
+
+        .profile-top {
+
+            text-align: center;
+
+            margin-bottom: 22px;
+        }
+
+
+        .profile-avatar {
+
+            width: 80px;
+
+            height: 80px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            background: #2481cc;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 35px;
+
+            font-weight: bold;
+        }
+
+
+        .profile-name {
+
+            margin-top: 12px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+
+        .profile-username {
+
+            margin-top: 5px;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+
+        .info-card {
+
+            background: #f6f8fb;
+
+            border-radius: 16px;
+
+            padding: 16px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .info-title {
+
+            color: #777;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .info-value {
+
+            font-size: 17px;
+
+            font-weight: bold;
+        }
+
+
+        .pro-card {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6c63ff,
+                    #a855f7
+                );
+
+            color: white;
+
+            border-radius: 18px;
+
+            padding: 20px;
+
+            margin-top: 15px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .pro-title {
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+
+        .pro-status {
+
+            font-size: 16px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .pro-time {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            margin-top: 12px;
+        }
+
+
+        .pro-button {
+
+            width: 100%;
+
+            height: 52px;
+
+            border: 0;
+
+            border-radius: 14px;
+
+            background: white;
+
+            color: #6c4de8;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           PRO PURCHASE
+        ========================= */
+
+        .pro-intro {
+
+            text-align: center;
+
+            color: #666;
+
+            margin-bottom: 20px;
+        }
+
+
+        .tariff {
+
+            border: 1px solid #ddd;
+
+            border-radius: 17px;
+
+            padding: 17px;
+
+            margin-bottom: 12px;
+
+            background: #fff;
+        }
+
+
+        .tariff-title {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            margin-bottom: 5px;
+        }
+
+
+        .tariff-price {
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            margin: 8px 0 12px;
+
+            color: #2481cc;
+        }
+
+
+        .tariff-button {
+
+            width: 100%;
+
+            height: 46px;
+
+            border: 0;
+
+            border-radius: 12px;
+
+            background: #2481cc;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .cancel-button {
+
+            width: 100%;
+
+            height: 48px;
+
+            border: 0;
+
+            border-radius: 12px;
+
+            background: #f0f0f0;
+
+            color: #444;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+        }
+
+
+        /* =========================
+           MESSAGE MODAL
+        ========================= */
+
+        .message-text {
+
+            text-align: center;
+
+            line-height: 1.5;
+
+            white-space: pre-line;
+
+            margin: 15px 0 20px;
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
+
+    <!-- =========================
+         HOME
+    ========================= -->
+
     <div class="welcome">
-        <h1 id="welcomeText">👋 Assalomu alaykum!</h1>
-        <p>Yangi test yaratish</p>
+
+        <h1 id="welcomeText">
+            👋 Assalomu alaykum!
+        </h1>
+
+        <p>
+            Yangi test yaratish
+        </p>
+
     </div>
+
 
     <div class="card">
 
-        <h2>➕ Test yaratish</h2>
+        <h2>
+            ➕ Test yaratish
+        </h2>
+
 
         <div class="field">
-            <label>🔑 Test kodi</label>
+
+            <label>
+                🔑 Test kodi
+            </label>
 
             <input
                 id="testCode"
@@ -165,10 +656,15 @@
                 placeholder="Masalan: ABC123"
                 autocomplete="off"
             >
+
         </div>
 
+
         <div class="field">
-            <label>📢 Test e’lon qilinadigan kanal</label>
+
+            <label>
+                📢 Test e’lon qilinadigan kanal
+            </label>
 
             <input
                 id="channel"
@@ -176,40 +672,97 @@
                 placeholder="@kanal_nomi"
                 autocomplete="off"
             >
+
         </div>
 
+
         <div class="field">
-            <label>⏱️ Test davomiyligi</label>
+
+            <label>
+                ⏱️ Test davomiyligi
+            </label>
 
             <select id="duration">
-                <option value="">Tanlang</option>
-                <option value="15">15 daqiqa</option>
-                <option value="30">30 daqiqa</option>
-                <option value="45">45 daqiqa</option>
-                <option value="60">60 daqiqa</option>
-                <option value="90">90 daqiqa</option>
-                <option value="120">120 daqiqa</option>
+
+                <option value="">
+                    Tanlang
+                </option>
+
+                <option value="15">
+                    15 daqiqa
+                </option>
+
+                <option value="30">
+                    30 daqiqa
+                </option>
+
+                <option value="45">
+                    45 daqiqa
+                </option>
+
+                <option value="60">
+                    60 daqiqa
+                </option>
+
+                <option value="90">
+                    90 daqiqa
+                </option>
+
+                <option value="120">
+                    120 daqiqa
+                </option>
+
             </select>
+
         </div>
+
 
         <div class="field">
-            <label>📝 Savollar soni</label>
+
+            <label>
+                📝 Savollar soni
+            </label>
 
             <select id="questionCount">
-                <option value="">Tanlang</option>
-                <option value="10">10 ta</option>
-                <option value="20">20 ta</option>
-                <option value="30">30 ta</option>
-                <option value="35">35 ta</option>
-                <option value="40">40 ta</option>
-                <option value="45">45 ta</option>
+
+                <option value="">
+                    Tanlang
+                </option>
+
+                <option value="10">
+                    10 ta
+                </option>
+
+                <option value="20">
+                    20 ta
+                </option>
+
+                <option value="30">
+                    30 ta
+                </option>
+
+                <option value="35">
+                    35 ta
+                </option>
+
+                <option value="40">
+                    40 ta
+                </option>
+
+                <option value="45">
+                    45 ta
+                </option>
+
             </select>
+
         </div>
+
 
         <button
             id="continueButton"
             class="create-button"
-            onclick="continueCreate()">
+            onclick="continueCreate()"
+        >
 
             Davom etish ➜
 
@@ -217,26 +770,40 @@
 
     </div>
 
-    <div id="message" class="message"></div>
-
 </div>
+
+
+<!-- =========================
+     BOTTOM NAV
+========================= -->
 
 <div class="bottom-nav">
 
     <button
+        id="homeButton"
         class="nav-button active"
-        onclick="goHome()">
+        onclick="goHome()"
+    >
 
-        <span class="nav-icon">🏠</span>
+        <span class="nav-icon">
+            🏠
+        </span>
+
         Bosh sahifa
 
     </button>
 
-    <button
-        class="nav-button"
-        onclick="goProfile()">
 
-        <span class="nav-icon">👤</span>
+    <button
+        id="profileButton"
+        class="nav-button"
+        onclick="goProfile()"
+    >
+
+        <span class="nav-icon">
+            👤
+        </span>
+
         Profil
 
     </button>
@@ -244,101 +811,785 @@
 </div>
 
 
+<!-- =========================
+     PROFILE MODAL
+========================= -->
+
+<div
+    id="profileModal"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                👤 Profil
+            </h2>
+
+            <button
+                class="close-button"
+                onclick="closeProfile()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="profile-top">
+
+            <div
+                id="profileAvatar"
+                class="profile-avatar"
+            >
+                U
+            </div>
+
+
+            <div
+                id="profileName"
+                class="profile-name"
+            >
+                Yuklanmoqda...
+            </div>
+
+
+            <div
+                id="profileUsername"
+                class="profile-username"
+            >
+                @username
+            </div>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-title">
+                Telegram ID
+            </div>
+
+            <div
+                id="profileTelegramId"
+                class="info-value"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="pro-card">
+
+            <div class="pro-title">
+                ⭐ PRO
+            </div>
+
+
+            <div
+                id="profileProStatus"
+                class="pro-status"
+            >
+                Tekshirilmoqda...
+            </div>
+
+
+            <div
+                id="profileProTime"
+                class="pro-time"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <button
+            class="pro-button"
+            onclick="openProModal()"
+        >
+
+            ⭐ PRO sotib olish
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     PRO MODAL
+========================= -->
+
+<div
+    id="proModal"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                ⭐ PRO
+            </h2>
+
+            <button
+                class="close-button"
+                onclick="closeProModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="pro-intro">
+
+            Test yaratish va PRO imkoniyatlaridan foydalaning.
+
+        </div>
+
+
+        <!--
+            Hozirgi serverda narx va muddat
+            admin tomonidan boshqariladi.
+
+            Keyingi bosqichda 1/3/6/12 oylik
+            tariflarni alohida serverdan oladigan qilamiz.
+        -->
+
+
+        <div class="tariff">
+
+            <div class="tariff-title">
+                ⭐ PRO
+            </div>
+
+            <div
+                id="proTariffPrice"
+                class="tariff-price"
+            >
+                Yuklanmoqda...
+            </div>
+
+            <div
+                id="proTariffDuration"
+                style="color:#777; margin-bottom:12px;"
+            >
+                —
+            </div>
+
+            <button
+                class="tariff-button"
+                onclick="buyPro()"
+            >
+
+                ⭐ PRO sotib olish
+
+            </button>
+
+        </div>
+
+
+        <button
+            class="cancel-button"
+            onclick="closeProModal()"
+        >
+
+            Keyinroq
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MESSAGE MODAL
+========================= -->
+
+<div
+    id="messageModal"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                📋 Xabar
+            </h2>
+
+            <button
+                class="close-button"
+                onclick="closeMessage()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div
+            id="messageText"
+            class="message-text"
+        >
+        </div>
+
+
+        <button
+            class="create-button"
+            onclick="closeMessage()"
+        >
+
+            Tushunarli
+
+        </button>
+
+    </div>
+
+</div>
+
+
 <script>
 
-const tg = window.Telegram.WebApp;
+
+/* =====================================
+   TELEGRAM
+===================================== */
+
+const tg =
+    window.Telegram.WebApp;
+
 
 tg.ready();
+
 tg.expand();
 
 
-/*
-    FLASK SERVER MANZILI
-
-    Hozircha Cloudflare Quick Tunnel.
-*/
+/* =====================================
+   SERVER MANZILI
+===================================== */
 
 const API_BASE =
     "https://behavioral-outlined-kim-minimum.trycloudflare.com";
-    
-/*
-    TELEGRAM FOYDALANUVCHISI
-*/
 
-const user = tg.initDataUnsafe?.user;
+
+/* =====================================
+   USER
+===================================== */
+
+const user =
+    tg.initDataUnsafe?.user;
+
 
 if (user) {
 
-    let name = user.first_name || "";
+    let name =
+        user.first_name || "";
+
 
     if (user.last_name) {
-        name += " " + user.last_name;
+
+        name +=
+            " " + user.last_name;
     }
 
-    document.getElementById("welcomeText").textContent =
-        "👋 Assalomu alaykum, " + name + "!";
+
+    document.getElementById(
+        "welcomeText"
+    ).textContent =
+        "👋 Assalomu alaykum, " +
+        name +
+        "!";
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        name;
+
+
+    document.getElementById(
+        "profileTelegramId"
+    ).textContent =
+        user.id;
+
+
+    document.getElementById(
+        "profileUsername"
+    ).textContent =
+        user.username
+            ? "@" + user.username
+            : "Username mavjud emas";
+
+
+    const firstLetter =
+        (
+            user.first_name ||
+            "U"
+        )
+        .charAt(0)
+        .toUpperCase();
+
+
+    document.getElementById(
+        "profileAvatar"
+    ).textContent =
+        firstLetter;
 }
 
 
-/*
-    SERVERDAN PRO HOLATINI OLISH
-*/
+/* =====================================
+   PRO STATUS
+===================================== */
+
+let currentProData =
+    null;
+
 
 async function checkProStatus() {
 
     try {
 
-        const response = await fetch(
-            API_BASE + "/api/pro-status",
-            {
-                method: "GET",
-                headers: {
-                    "X-Telegram-Init-Data": tg.initData
-                }
-            }
-        );
+        const response =
+            await fetch(
+                API_BASE +
+                "/api/pro-status",
+                {
+                    method: "GET",
 
-        const data = await response.json();
+                    headers: {
+                        "X-Telegram-Init-Data":
+                            tg.initData
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        currentProData =
+            data;
+
 
         return data;
 
     } catch (error) {
 
-        console.error("Server xatosi:", error);
+        console.error(
+            "PRO server xatosi:",
+            error
+        );
+
 
         return {
+
             success: false,
-            message: "Server bilan bog‘lanib bo‘lmadi."
+
+            message:
+                "Server bilan bog‘lanib bo‘lmadi."
         };
     }
 }
 
 
-/*
-    DAVOM ETISH
-*/
+/* =====================================
+   PROFILE
+===================================== */
+
+async function goProfile() {
+
+    document.getElementById(
+        "profileButton"
+    ).classList.add("active");
+
+
+    document.getElementById(
+        "homeButton"
+    ).classList.remove("active");
+
+
+    document.getElementById(
+        "profileModal"
+    ).classList.add("show");
+
+
+    await updateProfile();
+}
+
+
+async function updateProfile() {
+
+    const statusElement =
+        document.getElementById(
+            "profileProStatus"
+        );
+
+
+    const timeElement =
+        document.getElementById(
+            "profileProTime"
+        );
+
+
+    statusElement.textContent =
+        "Tekshirilmoqda...";
+
+
+    timeElement.textContent =
+        "—";
+
+
+    const data =
+        await checkProStatus();
+
+
+    if (!data.success) {
+
+        statusElement.textContent =
+            "❌ Aniqlanmadi";
+
+
+        timeElement.textContent =
+            data.message || "Server xatosi";
+
+        return;
+    }
+
+
+    /* ADMIN */
+
+    if (data.admin) {
+
+        statusElement.textContent =
+            "👑 Admin PRO";
+
+
+        timeElement.textContent =
+            "Cheksiz";
+
+        return;
+    }
+
+
+    /* PRO */
+
+    if (data.pro) {
+
+        statusElement.textContent =
+            "✅ PRO faol";
+
+
+        if (data.pro_until) {
+
+            updateRemainingTime(
+                data.pro_until
+            );
+
+            return;
+        }
+    }
+
+
+    /* PRO YO‘Q */
+
+    statusElement.textContent =
+        "❌ PRO mavjud emas";
+
+
+    timeElement.textContent =
+        "PRO sotib oling";
+}
+
+
+function updateRemainingTime(
+    proUntil
+) {
+
+    const timeElement =
+        document.getElementById(
+            "profileProTime"
+        );
+
+
+    const end =
+        new Date(proUntil);
+
+
+    function update() {
+
+        const now =
+            new Date();
+
+
+        let difference =
+            end.getTime() -
+            now.getTime();
+
+
+        if (difference <= 0) {
+
+            timeElement.textContent =
+                "PRO muddati tugagan";
+
+
+            document.getElementById(
+                "profileProStatus"
+            ).textContent =
+                "❌ PRO mavjud emas";
+
+
+            return;
+        }
+
+
+        const totalSeconds =
+            Math.floor(
+                difference / 1000
+            );
+
+
+        const days =
+            Math.floor(
+                totalSeconds /
+                86400
+            );
+
+
+        const hours =
+            Math.floor(
+                (
+                    totalSeconds %
+                    86400
+                ) / 3600
+            );
+
+
+        const minutes =
+            Math.floor(
+                (
+                    totalSeconds %
+                    3600
+                ) / 60
+            );
+
+
+        timeElement.textContent =
+            "⏳ " +
+            days +
+            " kun " +
+            hours +
+            " soat " +
+            minutes +
+            " daqiqa qoldi";
+    }
+
+
+    update();
+
+
+    /*
+        Har daqiqada yangilanadi.
+    */
+
+    clearInterval(
+        window.proTimer
+    );
+
+
+    window.proTimer =
+        setInterval(
+            update,
+            60000
+        );
+}
+
+
+function closeProfile() {
+
+    document.getElementById(
+        "profileModal"
+    ).classList.remove("show");
+
+
+    document.getElementById(
+        "profileButton"
+    ).classList.remove("active");
+
+
+    document.getElementById(
+        "homeButton"
+    ).classList.add("active");
+}
+
+
+/* =====================================
+   PRO MODAL
+===================================== */
+
+async function openProModal() {
+
+    document.getElementById(
+        "proModal"
+    ).classList.add("show");
+
+
+    const priceElement =
+        document.getElementById(
+            "proTariffPrice"
+        );
+
+
+    const durationElement =
+        document.getElementById(
+            "proTariffDuration"
+        );
+
+
+    priceElement.textContent =
+        "Yuklanmoqda...";
+
+
+    durationElement.textContent =
+        "—";
+
+
+    const data =
+        await checkProStatus();
+
+
+    if (!data.success) {
+
+        priceElement.textContent =
+            "Server bilan bog‘lanib bo‘lmadi.";
+
+        return;
+    }
+
+
+    if (data.admin) {
+
+        priceElement.textContent =
+            "Admin";
+
+
+        durationElement.textContent =
+            "Cheksiz PRO";
+
+        return;
+    }
+
+
+    if (data.pro) {
+
+        priceElement.textContent =
+            "PRO faol";
+
+
+        durationElement.textContent =
+            data.pro_until
+                ? "Amal qilish muddati mavjud"
+                : "—";
+
+        return;
+    }
+
+
+    const price =
+        data.price || 0;
+
+
+    const duration =
+        data.duration_days || 30;
+
+
+    priceElement.textContent =
+        Number(price).toLocaleString(
+            "uz-UZ"
+        ) +
+        " so‘m";
+
+
+    durationElement.textContent =
+        duration +
+        " kun";
+}
+
+
+function closeProModal() {
+
+    document.getElementById(
+        "proModal"
+    ).classList.remove("show");
+}
+
+
+/* =====================================
+   PRO SOTIB OLISH
+===================================== */
+
+function buyPro() {
+
+    closeProModal();
+
+
+    showMessage(
+        "⭐ PRO sotib olish\n\n" +
+        "To‘lov ma’lumotlari keyingi bosqichda " +
+        "qo‘shiladi.\n\n" +
+        "To‘lov amalga oshirilgach, " +
+        "admin tasdiqlaydi va PRO faollashadi."
+    );
+}
+
+
+/* =====================================
+   TEST YARATISH
+===================================== */
 
 async function continueCreate() {
 
     const testCode =
-        document.getElementById("testCode").value.trim();
+        document.getElementById(
+            "testCode"
+        ).value.trim();
+
 
     const channel =
-        document.getElementById("channel").value.trim();
+        document.getElementById(
+            "channel"
+        ).value.trim();
+
 
     const duration =
-        document.getElementById("duration").value;
+        document.getElementById(
+            "duration"
+        ).value;
+
 
     const questionCount =
-        document.getElementById("questionCount").value;
+        document.getElementById(
+            "questionCount"
+        ).value;
+
 
     const button =
-        document.getElementById("continueButton");
+        document.getElementById(
+            "continueButton"
+        );
 
 
-    /*
-        TEST KODI
-    */
+    /* TEST KODI */
 
     if (!testCode) {
 
@@ -356,30 +1607,28 @@ async function continueCreate() {
     ) {
 
         showMessage(
-            "❗ Test kodi 4–10 ta belgidan iborat bo‘lishi kerak."
+            "❗ Test kodi 4–10 ta " +
+            "belgidan iborat bo‘lishi kerak."
         );
 
         return;
     }
 
 
-    /*
-        KANAL
-    */
+    /* KANAL */
 
     if (!channel) {
 
         showMessage(
-            "❗ Test e’lon qilinadigan kanalni kiriting."
+            "❗ Test e’lon qilinadigan " +
+            "kanalni kiriting."
         );
 
         return;
     }
 
 
-    /*
-        DAVOMIYLIGI
-    */
+    /* DAVOMIYLIK */
 
     if (!duration) {
 
@@ -391,9 +1640,7 @@ async function continueCreate() {
     }
 
 
-    /*
-        SAVOLLAR SONI
-    */
+    /* SAVOLLAR */
 
     if (!questionCount) {
 
@@ -405,104 +1652,197 @@ async function continueCreate() {
     }
 
 
-    /*
-        SERVERNI TEKSHIRISH
-    */
+    /* SERVER */
 
-    button.disabled = true;
-    button.textContent = "Tekshirilmoqda...";
+    button.disabled =
+        true;
 
 
-    const proData = await checkProStatus();
+    button.textContent =
+        "Tekshirilmoqda...";
 
 
-    button.disabled = false;
-    button.textContent = "Davom etish ➜";
+    const proData =
+        await checkProStatus();
 
 
-    /*
-        SERVER BILAN ALOQA YO‘Q
-    */
-
-    if (!proData.success) {showMessage(
-            "❌ " + proData.message
-        );
-
-        return;
-    }
+    button.disabled =
+        false;
 
 
-    /*
-        PRO TEKSHIRUVI
-    */
+    button.textContent =
+        "Davom etish ➜";
 
-    if (!proData.pro && !proData.admin) {
+
+    if (!proData.success) {
 
         showMessage(
-            "⭐ Test yaratish uchun PRO kerak."
+            "❌ " +
+            proData.message
         );
 
         return;
     }
 
 
-    /*
-        HAMMASI TO‘G‘RI
-    */
+    /* PRO YO‘Q */
+
+    if (
+        !proData.pro &&
+        !proData.admin
+    ) {
+
+        openProModal();
+
+        return;
+    }
+
+
+    /* ADMIN yoki PRO */
 
     showMessage(
+
         "✅ Ma’lumotlar qabul qilindi.\n\n" +
-        "Test kodi: " + testCode + "\n" +
-        "Kanal: " + channel + "\n" +
-        "Davomiyligi: " + duration + " daqiqa\n" +
-        "Savollar: " + questionCount + " ta\n\n" +
-        "Keyingi bosqichda javoblar kalitini kiritish oynasi ochiladi."
+
+        "🔑 Test kodi: " +
+        testCode +
+
+        "\n📢 Kanal: " +
+        channel +
+
+        "\n⏱ Davomiyligi: " +
+        duration +
+        " daqiqa" +
+
+        "\n📝 Savollar: " +
+        questionCount +
+        " ta" +
+
+        "\n\n➡️ Keyingi bosqichda " +
+        "javoblar kalitini kiritish oynasi ochiladi."
     );
 
+
+    /*
+        Keyingi bosqichda shu joyga:
+
+        /api/create-test
+
+        orqali testni serverga saqlash
+        funksiyasini ulaymiz.
+    */
 }
 
 
-/*
-    BOSH SAHIFA
-*/
+/* =====================================
+   HOME
+===================================== */
 
 function goHome() {
 
-    showMessage(
-        "🏠 Siz bosh sahifadasiz."
-    );
+    document.getElementById(
+        "homeButton"
+    ).classList.add("active");
 
+
+    document.getElementById(
+        "profileButton"
+    ).classList.remove("active");
+
+
+    closeProfile();
+
+    closeProModal();
+
+
+    window.scrollTo(
+        {
+            top: 0,
+            behavior: "smooth"
+        }
+    );
 }
 
 
-/*
-    PROFIL
-*/
-
-function goProfile() {
-
-    showMessage(
-        "👤 Profil bo‘limi keyingi bosqichda tayyorlanadi."
-    );
-
-}
-
-
-/*
-    XABAR
-*/
+/* =====================================
+   MESSAGE
+===================================== */
 
 function showMessage(text) {
 
-    const message =
-        document.getElementById("message");
+    document.getElementById(
+        "messageText"
+    ).textContent =
+        text;
 
-    message.textContent = text;
 
-    message.style.display = "block";
+    document.getElementById(
+        "messageModal"
+    ).classList.add("show");
 }
+
+
+function closeMessage() {
+
+    document.getElementById(
+        "messageModal"
+    ).classList.remove("show");
+}
+
+
+/* =====================================
+   MODAL TASHQARISIGA BOSILSA YOPISH
+===================================== */
+
+document
+    .getElementById("profileModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeProfile();
+            }
+        }
+    );
+
+
+document
+    .getElementById("proModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeProModal();
+            }
+        }
+    );
+
+
+document
+    .getElementById("messageModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeMessage();
+            }
+        }
+    );
 
 </script>
 
 </body>
+
 </html>
