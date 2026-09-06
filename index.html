@@ -93,6 +93,10 @@
             cursor: pointer;
         }
 
+        .create-button:disabled {
+            opacity: 0.6;
+        }
+
         .message {
             display: none;
             margin-top: 15px;
@@ -100,6 +104,7 @@
             background: white;
             border-radius: 14px;
             text-align: center;
+            white-space: pre-line;
         }
 
         .bottom-nav {
@@ -146,14 +151,11 @@
         <p>Yangi test yaratish</p>
     </div>
 
-
     <div class="card">
 
         <h2>➕ Test yaratish</h2>
 
-
         <div class="field">
-
             <label>🔑 Test kodi</label>
 
             <input
@@ -163,12 +165,9 @@
                 placeholder="Masalan: ABC123"
                 autocomplete="off"
             >
-
         </div>
 
-
         <div class="field">
-
             <label>📢 Test e’lon qilinadigan kanal</label>
 
             <input
@@ -177,13 +176,10 @@
                 placeholder="@kanal_nomi"
                 autocomplete="off"
             >
-
         </div>
 
-
         <div class="field">
-
-            <label>⏱ Test davomiyligi</label>
+            <label>⏱️ Test davomiyligi</label>
 
             <select id="duration">
                 <option value="">Tanlang</option>
@@ -193,33 +189,25 @@
                 <option value="60">60 daqiqa</option>
                 <option value="90">90 daqiqa</option>
                 <option value="120">120 daqiqa</option>
-
             </select>
-
         </div>
 
-
         <div class="field">
-
             <label>📝 Savollar soni</label>
 
             <select id="questionCount">
-
                 <option value="">Tanlang</option>
-
                 <option value="10">10 ta</option>
                 <option value="20">20 ta</option>
                 <option value="30">30 ta</option>
                 <option value="35">35 ta</option>
                 <option value="40">40 ta</option>
                 <option value="45">45 ta</option>
-
             </select>
-
         </div>
 
-
         <button
+            id="continueButton"
             class="create-button"
             onclick="continueCreate()">
 
@@ -229,13 +217,9 @@
 
     </div>
 
-
     <div id="message" class="message"></div>
 
 </div>
-
-
-<!-- Pastki Mini App navigatsiyasi -->
 
 <div class="bottom-nav">
 
@@ -247,7 +231,6 @@
         Bosh sahifa
 
     </button>
-
 
     <button
         class="nav-button"
@@ -269,7 +252,19 @@ tg.ready();
 tg.expand();
 
 
-/* Telegram foydalanuvchisi */
+/*
+    FLASK SERVER MANZILI
+
+    Hozircha Cloudflare Quick Tunnel.
+*/
+
+const API_BASE =
+    "https://debug-actors-grade-dive.trycloudflare.com";
+
+
+/*
+    TELEGRAM FOYDALANUVCHISI
+*/
 
 const user = tg.initDataUnsafe?.user;
 
@@ -283,13 +278,48 @@ if (user) {
 
     document.getElementById("welcomeText").textContent =
         "👋 Assalomu alaykum, " + name + "!";
-
 }
 
 
-/* DAVOM ETISH */
+/*
+    SERVERDAN PRO HOLATINI OLISH
+*/
 
-function continueCreate() {
+async function checkProStatus() {
+
+    try {
+
+        const response = await fetch(
+            API_BASE + "/api/pro-status",
+            {
+                method: "GET",
+                headers: {
+                    "X-Telegram-Init-Data": tg.initData
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        return data;
+
+    } catch (error) {
+
+        console.error("Server xatosi:", error);
+
+        return {
+            success: false,
+            message: "Server bilan bog‘lanib bo‘lmadi."
+        };
+    }
+}
+
+
+/*
+    DAVOM ETISH
+*/
+
+async function continueCreate() {
 
     const testCode =
         document.getElementById("testCode").value.trim();
@@ -303,16 +333,28 @@ function continueCreate() {
     const questionCount =
         document.getElementById("questionCount").value;
 
+    const button =
+        document.getElementById("continueButton");
+
+
+    /*
+        TEST KODI
+    */
 
     if (!testCode) {
 
-        showMessage("❗ Test kodini kiriting.");
+        showMessage(
+            "❗ Test kodini kiriting."
+        );
 
         return;
     }
 
 
-    if (testCode.length < 4 || testCode.length > 10) {
+    if (
+        testCode.length < 4 ||
+        testCode.length > 10
+    ) {
 
         showMessage(
             "❗ Test kodi 4–10 ta belgidan iborat bo‘lishi kerak."
@@ -321,6 +363,10 @@ function continueCreate() {
         return;
     }
 
+
+    /*
+        KANAL
+    */
 
     if (!channel) {
 
@@ -332,6 +378,10 @@ function continueCreate() {
     }
 
 
+    /*
+        DAVOMIYLIGI
+    */
+
     if (!duration) {
 
         showMessage(
@@ -341,6 +391,10 @@ function continueCreate() {
         return;
     }
 
+
+    /*
+        SAVOLLAR SONI
+    */
 
     if (!questionCount) {
 
@@ -352,15 +406,66 @@ function continueCreate() {
     }
 
 
+    /*
+        SERVERNI TEKSHIRISH
+    */
+
+    button.disabled = true;
+    button.textContent = "Tekshirilmoqda...";
+
+
+    const proData = await checkProStatus();
+
+
+    button.disabled = false;
+    button.textContent = "Davom etish ➜";
+
+
+    /*
+        SERVER BILAN ALOQA YO‘Q
+    */
+
+    if (!proData.success) {showMessage(
+            "❌ " + proData.message
+        );
+
+        return;
+    }
+
+
+    /*
+        PRO TEKSHIRUVI
+    */
+
+    if (!proData.pro && !proData.admin) {
+
+        showMessage(
+            "⭐ Test yaratish uchun PRO kerak."
+        );
+
+        return;
+    }
+
+
+    /*
+        HAMMASI TO‘G‘RI
+    */
+
     showMessage(
         "✅ Ma’lumotlar qabul qilindi.\n\n" +
+        "Test kodi: " + testCode + "\n" +
+        "Kanal: " + channel + "\n" +
+        "Davomiyligi: " + duration + " daqiqa\n" +
+        "Savollar: " + questionCount + " ta\n\n" +
         "Keyingi bosqichda javoblar kalitini kiritish oynasi ochiladi."
     );
 
 }
 
 
-/* BOSH SAHIFA */
+/*
+    BOSH SAHIFA
+*/
 
 function goHome() {
 
@@ -371,7 +476,9 @@ function goHome() {
 }
 
 
-/* PROFIL */
+/*
+    PROFIL
+*/
 
 function goProfile() {
 
@@ -382,7 +489,9 @@ function goProfile() {
 }
 
 
-/* XABAR */
+/*
+    XABAR
+*/
 
 function showMessage(text) {
 
@@ -392,7 +501,6 @@ function showMessage(text) {
     message.textContent = text;
 
     message.style.display = "block";
-
 }
 
 </script>
