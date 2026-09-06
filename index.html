@@ -612,6 +612,20 @@
         /* =========================
            DTM JAVOBLAR KALITI
         ========================= */
+        .payment-card-box {
+            background:#f6f8fb;
+            border-radius:14px;
+            padding:16px;
+            margin:12px 0 16px;
+            line-height:1.7;
+        }
+        .payment-card-number {
+            font-size:20px;
+            font-weight:800;
+            letter-spacing:1px;
+            word-break:break-word;
+        }
+
         .answer-key-info {
             background: #f5f6f8;
             border-radius: 14px;
@@ -662,7 +676,9 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #555;
             padding: 0;
             transition: .15s ease;
             position: relative;
@@ -1102,35 +1118,8 @@
         -->
 
 
-        <div class="tariff">
-
-            <div class="tariff-title">
-                ⭐ PRO
-            </div>
-
-            <div
-                id="proTariffPrice"
-                class="tariff-price"
-            >
-                Yuklanmoqda...
-            </div>
-
-            <div
-                id="proTariffDuration"
-                style="color:#777; margin-bottom:12px;"
-            >
-                —
-            </div>
-
-            <button
-                class="tariff-button"
-                onclick="buyPro()"
-            >
-
-                ⭐ PRO sotib olish
-
-            </button>
-
+        <div id="proPlans" class="pro-plans">
+            <div class="tariff">Tariflar yuklanmoqda...</div>
         </div>
 
 
@@ -1152,6 +1141,23 @@
 <!-- =========================
      DTM JAVOBLAR KALITI
 ========================= -->
+<!-- =========================
+     PRO TO‘LOV
+ ========================= -->
+<div id="paymentModal" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>💳 To‘lov</h2>
+            <button class="close-button" onclick="closePaymentModal()">✕</button>
+        </div>
+        <div id="paymentInfo" class="message-text"></div>
+        <button id="paidButton" class="create-button" onclick="paidProPayment()">
+            ✅ To‘lov qildim
+        </button>
+        <button class="cancel-button" onclick="closePaymentModal()">Keyinroq</button>
+    </div>
+</div>
+
 <div id="answerKeyModal" class="modal">
     <div class="modal-box">
         <div class="modal-header">
@@ -1164,7 +1170,6 @@
             Bu oynada faqat to‘g‘ri javoblar belgilanadi.
         </div>
 
-        <div id="answerLabels" class="answer-labels"></div>
         <div id="answerGrid" class="answer-grid"></div>
 
         <button class="answer-save-button" onclick="saveAnswerKey()">
@@ -1605,179 +1610,128 @@ function closeProfile() {
 ===================================== */
 
 async function openProModal() {
+    document.getElementById("proModal").classList.add("show");
+    const plansBox = document.getElementById("proPlans");
+    plansBox.innerHTML = '<div class="tariff">Tariflar yuklanmoqda...</div>';
 
-    document.getElementById(
-        "proModal"
-    ).classList.add("show");
-
-
-    const priceElement =
-        document.getElementById(
-            "proTariffPrice"
-        );
-
-
-    const durationElement =
-        document.getElementById(
-            "proTariffDuration"
-        );
-
-
-    priceElement.textContent =
-        "Yuklanmoqda...";
-
-
-    durationElement.textContent =
-        "—";
-
-
-    const data =
-        await checkProStatus();
-
-
-    if (!data.success) {
-
-        priceElement.textContent =
-            "Server bilan bog‘lanib bo‘lmadi.";
-
+    const status = await checkProStatus();
+    if (!status.success) {
+        plansBox.innerHTML = '<div class="tariff">❌ ' + (status.message || "Server bilan bog‘lanib bo‘lmadi.") + '</div>';
         return;
     }
-
-
-    if (data.admin) {
-
-        priceElement.textContent =
-            "Admin";
-
-
-        durationElement.textContent =
-            "Cheksiz PRO";
-
+    if (status.admin) {
+        plansBox.innerHTML = '<div class="tariff"><div class="tariff-title">👑 Admin</div><div class="tariff-price">Cheksiz PRO</div></div>';
         return;
     }
-
-
-    if (data.pro) {
-
-        priceElement.textContent =
-            "PRO faol";
-
-
-        durationElement.textContent =
-            data.pro_until
-                ? "Amal qilish muddati mavjud"
-                : "—";
-
+    if (status.pro) {
+        plansBox.innerHTML = '<div class="tariff"><div class="tariff-title">✅ PRO faol</div><div class="tariff-price">Sizda PRO mavjud</div></div>';
         return;
     }
-
-
-    const price =
-        data.price || 0;
-
-
-    const duration =
-        data.duration_days || 30;
-
-
-    priceElement.textContent =
-        Number(price).toLocaleString(
-            "uz-UZ"
-        ) +
-        " so‘m";
-
-
-    durationElement.textContent =
-        duration +
-        " kun";
-}
-
-
-function closeProModal() {
-
-    document.getElementById(
-        "proModal"
-    ).classList.remove("show");
-}
-
-
-/* =====================================
-   PRO SOTIB OLISH
-===================================== */
-
-async function buyPro() {
-
-    const button = document.querySelector(
-        ".tariff-button"
-    );
-
-    button.disabled = true;
-    button.textContent = "Yuborilmoqda...";
 
     try {
-
-        const response = await fetch(
-            API_BASE + "/api/pro-purchase",
-            {
-                method: "POST",
-
-                headers: {
-                    "X-Telegram-Init-Data": tg.initData
-                }
-            }
-        );
-
+        const response = await fetch(API_BASE + "/api/pro-plans", {
+            headers: { "X-Telegram-Init-Data": tg.initData }
+        });
         const data = await response.json();
+        if (!data.success || !data.plans || !data.plans.length) {
+            plansBox.innerHTML = '<div class="tariff">❌ Faol tarif topilmadi.</div>';
+            return;
+        }
+        plansBox.innerHTML = "";
+        data.plans.forEach(function(plan) {
+            const card = document.createElement("div");
+            card.className = "tariff";
+            card.innerHTML =
+                '<div class="tariff-title">⭐ PRO ' + plan.duration_days + ' kun</div>' +
+                '<div class="tariff-price">' + Number(plan.price).toLocaleString("uz-UZ") + ' so‘m</div>' +
+                '<button class="tariff-button">⭐ Sotib olish</button>';
+            card.querySelector("button").addEventListener("click", function() {
+                buyPro(plan.id, plan.duration_days, plan.price);
+            });
+            plansBox.appendChild(card);
+        });
+    } catch (error) {
+        console.error("PRO plans error:", error);
+        plansBox.innerHTML = '<div class="tariff">❌ Server bilan bog‘lanib bo‘lmadi.</div>';
+    }
+}
 
-        button.disabled = false;
-        button.textContent = "⭐ PRO sotib olish";
+function closeProModal() {
+    document.getElementById("proModal").classList.remove("show");
+}
 
+async function buyPro(planId, durationDays, amount) {
+    try {
+        const response = await fetch(API_BASE + "/api/pro-purchase", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Telegram-Init-Data": tg.initData
+            },
+            body: JSON.stringify({ plan_id: planId })
+        });
+        const data = await response.json();
         if (!data.success) {
-
-            showMessage(
-                "❌ Xatolik\n\n" +
-                (data.message || "So'rov yuborilmadi.")
-            );
-
+            showMessage("❌ Xatolik\n\n" + (data.message || "To‘lov yaratilmadi."));
             return;
         }
 
         closeProModal();
-
-        showMessage(
-            "✅ PRO so‘rovi yuborildi!\n\n" +
-
-            "🆔 To‘lov ID: " +
-            data.payment_id +
-
-            "\n💰 Summa: " +
-            Number(data.amount).toLocaleString("uz-UZ") +
-            " so‘m" +
-
-            "\n⭐ Muddat: " +
-            data.duration_days +
-            " kun" +
-
-            "\n\n⏳ Admin tasdiqlashini kuting."
-        );
-
+        const card = data.card || {};
+        const cardNumber = card.card_number || "Karta ma’lumoti hali kiritilmagan";
+        const holder = card.card_holder ? "\n👤 Karta egasi: " + card.card_holder : "";
+        const bank = card.bank_name ? "\n🏦 Bank: " + card.bank_name : "";
+        document.getElementById("paymentInfo").innerHTML =
+            '<div>💰 <b>Summa:</b> ' + Number(data.amount).toLocaleString("uz-UZ") + ' so‘m</div>' +
+            '<div>⭐ <b>Muddat:</b> ' + data.duration_days + ' kun</div>' +
+            '<div class="payment-card-box">' +
+            '<div>💳 <b>Karta raqami:</b></div>' +
+            '<div class="payment-card-number">' + cardNumber + '</div>' +
+            '<div>' + holder.replace(/\n/g,"<br>") + bank.replace(/\n/g,"<br>") + '</div>' +
+            '</div>' +
+            '<div>1. Yuqoridagi kartaga to‘lov qiling.<br>2. Keyin <b>“To‘lov qildim”</b> tugmasini bosing.<br>3. Bot sizdan chekni yuborishingizni so‘raydi.</div>';
+        window.currentPaymentId = data.payment_id;
+        document.getElementById("paymentModal").classList.add("show");
     } catch (error) {
-
-        console.error(
-            "PRO purchase error:",
-            error
-        );
-
-        button.disabled = false;
-        button.textContent = "⭐ PRO sotib olish";
-
-        showMessage(
-            "❌ Server bilan bog‘lanib bo‘lmadi.\n\n" +
-            "Internet yoki serverni tekshiring."
-        );
+        console.error("PRO purchase error:", error);
+        showMessage("❌ Server bilan bog‘lanib bo‘lmadi.");
     }
 }
 
+function closePaymentModal() {
+    document.getElementById("paymentModal").classList.remove("show");
+}
+
+async function paidProPayment() {
+    const button = document.getElementById("paidButton");
+    if (!window.currentPaymentId) return;
+    button.disabled = true;
+    button.textContent = "Yuborilmoqda...";
+    try {
+        const response = await fetch(API_BASE + "/api/pro-payment-paid", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Telegram-Init-Data": tg.initData
+            },
+            body: JSON.stringify({ payment_id: window.currentPaymentId })
+        });
+        const data = await response.json();
+        if (!data.success) {
+            showMessage("❌ " + (data.message || "So‘rov yuborilmadi."));
+            button.disabled = false;
+            button.textContent = "✅ To‘lov qildim";
+            return;
+        }
+        closePaymentModal();
+        tg.close();
+    } catch (error) {
+        console.error("Payment paid error:", error);
+        showMessage("❌ Server bilan bog‘lanib bo‘lmadi.");
+        button.disabled = false;
+        button.textContent = "✅ To‘lov qildim";
+    }
+}
 
 /* =====================================
    TEST YARATISH
@@ -1944,6 +1898,7 @@ async function continueCreate() {
 
 window.currentTestDraft = null;
 window.answerKey = {};
+window.currentPaymentId = null;
 
 function openAnswerKey() {
     const draft = window.currentTestDraft;
@@ -1979,6 +1934,7 @@ function openAnswerKey() {
                 button.type = "button";
                 button.className = "answer-option";
                 button.setAttribute("aria-label", i + "-savol " + letter);
+                button.textContent = letter;
                 button.dataset.question = i;
                 button.dataset.answer = letter;
 
@@ -2010,18 +1966,6 @@ function openAnswerKey() {
         grid.appendChild(row);
     }
 
-    // A/B/C/D ustun nomlari
-    const labelOptions = document.createElement("div");
-    labelOptions.className = "answer-label-options";
-    const maxOptions = count >= 33 ? 6 : 4;
-    for (let j = 0; j < maxOptions; j++) {
-        const span = document.createElement("span");
-        span.textContent = String.fromCharCode(65 + j);
-        labelOptions.appendChild(span);
-    }
-    labels.appendChild(document.createElement("div"));
-    labels.appendChild(labelOptions);
-
     document.getElementById("answerKeyModal").classList.add("show");
 }
 
@@ -2047,7 +1991,6 @@ function saveAnswerKey() {
         return;
     }
 
-    // Hozircha HTML bosqichi. Keyingi bosqichda shu ma'lumot /api/create-test ga yuboriladi.
     closeAnswerKey();
     showMessage(
         "✅ Javoblar kaliti tayyor!\n\n" +
@@ -2055,7 +1998,7 @@ function saveAnswerKey() {
         "📢 Kanal: " + draft.channel + "\n" +
         "⏱ Davomiyligi: " + draft.duration + " daqiqa\n" +
         "📝 Savollar: " + draft.questionCount + " ta\n\n" +
-        "Keyingi bosqichda bu javoblar serverga saqlanadi."
+        "Javoblar kaliti saqlandi."
     );
 }
 
