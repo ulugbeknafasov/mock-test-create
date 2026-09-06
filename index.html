@@ -14,597 +14,381 @@
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-
     <style>
 
         * {
             box-sizing: border-box;
         }
 
-
         body {
-
             margin: 0;
-
             padding: 20px;
-
             padding-bottom: 90px;
-
             font-family: Arial, sans-serif;
-
             background: #f5f7fb;
-
             color: #222;
         }
 
-
         .container {
-
             max-width: 500px;
-
             margin: auto;
         }
 
-
         .welcome {
-
             margin: 10px 5px 25px;
         }
 
-
         .welcome h1 {
-
             margin: 0 0 8px;
-
             font-size: 24px;
         }
 
-
         .welcome p {
-
             margin: 0;
-
             color: #777;
         }
 
-
         .card {
-
             background: white;
-
             padding: 20px;
-
             border-radius: 18px;
-
-            box-shadow:
-                0 3px 15px
-                rgba(0, 0, 0, 0.07);
+            box-shadow: 0 3px 15px rgba(0,0,0,.07);
         }
 
-
         .card h2 {
-
             margin: 0 0 20px;
-
             font-size: 20px;
         }
 
-
         .field {
-
             margin-bottom: 17px;
         }
 
-
         .field label {
-
             display: block;
-
             margin-bottom: 8px;
-
             font-size: 14px;
-
             font-weight: bold;
         }
-
 
         .field input,
         .field select {
-
             width: 100%;
-
             height: 50px;
-
             padding: 0 14px;
-
             border: 1px solid #ddd;
-
             border-radius: 12px;
-
             outline: none;
-
             font-size: 16px;
-
             background: white;
         }
 
-
         .field input:focus,
         .field select:focus {
-
             border-color: #2481cc;
         }
 
+        button {
+            font-family: inherit;
+        }
 
         .create-button {
-
             width: 100%;
-
             height: 55px;
-
             border: 0;
-
             border-radius: 14px;
-
             background: #2481cc;
-
             color: white;
-
             font-size: 16px;
-
             font-weight: bold;
-
             cursor: pointer;
         }
 
-
         .create-button:disabled {
-
-            opacity: 0.6;
-
+            opacity: .6;
             cursor: not-allowed;
         }
-
 
         /* =========================
            BOTTOM NAV
         ========================= */
 
         .bottom-nav {
-
             position: fixed;
-
             left: 0;
-
             right: 0;
-
             bottom: 0;
-
             height: 70px;
-
             background: white;
-
             border-top: 1px solid #e5e5e5;
-
             display: flex;
-
             justify-content: center;
-
             gap: 60px;
-
             align-items: center;
-
             z-index: 20;
         }
 
-
         .nav-button {
-
             border: 0;
-
             background: none;
-
             font-size: 14px;
-
             color: #555;
-
             cursor: pointer;
         }
 
-
         .nav-icon {
-
             display: block;
-
             font-size: 22px;
-
             margin-bottom: 3px;
         }
 
-
         .active {
-
             color: #2481cc;
-
             font-weight: bold;
         }
-
 
         /* =========================
            MODAL
         ========================= */
 
         .modal {
-
             display: none;
-
             position: fixed;
-
             inset: 0;
-
-            background:
-                rgba(0, 0, 0, 0.55);
-
+            background: rgba(0,0,0,.55);
             z-index: 100;
-
             padding: 20px;
-
             align-items: flex-end;
-
             justify-content: center;
         }
 
-
         .modal.show {
-
             display: flex;
         }
 
-
         .modal-box {
-
             width: 100%;
-
             max-width: 500px;
-
             background: white;
-
             border-radius: 24px;
-
             padding: 24px;
-
             max-height: 90vh;
-
             overflow-y: auto;
-
-            animation:
-                modalOpen 0.2s ease;
+            animation: modalOpen .2s ease;
         }
 
-
         @keyframes modalOpen {
-
             from {
-
-                transform:
-                    translateY(30px);
-
+                transform: translateY(30px);
                 opacity: 0;
             }
 
             to {
-
-                transform:
-                    translateY(0);
-
+                transform: translateY(0);
                 opacity: 1;
             }
         }
 
-
         .modal-header {
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
             margin-bottom: 20px;
         }
 
-
         .modal-header h2 {
-
             margin: 0;
-
             font-size: 23px;
         }
 
-
         .close-button {
-
             width: 38px;
-
             height: 38px;
-
             border: 0;
-
             border-radius: 50%;
-
             background: #f1f1f1;
-
             font-size: 22px;
-
             cursor: pointer;
         }
-
 
         /* =========================
            PROFILE
         ========================= */
 
         .profile-top {
-
             text-align: center;
-
             margin-bottom: 22px;
         }
 
-
         .profile-avatar {
-
             width: 80px;
-
             height: 80px;
-
             margin: auto;
-
             border-radius: 50%;
-
             background: #2481cc;
-
             color: white;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             font-size: 35px;
-
             font-weight: bold;
         }
-
 
         .profile-name {
-
             margin-top: 12px;
-
             font-size: 20px;
-
             font-weight: bold;
         }
 
-
         .profile-username {
-
             margin-top: 5px;
-
             color: #777;
-
             font-size: 14px;
         }
 
-
         .info-card {
-
             background: #f6f8fb;
-
             border-radius: 16px;
-
             padding: 16px;
-
             margin-bottom: 12px;
         }
 
-
         .info-title {
-
             color: #777;
-
             font-size: 13px;
-
             margin-bottom: 6px;
         }
 
-
         .info-value {
-
             font-size: 17px;
-
             font-weight: bold;
         }
 
-
         .pro-card {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #6c63ff,
-                    #a855f7
-                );
-
+            background: linear-gradient(
+                135deg,
+                #6c63ff,
+                #a855f7
+            );
             color: white;
-
             border-radius: 18px;
-
             padding: 20px;
-
             margin-top: 15px;
-
             margin-bottom: 15px;
         }
 
-
         .pro-title {
-
             font-size: 21px;
-
             font-weight: bold;
-
             margin-bottom: 8px;
         }
-
 
         .pro-status {
-
             font-size: 16px;
-
             margin-bottom: 8px;
         }
 
-
         .pro-time {
-
             font-size: 18px;
-
             font-weight: bold;
-
             margin-top: 12px;
         }
 
-
         .pro-button {
-
             width: 100%;
-
             height: 52px;
-
             border: 0;
-
             border-radius: 14px;
-
             background: white;
-
             color: #6c4de8;
-
             font-size: 16px;
-
             font-weight: bold;
-
             cursor: pointer;
         }
 
-
         /* =========================
-           PRO PURCHASE
+           PRO
         ========================= */
 
         .pro-intro {
-
             text-align: center;
-
             color: #666;
-
             margin-bottom: 20px;
+            line-height: 1.4;
         }
 
-
         .tariff {
-
             border: 1px solid #ddd;
-
             border-radius: 17px;
-
             padding: 17px;
-
             margin-bottom: 12px;
-
             background: #fff;
         }
 
-
         .tariff-title {
-
             font-size: 18px;
-
             font-weight: bold;
-
             margin-bottom: 5px;
         }
 
-
         .tariff-price {
-
             font-size: 22px;
-
             font-weight: bold;
-
             margin: 8px 0 12px;
-
             color: #2481cc;
         }
 
-
         .tariff-button {
-
             width: 100%;
-
             height: 46px;
-
             border: 0;
-
             border-radius: 12px;
-
             background: #2481cc;
-
             color: white;
-
             font-size: 15px;
-
             font-weight: bold;
-
             cursor: pointer;
         }
 
-
         .cancel-button {
-
             width: 100%;
-
             height: 48px;
-
             border: 0;
-
             border-radius: 12px;
-
             background: #f0f0f0;
-
             color: #444;
-
             font-size: 15px;
-
             cursor: pointer;
-
             margin-top: 5px;
         }
 
+        .payment-note {
+            background: #fff8e1;
+            border-radius: 14px;
+            padding: 15px;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+
+        .copy-button {
+            width: 100%;
+            height: 45px;
+            margin-top: 8px;
+            border: 0;
+            border-radius: 12px;
+            background: #eee;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
         /* =========================
-           MESSAGE MODAL
+           MESSAGE
         ========================= */
 
         .message-text {
-
             text-align: center;
-
             line-height: 1.5;
-
             white-space: pre-line;
-
             margin: 15px 0 20px;
         }
 
@@ -615,13 +399,9 @@
 
 <body>
 
-
 <div class="container">
 
-
-    <!-- =========================
-         HOME
-    ========================= -->
+    <!-- HOME -->
 
     <div class="welcome">
 
@@ -763,9 +543,7 @@
             class="create-button"
             onclick="continueCreate()"
         >
-
             Davom etish ➜
-
         </button>
 
     </div>
@@ -773,9 +551,7 @@
 </div>
 
 
-<!-- =========================
-     BOTTOM NAV
-========================= -->
+<!-- BOTTOM NAV -->
 
 <div class="bottom-nav">
 
@@ -811,9 +587,7 @@
 </div>
 
 
-<!-- =========================
-     PROFILE MODAL
-========================= -->
+<!-- PROFILE MODAL -->
 
 <div
     id="profileModal"
@@ -888,14 +662,12 @@
                 ⭐ PRO
             </div>
 
-
             <div
                 id="profileProStatus"
                 class="pro-status"
             >
                 Tekshirilmoqda...
             </div>
-
 
             <div
                 id="profileProTime"
@@ -911,9 +683,7 @@
             class="pro-button"
             onclick="openProModal()"
         >
-
             ⭐ PRO sotib olish
-
         </button>
 
     </div>
@@ -921,9 +691,7 @@
 </div>
 
 
-<!-- =========================
-     PRO MODAL
-========================= -->
+<!-- PRO MODAL -->
 
 <div
     id="proModal"
@@ -950,48 +718,17 @@
 
         <div class="pro-intro">
 
-            Test yaratish va PRO imkoniyatlaridan foydalaning.
+            Test yaratish va PRO
+            imkoniyatlaridan foydalaning.
 
         </div>
 
 
-        <!--
-            Hozirgi serverda narx va muddat
-            admin tomonidan boshqariladi.
+        <div id="proPlans">
 
-            Keyingi bosqichda 1/3/6/12 oylik
-            tariflarni alohida serverdan oladigan qilamiz.
-        -->
-
-
-        <div class="tariff">
-
-            <div class="tariff-title">
-                ⭐ PRO
+            <div class="tariff">
+                ⏳ Tariflar yuklanmoqda...
             </div>
-
-            <div
-                id="proTariffPrice"
-                class="tariff-price"
-            >
-                Yuklanmoqda...
-            </div>
-
-            <div
-                id="proTariffDuration"
-                style="color:#777; margin-bottom:12px;"
-            >
-                —
-            </div>
-
-            <button
-                class="tariff-button"
-                onclick="buyPro()"
-            >
-
-                ⭐ PRO sotib olish
-
-            </button>
 
         </div>
 
@@ -1000,9 +737,7 @@
             class="cancel-button"
             onclick="closeProModal()"
         >
-
             Keyinroq
-
         </button>
 
     </div>
@@ -1010,9 +745,39 @@
 </div>
 
 
-<!-- =========================
-     MESSAGE MODAL
-========================= -->
+<!-- PAYMENT MODAL -->
+
+<div
+    id="paymentModal"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                💳 To‘lov
+            </h2>
+
+            <button
+                class="close-button"
+                onclick="closePaymentModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div id="paymentContent"></div>
+
+    </div>
+
+</div>
+
+
+<!-- MESSAGE MODAL -->
 
 <div
     id="messageModal"
@@ -1040,17 +805,14 @@
         <div
             id="messageText"
             class="message-text"
-        >
-        </div>
+        ></div>
 
 
         <button
             class="create-button"
             onclick="closeMessage()"
         >
-
             Tushunarli
-
         </button>
 
     </div>
@@ -1060,7 +822,6 @@
 
 <script>
 
-
 /* =====================================
    TELEGRAM
 ===================================== */
@@ -1068,14 +829,12 @@
 const tg =
     window.Telegram.WebApp;
 
-
 tg.ready();
-
 tg.expand();
 
 
 /* =====================================
-   SERVER MANZILI
+   SERVER
 ===================================== */
 
 const API_BASE =
@@ -1095,13 +854,12 @@ if (user) {
     let name =
         user.first_name || "";
 
-
     if (user.last_name) {
 
         name +=
             " " + user.last_name;
-    }
 
+    }
 
     document.getElementById(
         "welcomeText"
@@ -1131,7 +889,9 @@ if (user) {
             : "Username mavjud emas";
 
 
-    const firstLetter =
+    document.getElementById(
+        "profileAvatar"
+    ).textContent =
         (
             user.first_name ||
             "U"
@@ -1139,11 +899,6 @@ if (user) {
         .charAt(0)
         .toUpperCase();
 
-
-    document.getElementById(
-        "profileAvatar"
-    ).textContent =
-        firstLetter;
 }
 
 
@@ -1151,8 +906,7 @@ if (user) {
    PRO STATUS
 ===================================== */
 
-let currentProData =
-    null;
+let currentProData = null;
 
 
 async function checkProStatus() {
@@ -1184,6 +938,7 @@ async function checkProStatus() {
 
         return data;
 
+
     } catch (error) {
 
         console.error(
@@ -1198,8 +953,11 @@ async function checkProStatus() {
 
             message:
                 "Server bilan bog‘lanib bo‘lmadi."
+
         };
+
     }
+
 }
 
 
@@ -1209,22 +967,23 @@ async function checkProStatus() {
 
 async function goProfile() {
 
-    document.getElementById(
-        "profileButton"
-    ).classList.add("active");
+    document
+        .getElementById("profileButton")
+        .classList.add("active");
 
 
-    document.getElementById(
-        "homeButton"
-    ).classList.remove("active");
+    document
+        .getElementById("homeButton")
+        .classList.remove("active");
 
 
-    document.getElementById(
-        "profileModal"
-    ).classList.add("show");
+    document
+        .getElementById("profileModal")
+        .classList.add("show");
 
 
     await updateProfile();
+
 }
 
 
@@ -1259,11 +1018,12 @@ async function updateProfile() {
         statusElement.textContent =
             "❌ Aniqlanmadi";
 
-
         timeElement.textContent =
-            data.message || "Server xatosi";
+            data.message ||
+            "Server xatosi";
 
         return;
+
     }
 
 
@@ -1274,11 +1034,11 @@ async function updateProfile() {
         statusElement.textContent =
             "👑 Admin PRO";
 
-
         timeElement.textContent =
             "Cheksiz";
 
         return;
+
     }
 
 
@@ -1289,26 +1049,27 @@ async function updateProfile() {
         statusElement.textContent =
             "✅ PRO faol";
 
-
         if (data.pro_until) {
 
             updateRemainingTime(
                 data.pro_until
             );
 
-            return;
         }
+
+        return;
+
     }
 
 
-    /* PRO YO‘Q */
+    /* PRO YO'Q */
 
     statusElement.textContent =
         "❌ PRO mavjud emas";
 
-
     timeElement.textContent =
-        "PRO sotib oling";
+        "⭐ PRO sotib oling";
+
 }
 
 
@@ -1326,13 +1087,18 @@ function updateRemainingTime(
         new Date(proUntil);
 
 
+    clearInterval(
+        window.proTimer
+    );
+
+
     function update() {
 
         const now =
             new Date();
 
 
-        let difference =
+        const difference =
             end.getTime() -
             now.getTime();
 
@@ -1349,7 +1115,12 @@ function updateRemainingTime(
                 "❌ PRO mavjud emas";
 
 
+            clearInterval(
+                window.proTimer
+            );
+
             return;
+
         }
 
 
@@ -1361,16 +1132,14 @@ function updateRemainingTime(
 
         const days =
             Math.floor(
-                totalSeconds /
-                86400
+                totalSeconds / 86400
             );
 
 
         const hours =
             Math.floor(
                 (
-                    totalSeconds %
-                    86400
+                    totalSeconds % 86400
                 ) / 3600
             );
 
@@ -1378,8 +1147,7 @@ function updateRemainingTime(
         const minutes =
             Math.floor(
                 (
-                    totalSeconds %
-                    3600
+                    totalSeconds % 3600
                 ) / 60
             );
 
@@ -1392,19 +1160,11 @@ function updateRemainingTime(
             " soat " +
             minutes +
             " daqiqa qoldi";
+
     }
 
 
     update();
-
-
-    /*
-        Har daqiqada yangilanadi.
-    */
-
-    clearInterval(
-        window.proTimer
-    );
 
 
     window.proTimer =
@@ -1412,125 +1172,215 @@ function updateRemainingTime(
             update,
             60000
         );
+
 }
 
 
 function closeProfile() {
 
-    document.getElementById(
-        "profileModal"
-    ).classList.remove("show");
+    document
+        .getElementById("profileModal")
+        .classList.remove("show");
 
 
-    document.getElementById(
-        "profileButton"
-    ).classList.remove("active");
+    document
+        .getElementById("profileButton")
+        .classList.remove("active");
 
 
-    document.getElementById(
-        "homeButton"
-    ).classList.add("active");
+    document
+        .getElementById("homeButton")
+        .classList.add("active");
+
 }
 
 
 /* =====================================
-   PRO MODAL
+   PRO TARIFLARI
 ===================================== */
 
 async function openProModal() {
 
-    document.getElementById(
-        "proModal"
-    ).classList.add("show");
+    document
+        .getElementById("proModal")
+        .classList.add("show");
 
 
-    const priceElement =
+    const plansElement =
         document.getElementById(
-            "proTariffPrice"
+            "proPlans"
         );
 
 
-    const durationElement =
-        document.getElementById(
-            "proTariffDuration"
+    plansElement.innerHTML = `
+
+        <div class="tariff">
+
+            ⏳ Tariflar yuklanmoqda...
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE +
+                "/api/pro-plans",
+                {
+                    method: "GET"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            plansElement.innerHTML = `
+
+                <div class="tariff">
+
+                    ❌ ${
+                        data.message ||
+                        "Tariflarni yuklab bo‘lmadi."
+                    }
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        if (
+            !data.plans ||
+            data.plans.length === 0
+        ) {
+
+            plansElement.innerHTML = `
+
+                <div class="tariff">
+
+                    ❌ Hozircha PRO tariflari mavjud emas.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        plansElement.innerHTML = "";
+
+
+        data.plans.forEach(
+            function(plan) {
+
+                const tariff =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                tariff.className =
+                    "tariff";
+
+
+                const price =
+                    Number(
+                        plan.price || 0
+                    )
+                    .toLocaleString(
+                        "uz-UZ"
+                    );
+
+
+                tariff.innerHTML = `
+
+                    <div class="tariff-title">
+
+                        ⭐ PRO —
+                        ${plan.duration_days} kun
+
+                    </div>
+
+
+                    <div class="tariff-price">
+
+                        ${price} so‘m
+
+                    </div>
+
+
+                    <div style="
+                        color:#777;
+                        margin-bottom:12px;
+                    ">
+
+                        ${plan.duration_days}
+                        kun PRO
+
+                    </div>
+
+
+                    <button
+                        class="tariff-button"
+                        onclick="buyPro(${plan.id})"
+                    >
+
+                        ⭐ PRO sotib olish
+
+                    </button>
+
+                `;
+
+
+                plansElement.appendChild(
+                    tariff
+                );
+
+            }
         );
 
 
-    priceElement.textContent =
-        "Yuklanmoqda...";
+    } catch (error) {
+
+        console.error(
+            "PRO tarif xatosi:",
+            error
+        );
 
 
-    durationElement.textContent =
-        "—";
+        plansElement.innerHTML = `
 
+            <div class="tariff">
 
-    const data =
-        await checkProStatus();
+                ❌ Server bilan bog‘lanib bo‘lmadi.
 
+            </div>
 
-    if (!data.success) {
+        `;
 
-        priceElement.textContent =
-            "Server bilan bog‘lanib bo‘lmadi.";
-
-        return;
     }
 
-
-    if (data.admin) {
-
-        priceElement.textContent =
-            "Admin";
-
-
-        durationElement.textContent =
-            "Cheksiz PRO";
-
-        return;
-    }
-
-
-    if (data.pro) {
-
-        priceElement.textContent =
-            "PRO faol";
-
-
-        durationElement.textContent =
-            data.pro_until
-                ? "Amal qilish muddati mavjud"
-                : "—";
-
-        return;
-    }
-
-
-    const price =
-        data.price || 0;
-
-
-    const duration =
-        data.duration_days || 30;
-
-
-    priceElement.textContent =
-        Number(price).toLocaleString(
-            "uz-UZ"
-        ) +
-        " so‘m";
-
-
-    durationElement.textContent =
-        duration +
-        " kun";
 }
 
 
 function closeProModal() {
 
-    document.getElementById(
-        "proModal"
-    ).classList.remove("show");
+    document
+        .getElementById("proModal")
+        .classList.remove("show");
+
 }
 
 
@@ -1538,61 +1388,286 @@ function closeProModal() {
    PRO SOTIB OLISH
 ===================================== */
 
-async function buyPro() {
+async function buyPro(planId) {
 
-    const button = document.querySelector(
-        ".tariff-button"
-    );
+    const plansElement =
+        document.getElementById(
+            "proPlans"
+        );
 
-    button.disabled = true;
-    button.textContent = "Yuborilmoqda...";
+
+    plansElement.innerHTML = `
+
+        <div class="tariff">
+
+            ⏳ To‘lov ma’lumotlari
+            tayyorlanmoqda...
+
+        </div>
+
+    `;
+
 
     try {
 
-        const response = await fetch(
-            API_BASE + "/api/pro-purchase",
-            {
-                method: "POST",
+        const response =
+            await fetch(
+                API_BASE +
+                "/api/pro-purchase",
+                {
 
-                headers: {
-                    "X-Telegram-Init-Data": tg.initData
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "X-Telegram-Init-Data":
+                            tg.initData
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            plan_id: planId
+                        })
+
                 }
-            }
-        );
+            );
 
-        const data = await response.json();
 
-        button.disabled = false;
-        button.textContent = "⭐ PRO sotib olish";
+        const data =
+            await response.json();
+
 
         if (!data.success) {
 
+            closeProModal();
+
+
             showMessage(
-                "❌ Xatolik\n\n" +
-                (data.message || "So'rov yuborilmadi.")
+                "❌ " +
+                (
+                    data.message ||
+                    "To‘lovni boshlashda xatolik."
+                )
             );
 
+
             return;
+
         }
+
+
+        const payment =
+            data.payment;
+
+
+        const card =
+            payment.card;
+
 
         closeProModal();
 
-        showMessage(
-            "✅ PRO so‘rovi yuborildi!\n\n" +
 
-            "🆔 To‘lov ID: " +
-            data.payment_id +
+        const amount =
+            Number(
+                payment.amount || 0
+            );
 
-            "\n💰 Summa: " +
-            Number(data.amount).toLocaleString("uz-UZ") +
-            " so‘m" +
 
-            "\n⭐ Muddat: " +
-            data.duration_days +
-            " kun" +
+        const cardNumber =
+            card.card_number ||
+            "Karta sozlanmagan";
 
-            "\n\n⏳ Admin tasdiqlashini kuting."
-        );
+
+        const cardHolder =
+            card.card_holder ||
+            "—";
+
+
+        const bankName =
+            card.bank_name ||
+            "—";
+
+
+        document.getElementById(
+            "paymentContent"
+        ).innerHTML = `
+
+            <div class="info-card">
+
+                <div class="info-title">
+                    🆔 To‘lov ID
+                </div>
+
+                <div class="info-value">
+
+                    #${payment.id}
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-title">
+                    ⭐ Tarif
+                </div>
+
+                <div class="info-value">
+
+                    ${payment.duration_days}
+                    kun
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-title">
+                    💰 To‘lov summasi
+                </div>
+
+                <div class="info-value">
+
+                    ${amount.toLocaleString("uz-UZ")}
+                    so‘m
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-title">
+                    💳 Karta raqami
+                </div>
+
+                <div
+                    class="info-value"
+                    style="
+                        word-break:break-all;
+                        font-size:18px;
+                    "
+                >
+
+                    ${cardNumber}
+
+                </div>
+
+
+                <button
+                    class="copy-button"
+                    onclick="copyCard('${cardNumber}')"
+                >
+
+                    📋 Karta raqamini nusxalash
+
+                </button>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-title">
+                    👤 Karta egasi
+                </div>
+
+                <div class="info-value">
+
+                    ${cardHolder}
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-title">
+                    🏦 Bank
+                </div>
+
+                <div class="info-value">
+
+                    ${bankName}
+
+                </div>
+
+            </div>
+
+
+            <div class="payment-note">
+
+                <b>📌 To‘lov tartibi</b>
+
+                <br><br>
+
+                1️⃣ Yuqoridagi kartaga
+                <b>
+                    ${amount.toLocaleString("uz-UZ")}
+                    so‘m
+                </b>
+                o‘tkazing.
+
+                <br><br>
+
+                2️⃣ To‘lov chekini
+                <b>botga yuboring.</b>
+
+                <br><br>
+
+                3️⃣ Admin chekni tekshiradi.
+
+                <br><br>
+
+                4️⃣ Tasdiqlangandan so‘ng
+                PRO avtomatik faollashadi.
+
+                <br><br>
+
+                🆔 To‘lov ID:
+                <b>#${payment.id}</b>
+
+            </div>
+
+
+            <button
+                class="create-button"
+                style="margin-top:15px;"
+                onclick="returnToBot()"
+            >
+
+                📤 Botga qaytish
+
+            </button>
+
+
+            <button
+                class="cancel-button"
+                onclick="closePaymentModal()"
+            >
+
+                Keyinroq
+
+            </button>
+
+        `;
+
+
+        document
+            .getElementById(
+                "paymentModal"
+            )
+            .classList.add("show");
+
 
     } catch (error) {
 
@@ -1601,14 +1676,92 @@ async function buyPro() {
             error
         );
 
-        button.disabled = false;
-        button.textContent = "⭐ PRO sotib olish";
+
+        closeProModal();
+
 
         showMessage(
             "❌ Server bilan bog‘lanib bo‘lmadi.\n\n" +
             "Internet yoki serverni tekshiring."
         );
+
     }
+
+}
+
+
+/* =====================================
+   KARTA NUSXALASH
+===================================== */
+
+async function copyCard(
+    cardNumber
+) {
+
+    try {
+
+        await navigator.clipboard.writeText(
+            cardNumber
+        );
+
+
+        showMessage(
+            "✅ Karta raqami nusxalandi!"
+        );
+
+
+    } catch (error) {
+
+        showMessage(
+            "📋 Karta raqamini qo‘lda nusxalang."
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   TO‘LOV OYNASINI YOPISH
+===================================== */
+
+function closePaymentModal() {
+
+    document
+        .getElementById(
+            "paymentModal"
+        )
+        .classList.remove("show");
+
+}
+
+
+/* =====================================
+   BOTGA QAYTISH
+===================================== */
+
+function returnToBot() {
+
+    closePaymentModal();
+
+
+    showMessage(
+        "📤 Mini App yopiladi.\n\n" +
+        "Botga kirib, to‘lov chekini " +
+        "rasm yoki fayl ko‘rinishida yuboring.\n\n" +
+        "Admin chekni tekshiradi."
+    );
+
+
+    setTimeout(
+        function() {
+
+            tg.close();
+
+        },
+        1200
+    );
+
 }
 
 
@@ -1657,6 +1810,7 @@ async function continueCreate() {
         );
 
         return;
+
     }
 
 
@@ -1671,6 +1825,7 @@ async function continueCreate() {
         );
 
         return;
+
     }
 
 
@@ -1684,6 +1839,7 @@ async function continueCreate() {
         );
 
         return;
+
     }
 
 
@@ -1696,6 +1852,7 @@ async function continueCreate() {
         );
 
         return;
+
     }
 
 
@@ -1708,14 +1865,11 @@ async function continueCreate() {
         );
 
         return;
+
     }
 
 
-    /* SERVER */
-
-    button.disabled =
-        true;
-
+    button.disabled = true;
 
     button.textContent =
         "Tekshirilmoqda...";
@@ -1725,9 +1879,7 @@ async function continueCreate() {
         await checkProStatus();
 
 
-    button.disabled =
-        false;
-
+    button.disabled = false;
 
     button.textContent =
         "Davom etish ➜";
@@ -1741,6 +1893,7 @@ async function continueCreate() {
         );
 
         return;
+
     }
 
 
@@ -1751,13 +1904,14 @@ async function continueCreate() {
         !proData.admin
     ) {
 
-        openProModal();
+        await openProModal();
 
         return;
+
     }
 
 
-    /* ADMIN yoki PRO */
+    /* PRO BOR */
 
     showMessage(
 
@@ -1779,17 +1933,9 @@ async function continueCreate() {
 
         "\n\n➡️ Keyingi bosqichda " +
         "javoblar kalitini kiritish oynasi ochiladi."
+
     );
 
-
-    /*
-        Keyingi bosqichda shu joyga:
-
-        /api/create-test
-
-        orqali testni serverga saqlash
-        funksiyasini ulaymiz.
-    */
 }
 
 
@@ -1799,27 +1945,33 @@ async function continueCreate() {
 
 function goHome() {
 
-    document.getElementById(
-        "homeButton"
-    ).classList.add("active");
+    document
+        .getElementById(
+            "homeButton"
+        )
+        .classList.add("active");
 
 
-    document.getElementById(
-        "profileButton"
-    ).classList.remove("active");
+    document
+        .getElementById(
+            "profileButton"
+        )
+        .classList.remove("active");
 
 
     closeProfile();
-
     closeProModal();
+    closePaymentModal();
 
 
-    window.scrollTo(
-        {
-            top: 0,
-            behavior: "smooth"
-        }
-    );
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
 }
 
 
@@ -1827,7 +1979,9 @@ function goHome() {
    MESSAGE
 ===================================== */
 
-function showMessage(text) {
+function showMessage(
+    text
+) {
 
     document.getElementById(
         "messageText"
@@ -1838,6 +1992,7 @@ function showMessage(text) {
     document.getElementById(
         "messageModal"
     ).classList.add("show");
+
 }
 
 
@@ -1846,11 +2001,12 @@ function closeMessage() {
     document.getElementById(
         "messageModal"
     ).classList.remove("show");
+
 }
 
 
 /* =====================================
-   MODAL TASHQARISIGA BOSILSA YOPISH
+   MODAL TASHQARISIGA BOSILSA
 ===================================== */
 
 document
@@ -1864,7 +2020,9 @@ document
             ) {
 
                 closeProfile();
+
             }
+
         }
     );
 
@@ -1880,7 +2038,27 @@ document
             ) {
 
                 closeProModal();
+
             }
+
+        }
+    );
+
+
+document
+    .getElementById("paymentModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closePaymentModal();
+
+            }
+
         }
     );
 
@@ -1896,7 +2074,9 @@ document
             ) {
 
                 closeMessage();
+
             }
+
         }
     );
 
