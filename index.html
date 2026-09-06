@@ -1538,18 +1538,77 @@ function closeProModal() {
    PRO SOTIB OLISH
 ===================================== */
 
-function buyPro() {
+async function buyPro() {
 
-    closeProModal();
-
-
-    showMessage(
-        "⭐ PRO sotib olish\n\n" +
-        "To‘lov ma’lumotlari keyingi bosqichda " +
-        "qo‘shiladi.\n\n" +
-        "To‘lov amalga oshirilgach, " +
-        "admin tasdiqlaydi va PRO faollashadi."
+    const button = document.querySelector(
+        ".tariff-button"
     );
+
+    button.disabled = true;
+    button.textContent = "Yuborilmoqda...";
+
+    try {
+
+        const response = await fetch(
+            API_BASE + "/api/pro-purchase",
+            {
+                method: "POST",
+
+                headers: {
+                    "X-Telegram-Init-Data": tg.initData
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        button.disabled = false;
+        button.textContent = "⭐ PRO sotib olish";
+
+        if (!data.success) {
+
+            showMessage(
+                "❌ Xatolik\n\n" +
+                (data.message || "So'rov yuborilmadi.")
+            );
+
+            return;
+        }
+
+        closeProModal();
+
+        showMessage(
+            "✅ PRO so‘rovi yuborildi!\n\n" +
+
+            "🆔 To‘lov ID: " +
+            data.payment_id +
+
+            "\n💰 Summa: " +
+            Number(data.amount).toLocaleString("uz-UZ") +
+            " so‘m" +
+
+            "\n⭐ Muddat: " +
+            data.duration_days +
+            " kun" +
+
+            "\n\n⏳ Admin tasdiqlashini kuting."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "PRO purchase error:",
+            error
+        );
+
+        button.disabled = false;
+        button.textContent = "⭐ PRO sotib olish";
+
+        showMessage(
+            "❌ Server bilan bog‘lanib bo‘lmadi.\n\n" +
+            "Internet yoki serverni tekshiring."
+        );
+    }
 }
 
 
