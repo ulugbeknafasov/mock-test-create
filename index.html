@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="uz">
 
 <head>
@@ -10,9 +10,10 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Milliy Sertifikat Tekshirish</title>
+    <title>Test yaratish</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 
     <style>
 
@@ -20,373 +21,733 @@
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
+
             padding: 20px;
+
             padding-bottom: 90px;
+
             font-family: Arial, sans-serif;
+
             background: #f5f7fb;
-            color: #111;
+
+            color: #222;
         }
 
+
         .container {
-            max-width: 520px;
+
+            max-width: 500px;
+
             margin: auto;
         }
 
+
         .welcome {
-            margin: 15px 5px 25px;
+
+            margin: 10px 5px 25px;
         }
+
 
         .welcome h1 {
+
             margin: 0 0 8px;
-            font-size: 26px;
+
+            font-size: 24px;
         }
+
 
         .welcome p {
+
             margin: 0;
+
             color: #777;
-            font-size: 16px;
         }
+
 
         .card {
+
             background: white;
-            padding: 22px;
-            border-radius: 20px;
-            box-shadow: 0 4px 18px rgba(0,0,0,.07);
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, 0.07);
         }
+
 
         .card h2 {
-            margin: 0 0 22px;
-            font-size: 23px;
+
+            margin: 0 0 20px;
+
+            font-size: 20px;
         }
 
+
         .field {
+
             margin-bottom: 17px;
         }
 
+
         .field label {
+
             display: block;
+
             margin-bottom: 8px;
+
+            font-size: 14px;
+
             font-weight: bold;
-            font-size: 15px;
         }
+
 
         .field input,
         .field select {
+
             width: 100%;
-            height: 52px;
+
+            height: 50px;
+
+            padding: 0 14px;
+
             border: 1px solid #ddd;
-            border-radius: 13px;
-            padding: 0 15px;
-            font-size: 16px;
+
+            border-radius: 12px;
+
             outline: none;
+
+            font-size: 16px;
+
             background: white;
         }
 
+
         .field input:focus,
         .field select:focus {
+
             border-color: #2481cc;
         }
 
-        button {
-            font-family: inherit;
-        }
 
         .create-button {
+
             width: 100%;
-            height: 54px;
+
+            height: 55px;
+
             border: 0;
+
             border-radius: 14px;
+
             background: #2481cc;
+
             color: white;
+
             font-size: 16px;
+
             font-weight: bold;
+
             cursor: pointer;
         }
 
+
         .create-button:disabled {
-            opacity: .6;
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
         }
+
 
         /* =========================
            BOTTOM NAV
         ========================= */
 
         .bottom-nav {
+
             position: fixed;
+
             left: 0;
+
             right: 0;
+
             bottom: 0;
+
             height: 70px;
+
             background: white;
-            border-top: 1px solid #ddd;
+
+            border-top: 1px solid #e5e5e5;
+
             display: flex;
-            align-items: center;
+
             justify-content: center;
-            gap: 80px;
-            z-index: 50;
+
+            gap: 60px;
+
+            align-items: center;
+
+            z-index: 20;
         }
 
+
         .nav-button {
+
             border: 0;
+
             background: none;
-            color: #777;
-            font-size: 13px;
+
+            font-size: 14px;
+
+            color: #555;
+
             cursor: pointer;
         }
 
-        .nav-button.active {
+
+        .nav-icon {
+
+            display: block;
+
+            font-size: 22px;
+
+            margin-bottom: 3px;
+        }
+
+
+        .active {
+
             color: #2481cc;
+
             font-weight: bold;
         }
 
-        .nav-icon {
-            display: block;
-            font-size: 22px;
-            margin-bottom: 3px;
-        }
 
         /* =========================
            MODAL
         ========================= */
 
         .modal {
+
             display: none;
+
             position: fixed;
+
             inset: 0;
-            background: rgba(0,0,0,.58);
+
+            background:
+                rgba(0, 0, 0, 0.55);
+
             z-index: 100;
+
             padding: 20px;
+
             align-items: flex-end;
+
             justify-content: center;
         }
 
+
         .modal.show {
+
             display: flex;
         }
+
 
         .modal-box {
+
             width: 100%;
-            max-width: 520px;
-            max-height: 90vh;
-            overflow-y: auto;
+
+            max-width: 500px;
+
             background: white;
-            border-radius: 25px;
-            padding: 23px;
+
+            border-radius: 24px;
+
+            padding: 24px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            animation:
+                modalOpen 0.2s ease;
         }
+
+
+        @keyframes modalOpen {
+
+            from {
+
+                transform:
+                    translateY(30px);
+
+                opacity: 0;
+            }
+
+            to {
+
+                transform:
+                    translateY(0);
+
+                opacity: 1;
+            }
+        }
+
 
         .modal-header {
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
-            margin-bottom: 18px;
+
+            margin-bottom: 20px;
         }
+
 
         .modal-header h2 {
+
             margin: 0;
-            font-size: 24px;
+
+            font-size: 23px;
         }
 
+
         .close-button {
-            width: 40px;
-            height: 40px;
+
+            width: 38px;
+
+            height: 38px;
+
             border: 0;
+
             border-radius: 50%;
+
             background: #f1f1f1;
+
             font-size: 22px;
+
             cursor: pointer;
         }
+
 
         /* =========================
            PROFILE
         ========================= */
 
         .profile-top {
+
             text-align: center;
-            margin-bottom: 20px;
+
+            margin-bottom: 22px;
         }
+
 
         .profile-avatar {
-            width: 82px;
-            height: 82px;
+
+            width: 80px;
+
+            height: 80px;
+
             margin: auto;
+
             border-radius: 50%;
+
             background: #2481cc;
+
             color: white;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             font-size: 35px;
+
             font-weight: bold;
         }
+
 
         .profile-name {
+
             margin-top: 12px;
-            font-size: 21px;
+
+            font-size: 20px;
+
             font-weight: bold;
         }
 
+
         .profile-username {
+
             margin-top: 5px;
+
             color: #777;
+
+            font-size: 14px;
         }
 
+
         .info-card {
-            background: #f5f7fa;
-            border-radius: 15px;
-            padding: 15px;
+
+            background: #f6f8fb;
+
+            border-radius: 16px;
+
+            padding: 16px;
+
             margin-bottom: 12px;
         }
 
+
         .info-title {
+
             color: #777;
+
             font-size: 13px;
+
             margin-bottom: 6px;
         }
 
+
         .info-value {
+
             font-size: 17px;
+
             font-weight: bold;
         }
 
-        /* =========================
-           PRO CARD
-        ========================= */
 
         .pro-card {
-            background: linear-gradient(
-                135deg,
-                #6d4aff,
-                #a855f7
-            );
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6c63ff,
+                    #a855f7
+                );
+
             color: white;
+
             border-radius: 18px;
-            padding: 19px;
+
+            padding: 20px;
+
             margin-top: 15px;
-            margin-bottom: 14px;
+
+            margin-bottom: 15px;
         }
 
+
         .pro-title {
-            font-size: 22px;
+
+            font-size: 21px;
+
             font-weight: bold;
+
             margin-bottom: 8px;
         }
 
+
         .pro-status {
+
             font-size: 16px;
+
+            margin-bottom: 8px;
         }
+
 
         .pro-time {
-            margin-top: 10px;
+
+            font-size: 18px;
+
             font-weight: bold;
-            font-size: 16px;
+
+            margin-top: 12px;
         }
 
+
         .pro-button {
+
             width: 100%;
+
             height: 52px;
+
             border: 0;
+
             border-radius: 14px;
-            background: #6d4aff;
-            color: white;
+
+            background: white;
+
+            color: #6c4de8;
+
             font-size: 16px;
+
             font-weight: bold;
+
             cursor: pointer;
         }
 
+
         /* =========================
-           PRO PLANS
+           PRO PURCHASE
         ========================= */
 
         .pro-intro {
+
             text-align: center;
+
             color: #666;
-            line-height: 1.45;
-            margin-bottom: 18px;
+
+            margin-bottom: 20px;
         }
+
 
         .tariff {
+
             border: 1px solid #ddd;
-            border-radius: 18px;
+
+            border-radius: 17px;
+
             padding: 17px;
-            margin-bottom: 13px;
-            background: white;
+
+            margin-bottom: 12px;
+
+            background: #fff;
         }
+
 
         .tariff-title {
-            font-size: 19px;
+
+            font-size: 18px;
+
             font-weight: bold;
+
+            margin-bottom: 5px;
         }
+
 
         .tariff-price {
-            color: #2481cc;
-            font-size: 24px;
+
+            font-size: 22px;
+
             font-weight: bold;
-            margin: 8px 0;
+
+            margin: 8px 0 12px;
+
+            color: #2481cc;
         }
 
-        .tariff-duration {
-            color: #777;
-            margin-bottom: 13px;
-        }
 
         .tariff-button {
+
             width: 100%;
-            height: 48px;
+
+            height: 46px;
+
             border: 0;
-            border-radius: 13px;
+
+            border-radius: 12px;
+
             background: #2481cc;
+
             color: white;
+
             font-size: 15px;
+
             font-weight: bold;
+
             cursor: pointer;
         }
 
+
         .cancel-button {
+
             width: 100%;
+
             height: 48px;
+
             border: 0;
-            border-radius: 13px;
-            background: #eee;
+
+            border-radius: 12px;
+
+            background: #f0f0f0;
+
             color: #444;
+
             font-size: 15px;
+
             cursor: pointer;
+
             margin-top: 5px;
         }
 
-        /* =========================
-           PAYMENT
-        ========================= */
-
-        .payment-note {
-            background: #fff8df;
-            border-radius: 15px;
-            padding: 16px;
-            line-height: 1.55;
-            margin-top: 15px;
-        }
-
-        .copy-button {
-            width: 100%;
-            height: 45px;
-            border: 0;
-            border-radius: 12px;
-            background: #e9e9e9;
-            font-weight: bold;
-            margin-top: 8px;
-            cursor: pointer;
-        }
 
         /* =========================
-           MESSAGE
+           MESSAGE MODAL
         ========================= */
 
         .message-text {
+
             text-align: center;
-            white-space: pre-line;
+
             line-height: 1.5;
+
+            white-space: pre-line;
+
             margin: 15px 0 20px;
+        }
+
+
+        /* =========================
+           TEST EDITOR
+        ========================= */
+
+        .editor-info {
+            background: #f6f8fb;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .editor-top {
+            background: linear-gradient(135deg, #6c63ff, #a855f7);
+            color: white;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .editor-top-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .editor-top-text {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #e1e5ea;
+            border-radius: 17px;
+            padding: 16px;
+            margin-bottom: 15px;
+        }
+
+        .question-number {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-type {
+            display: inline-block;
+            font-size: 12px;
+            background: #f0f2f5;
+            padding: 5px 9px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .question-input {
+            width: 100%;
+            min-height: 90px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 15px;
+            resize: vertical;
+            outline: none;
+            box-sizing: border-box;
+            margin-bottom: 12px;
+            font-family: inherit;
+        }
+
+        .question-input:focus,
+        .answer-input:focus {
+            border-color: #6c63ff;
+        }
+
+        .option-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 9px;
+        }
+
+        .option-letter {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .answer-input {
+            flex: 1;
+            min-width: 0;
+            height: 44px;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 11px;
+            font-size: 15px;
+            outline: none;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .correct-label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #555;
+            white-space: nowrap;
+        }
+
+        .correct-radio {
+            width: 18px;
+            height: 18px;
+        }
+
+        .exact-answer-label {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 7px;
+        }
+
+        @media (max-width: 480px) {
+            .option-row {
+                flex-wrap: wrap;
+            }
+
+            .answer-input {
+                width: calc(100% - 42px);
+                flex: 1 1 calc(100% - 42px);
+            }
+
+            .correct-label {
+                margin-left: 42px;
+            }
         }
 
     </style>
@@ -435,6 +796,7 @@
                 type="text"
                 maxlength="10"
                 placeholder="Masalan: ABC123"
+                autocomplete="off"
             >
 
         </div>
@@ -443,13 +805,14 @@
         <div class="field">
 
             <label>
-                📢 Test e'lon qilinadigan kanal
+                📢 Test e’lon qilinadigan kanal
             </label>
 
             <input
                 id="channel"
                 type="text"
                 placeholder="@kanal_nomi"
+                autocomplete="off"
             >
 
         </div>
@@ -542,7 +905,9 @@
             class="create-button"
             onclick="continueCreate()"
         >
+
             Davom etish ➜
+
         </button>
 
     </div>
@@ -624,6 +989,7 @@
                 U
             </div>
 
+
             <div
                 id="profileName"
                 class="profile-name"
@@ -631,11 +997,12 @@
                 Yuklanmoqda...
             </div>
 
+
             <div
                 id="profileUsername"
                 class="profile-username"
             >
-                —
+                @username
             </div>
 
         </div>
@@ -663,12 +1030,14 @@
                 ⭐ PRO
             </div>
 
+
             <div
                 id="profileProStatus"
                 class="pro-status"
             >
                 Tekshirilmoqda...
             </div>
+
 
             <div
                 id="profileProTime"
@@ -684,7 +1053,9 @@
             class="pro-button"
             onclick="openProModal()"
         >
+
             ⭐ PRO sotib olish
+
         </button>
 
     </div>
@@ -696,18 +1067,13 @@
      PRO MODAL
 ========================= -->
 
-<div
-    id="proModal"
-    class="modal"
->
+<div id="proModal" class="modal">
 
     <div class="modal-box">
 
         <div class="modal-header">
 
-            <h2>
-                ⭐ PRO
-            </h2>
+            <h2>⭐ PRO</h2>
 
             <button
                 class="close-button"
@@ -718,27 +1084,60 @@
 
         </div>
 
-
         <div class="pro-intro">
-
-            Test yaratish va PRO
-            imkoniyatlaridan foydalaning.
-
+            Test yaratish uchun PRO imkoniyatlaridan foydalaning.
         </div>
 
-
-        <div id="proPlans">
+        <div id="proPlansContainer">
 
             <div class="tariff">
-                ⏳ Tariflar yuklanmoqda...
+
+                <div class="tariff-title">
+                    ⭐ PRO tariflar
+                </div>
+
+                <div style="color:#777; text-align:center; padding:15px 0;">
+                    Tariflar yuklanmoqda...
+                </div>
+
             </div>
 
         </div>
 
+        <div
+            id="pendingPaymentBox"
+            style="
+                display:none;
+                margin-top:15px;
+                padding:15px;
+                border-radius:14px;
+                background:#fff8e1;
+                border:1px solid #ffe082;
+            "
+        >
+
+            <div style="font-weight:bold; margin-bottom:8px;">
+                ⏳ Kutilayotgan PRO to‘lov
+            </div>
+
+            <div
+                id="pendingPaymentText"
+                style="color:#666; line-height:1.5; margin-bottom:12px;"
+            ></div>
+
+            <button
+                class="cancel-button"
+                onclick="cancelPendingPayment()"
+            >
+                ❌ To‘lovni bekor qilish
+            </button>
+
+        </div>
 
         <button
             class="cancel-button"
             onclick="closeProModal()"
+            style="margin-top:12px;"
         >
             Keyinroq
         </button>
@@ -749,33 +1148,50 @@
 
 
 <!-- =========================
-     PAYMENT MODAL
+     TEST EDITOR MODAL
 ========================= -->
 
-<div
-    id="paymentModal"
-    class="modal"
->
+<div id="testEditorModal" class="modal">
 
     <div class="modal-box">
 
         <div class="modal-header">
 
-            <h2>
-                💳 To'lov
-            </h2>
+            <h2>📝 Savollar</h2>
 
             <button
                 class="close-button"
-                onclick="closePaymentModal()"
+                onclick="closeTestEditor()"
             >
                 ✕
             </button>
 
         </div>
 
+        <div
+            id="testEditorInfo"
+            class="editor-info"
+        >
+            Savollarni kiriting.
+        </div>
 
-        <div id="paymentContent"></div>
+        <div id="questionsContainer"></div>
+
+        <button
+            id="createTestButton"
+            class="create-button"
+            onclick="createTestFromEditor()"
+        >
+            ✅ Testni yaratish
+        </button>
+
+        <button
+            class="cancel-button"
+            onclick="closeTestEditor()"
+            style="margin-top:10px;"
+        >
+            Bekor qilish
+        </button>
 
     </div>
 
@@ -812,14 +1228,17 @@
         <div
             id="messageText"
             class="message-text"
-        ></div>
+        >
+        </div>
 
 
         <button
             class="create-button"
             onclick="closeMessage()"
         >
+
             Tushunarli
+
         </button>
 
     </div>
@@ -831,13 +1250,15 @@
 
 
 /* =====================================
-   TELEGRAM WEB APP
+   TELEGRAM
 ===================================== */
 
 const tg =
     window.Telegram.WebApp;
 
+
 tg.ready();
+
 tg.expand();
 
 
@@ -846,11 +1267,11 @@ tg.expand();
 ===================================== */
 
 const API_BASE =
-    "https://metals-java-archive-commitments.trycloudflare.com";
+    "https://contractors-places-notifications-adopt.trycloudflare.com";
 
 
 /* =====================================
-   TELEGRAM USER
+   USER
 ===================================== */
 
 const user =
@@ -859,15 +1280,14 @@ const user =
 
 if (user) {
 
-    let fullName =
+    let name =
         user.first_name || "";
 
 
     if (user.last_name) {
 
-        fullName +=
+        name +=
             " " + user.last_name;
-
     }
 
 
@@ -875,14 +1295,14 @@ if (user) {
         "welcomeText"
     ).textContent =
         "👋 Assalomu alaykum, " +
-        fullName +
+        name +
         "!";
 
 
     document.getElementById(
         "profileName"
     ).textContent =
-        fullName;
+        name;
 
 
     document.getElementById(
@@ -899,9 +1319,7 @@ if (user) {
             : "Username mavjud emas";
 
 
-    document.getElementById(
-        "profileAvatar"
-    ).textContent =
+    const firstLetter =
         (
             user.first_name ||
             "U"
@@ -909,12 +1327,21 @@ if (user) {
         .charAt(0)
         .toUpperCase();
 
+
+    document.getElementById(
+        "profileAvatar"
+    ).textContent =
+        firstLetter;
 }
 
 
 /* =====================================
    PRO STATUS
 ===================================== */
+
+let currentProData =
+    null;
+
 
 async function checkProStatus() {
 
@@ -939,13 +1366,16 @@ async function checkProStatus() {
             await response.json();
 
 
-        return data;
+        currentProData =
+            data;
 
+
+        return data;
 
     } catch (error) {
 
         console.error(
-            "PRO STATUS ERROR:",
+            "PRO server xatosi:",
             error
         );
 
@@ -955,12 +1385,9 @@ async function checkProStatus() {
             success: false,
 
             message:
-                "Server bilan bog'lanib bo'lmadi."
-
+                "Server bilan bog‘lanib bo‘lmadi."
         };
-
     }
-
 }
 
 
@@ -970,51 +1397,44 @@ async function checkProStatus() {
 
 async function goProfile() {
 
-    document
-        .getElementById(
-            "homeButton"
-        )
-        .classList.remove("active");
+    document.getElementById(
+        "profileButton"
+    ).classList.add("active");
 
 
-    document
-        .getElementById(
-            "profileButton"
-        )
-        .classList.add("active");
+    document.getElementById(
+        "homeButton"
+    ).classList.remove("active");
 
 
-    document
-        .getElementById(
-            "profileModal"
-        )
-        .classList.add("show");
+    document.getElementById(
+        "profileModal"
+    ).classList.add("show");
 
 
     await updateProfile();
-
 }
 
 
 async function updateProfile() {
 
-    const status =
+    const statusElement =
         document.getElementById(
             "profileProStatus"
         );
 
 
-    const time =
+    const timeElement =
         document.getElementById(
             "profileProTime"
         );
 
 
-    status.textContent =
+    statusElement.textContent =
         "Tekshirilmoqda...";
 
 
-    time.textContent =
+    timeElement.textContent =
         "—";
 
 
@@ -1024,17 +1444,14 @@ async function updateProfile() {
 
     if (!data.success) {
 
-        status.textContent =
+        statusElement.textContent =
             "❌ Aniqlanmadi";
 
 
-        time.textContent =
-            data.message ||
-            "Server xatosi";
-
+        timeElement.textContent =
+            data.message || "Server xatosi";
 
         return;
-
     }
 
 
@@ -1042,16 +1459,14 @@ async function updateProfile() {
 
     if (data.admin) {
 
-        status.textContent =
+        statusElement.textContent =
             "👑 Admin PRO";
 
 
-        time.textContent =
+        timeElement.textContent =
             "Cheksiz";
 
-
         return;
-
     }
 
 
@@ -1059,7 +1474,7 @@ async function updateProfile() {
 
     if (data.pro) {
 
-        status.textContent =
+        statusElement.textContent =
             "✅ PRO faol";
 
 
@@ -1069,23 +1484,19 @@ async function updateProfile() {
                 data.pro_until
             );
 
+            return;
         }
-
-
-        return;
-
     }
 
 
-    /* PRO YO'Q */
+    /* PRO YO‘Q */
 
-    status.textContent =
+    statusElement.textContent =
         "❌ PRO mavjud emas";
 
 
-    time.textContent =
-        "⭐ PRO sotib oling";
-
+    timeElement.textContent =
+        "PRO sotib oling";
 }
 
 
@@ -1103,24 +1514,13 @@ function updateRemainingTime(
         new Date(proUntil);
 
 
-    if (
-        window.proTimer
-    ) {
-
-        clearInterval(
-            window.proTimer
-        );
-
-    }
-
-
     function update() {
 
         const now =
             new Date();
 
 
-        const difference =
+        let difference =
             end.getTime() -
             now.getTime();
 
@@ -1137,17 +1537,11 @@ function updateRemainingTime(
                 "❌ PRO mavjud emas";
 
 
-            clearInterval(
-                window.proTimer
-            );
-
-
             return;
-
         }
 
 
-        const seconds =
+        const totalSeconds =
             Math.floor(
                 difference / 1000
             );
@@ -1155,14 +1549,16 @@ function updateRemainingTime(
 
         const days =
             Math.floor(
-                seconds / 86400
+                totalSeconds /
+                86400
             );
 
 
         const hours =
             Math.floor(
                 (
-                    seconds % 86400
+                    totalSeconds %
+                    86400
                 ) / 3600
             );
 
@@ -1170,7 +1566,8 @@ function updateRemainingTime(
         const minutes =
             Math.floor(
                 (
-                    seconds % 3600
+                    totalSeconds %
+                    3600
                 ) / 60
             );
 
@@ -1183,11 +1580,19 @@ function updateRemainingTime(
             " soat " +
             minutes +
             " daqiqa qoldi";
-
     }
 
 
     update();
+
+
+    /*
+        Har daqiqada yangilanadi.
+    */
+
+    clearInterval(
+        window.proTimer
+    );
 
 
     window.proTimer =
@@ -1195,227 +1600,260 @@ function updateRemainingTime(
             update,
             60000
         );
-
 }
 
 
 function closeProfile() {
 
-    document
-        .getElementById(
-            "profileModal"
-        )
-        .classList.remove("show");
+    document.getElementById(
+        "profileModal"
+    ).classList.remove("show");
 
 
-    document
-        .getElementById(
-            "profileButton"
-        )
-        .classList.remove("active");
+    document.getElementById(
+        "profileButton"
+    ).classList.remove("active");
 
 
-    document
-        .getElementById(
-            "homeButton"
-        )
-        .classList.add("active");
-
+    document.getElementById(
+        "homeButton"
+    ).classList.add("active");
 }
 
 
 /* =====================================
-   PRO TARIFLARINI OLISH
+   PRO MODAL
 ===================================== */
 
 async function openProModal() {
 
     document
-        .getElementById(
-            "proModal"
-        )
+        .getElementById("proModal")
         .classList.add("show");
 
-
     const container =
-        document.getElementById(
-            "proPlans"
-        );
-
+        document.getElementById("proPlansContainer");
 
     container.innerHTML = `
-
         <div class="tariff">
-
-            ⏳ Tariflar yuklanmoqda...
-
+            <div class="tariff-title">⭐ PRO tariflar</div>
+            <div style="color:#777; text-align:center; padding:15px 0;">
+                Tariflar yuklanmoqda...
+            </div>
         </div>
-
     `;
 
+    await loadPendingPayment();
+
+    const status = await checkProStatus();
+
+    if (!status.success) {
+        container.innerHTML = `
+            <div class="tariff">
+                ❌ Server bilan bog‘lanib bo‘lmadi.
+            </div>
+        `;
+        return;
+    }
+
+    if (status.admin) {
+        container.innerHTML = `
+            <div class="tariff">
+                <div class="tariff-title">👑 Admin</div>
+                <div class="tariff-price">Cheksiz PRO</div>
+            </div>
+        `;
+        return;
+    }
+
+    if (status.pro) {
+        container.innerHTML = `
+            <div class="tariff">
+                <div class="tariff-title">✅ PRO faol</div>
+                <div style="color:#777; margin-top:8px;">
+                    PRO sizda allaqachon faol.
+                </div>
+            </div>
+        `;
+        return;
+    }
 
     try {
 
-        const response =
-            await fetch(
-                API_BASE +
-                "/api/pro-plans"
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (!data.success) {
-
-            container.innerHTML = `
-
-                <div class="tariff">
-
-                    ❌ ${
-                        data.message ||
-                        "Tariflarni yuklab bo'lmadi."
-                    }
-
-                </div>
-
-            `;
-
-
-            return;
-
-        }
-
-
-        if (
-            !Array.isArray(
-                data.plans
-            ) ||
-            data.plans.length === 0
-        ) {
-
-            container.innerHTML = `
-
-                <div class="tariff">
-
-                    ❌ Hozircha PRO tariflari mavjud emas.
-
-                </div>
-
-            `;
-
-
-            return;
-
-        }
-
-
-        container.innerHTML = "";
-
-
-        data.plans.forEach(
-            function(plan) {
-
-                const tariff =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                tariff.className =
-                    "tariff";
-
-
-                const price =
-                    Number(
-                        plan.price
-                    )
-                    .toLocaleString(
-                        "uz-UZ"
-                    );
-
-
-                tariff.innerHTML = `
-
-                    <div class="tariff-title">
-
-                        ⭐ PRO —
-                        ${plan.duration_days} kun
-
-                    </div>
-
-
-                    <div class="tariff-price">
-
-                        ${price} so'm
-
-                    </div>
-
-
-                    <div class="tariff-duration">
-
-                        ${plan.duration_days}
-                        kun davomida PRO
-
-                    </div>
-
-
-                    <button
-                        class="tariff-button"
-                        onclick="buyPro(${Number(plan.id)})"
-                    >
-
-                        ⭐ PRO sotib olish
-
-                    </button>
-
-                `;
-
-
-                container.appendChild(
-                    tariff
-                );
-
+        const response = await fetch(
+            API_BASE + "/api/pro-plans",
+            {
+                method: "GET",
+                headers: {
+                    "X-Telegram-Init-Data": tg.initData
+                }
             }
         );
 
+        const data = await response.json();
+
+        if (!data.success || !Array.isArray(data.plans)) {
+            throw new Error(
+                data.message || "Tariflar topilmadi."
+            );
+        }
+
+        if (data.plans.length === 0) {
+            container.innerHTML = `
+                <div class="tariff">
+                    Hozircha faol PRO tariflar mavjud emas.
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = "";
+
+        data.plans.forEach(function(plan) {
+
+            const tariff = document.createElement("div");
+            tariff.className = "tariff";
+
+            tariff.innerHTML = `
+                <div class="tariff-title">
+                    ⭐ PRO — ${plan.duration_days} kun
+                </div>
+
+                <div class="tariff-price">
+                    ${Number(plan.price).toLocaleString("uz-UZ")} so‘m
+                </div>
+
+                <div style="color:#777; margin-bottom:12px;">
+                    ${plan.duration_days} kun PRO
+                </div>
+
+                <button class="tariff-button">
+                    ⭐ PRO sotib olish
+                </button>
+            `;
+
+            const button =
+                tariff.querySelector(".tariff-button");
+
+            button.addEventListener("click", function() {
+                buyPro(plan.id, button);
+            });
+
+            container.appendChild(tariff);
+        });
 
     } catch (error) {
 
-        console.error(
-            "PRO PLANS ERROR:",
-            error
-        );
-
+        console.error("PRO plans error:", error);
 
         container.innerHTML = `
-
             <div class="tariff">
-
-                ❌ Server bilan bog'lanib bo'lmadi.
-
-                <br><br>
-
-                Server ishlayotganini tekshiring.
-
+                ❌ Tariflarni yuklab bo‘lmadi.
             </div>
-
         `;
-
     }
+}
 
+
+async function loadPendingPayment() {
+
+    const box =
+        document.getElementById("pendingPaymentBox");
+
+    const text =
+        document.getElementById("pendingPaymentText");
+
+    box.style.display = "none";
+    text.textContent = "";
+
+    try {
+
+        const response = await fetch(
+            API_BASE + "/api/pro-pending",
+            {
+                method: "GET",
+                headers: {
+                    "X-Telegram-Init-Data": tg.initData
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!data.success || !data.pending) {
+            return;
+        }
+
+        const payment = data.payment;
+
+        text.textContent =
+            "🆔 To‘lov ID: " + payment.id +
+            "\n💰 Summa: " +
+            Number(payment.amount).toLocaleString("uz-UZ") +
+            " so‘m" +
+            "\n⭐ Muddat: " + payment.duration_days + " kun" +
+            (payment.proof_received
+                ? "\n📷 Chek yuborilgan. Admin tekshiradi."
+                : "\n📷 Hali chek yuborilmagan.");
+
+        box.style.display = "block";
+
+    } catch (error) {
+        console.error("Pending payment error:", error);
+    }
+}
+
+
+async function cancelPendingPayment() {
+
+    try {
+
+        const response = await fetch(
+            API_BASE + "/api/pro-cancel",
+            {
+                method: "POST",
+                headers: {
+                    "X-Telegram-Init-Data": tg.initData
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+            showMessage(
+                "❌ " +
+                (data.message || "To‘lovni bekor qilib bo‘lmadi.")
+            );
+            return;
+        }
+
+        document.getElementById(
+            "pendingPaymentBox"
+        ).style.display = "none";
+
+        showMessage(
+            "✅ PRO to‘lov bekor qilindi."
+        );
+
+        await openProModal();
+
+    } catch (error) {
+
+        console.error("Cancel payment error:", error);
+
+        showMessage(
+            "❌ Server bilan bog‘lanib bo‘lmadi."
+        );
+    }
 }
 
 
 function closeProModal() {
 
     document
-        .getElementById(
-            "proModal"
-        )
+        .getElementById("proModal")
         .classList.remove("show");
-
 }
 
 
@@ -1423,444 +1861,101 @@ function closeProModal() {
    PRO SOTIB OLISH
 ===================================== */
 
-async function buyPro(planId) {
+async function buyPro(planId, button) {
 
-    const container =
-        document.getElementById(
-            "proPlans"
-        );
+    if (!button) {
+        return;
+    }
 
-
-    container.innerHTML = `
-
-        <div class="tariff">
-
-            ⏳ To'lov ma'lumotlari
-            tayyorlanmoqda...
-
-        </div>
-
-    `;
-
+    button.disabled = true;
+    button.textContent = "Yuborilmoqda...";
 
     try {
 
-        const response =
-            await fetch(
-                API_BASE +
-                "/api/pro-purchase",
-                {
+        const response = await fetch(
+            API_BASE + "/api/pro-purchase",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Telegram-Init-Data": tg.initData
+                },
+                body: JSON.stringify({
+                    plan_id: planId
+                })
+            }
+        );
 
-                    method: "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json",
-
-                        "X-Telegram-Init-Data":
-                            tg.initData
-
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            plan_id:
-                                Number(planId)
-
-                        })
-
-                }
-            );
-
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         if (!data.success) {
 
-            closeProModal();
+            if (data.code === "PENDING_PAYMENT") {
 
+                await loadPendingPayment();
 
-            showMessage(
-                "❌ " +
-                (
-                    data.message ||
-                    "To'lovni boshlashda xatolik."
-                )
-            );
+                showMessage(
+                    "⏳ Sizda allaqachon kutilayotgan PRO to‘lov mavjud."
+                );
 
+            } else {
 
-            return;
-
-        }
-
-
-        const payment =
-            data.payment;
-
-
-        if (!payment) {
-
-            closeProModal();
-
-
-            showMessage(
-                "❌ Server to'lov ma'lumotlarini yubormadi."
-            );
-
+                showMessage(
+                    "❌ Xatolik\n\n" +
+                    (data.message || "So‘rov yuborilmadi.")
+                );
+            }
 
             return;
-
         }
 
+        let paymentText =
+            "✅ PRO uchun to‘lov yaratildi!\n\n" +
+            "🆔 To‘lov ID: " + data.payment_id +
+            "\n💰 Summa: " +
+            Number(data.amount).toLocaleString("uz-UZ") +
+            " so‘m" +
+            "\n⭐ Muddat: " + data.duration_days + " kun";
 
-        const card =
-            payment.card || {};
+        if (data.card) {
 
+            if (data.card.card_number) {
+                paymentText +=
+                    "\n\n💳 Karta: " + data.card.card_number;
+            }
 
-        const amount =
-            Number(
-                payment.amount || 0
-            );
+            if (data.card.card_holder) {
+                paymentText +=
+                    "\n👤 Karta egasi: " + data.card.card_holder;
+            }
 
+            if (data.card.bank_name) {
+                paymentText +=
+                    "\n🏦 Bank: " + data.card.bank_name;
+            }
+        }
 
-        const paymentId =
-            payment.id;
-
-
-        const duration =
-            payment.duration_days;
-
-
-        const cardNumber =
-            card.card_number ||
-            "Karta mavjud emas";
-
-
-        const cardHolder =
-            card.card_holder ||
-            "—";
-
-
-        const bankName =
-            card.bank_name ||
-            "—";
-
+        paymentText +=
+            "\n\n📷 To‘lovni amalga oshirgach, chekni botga rasm yoki fayl qilib yuboring." +
+            "\n\n⏳ Admin tekshiradi. Tasdiqlangandan keyin PRO avtomatik faollashadi.";
 
         closeProModal();
-
-
-        document.getElementById(
-            "paymentContent"
-        ).innerHTML = `
-
-            <div class="info-card">
-
-                <div class="info-title">
-                    🆔 To'lov ID
-                </div>
-
-                <div class="info-value">
-
-                    #${paymentId}
-
-                </div>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <div class="info-title">
-                    ⭐ Tarif
-                </div>
-
-                <div class="info-value">
-
-                    ${duration} kun
-
-                </div>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <div class="info-title">
-                    💰 To'lov summasi
-                </div>
-
-                <div class="info-value">
-
-                    ${amount.toLocaleString("uz-UZ")}
-                    so'm
-
-                </div>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <div class="info-title">
-                    💳 Karta raqami
-                </div>
-
-                <div
-                    class="info-value"
-                    style="
-                        word-break:break-all;
-                        font-size:18px;
-                    "
-                >
-
-                    ${escapeHtml(cardNumber)}
-
-                </div>
-
-
-                <button
-                    class="copy-button"
-                    onclick="copyCard()"
-                >
-
-                    📋 Karta raqamini nusxalash
-
-                </button>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <div class="info-title">
-                    👤 Karta egasi
-                </div>
-
-                <div class="info-value">
-
-                    ${escapeHtml(cardHolder)}
-
-                </div>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <div class="info-title">
-                    🏦 Bank
-                </div>
-
-                <div class="info-value">
-
-                    ${escapeHtml(bankName)}
-
-                </div>
-
-            </div>
-
-
-            <div class="payment-note">
-
-                <b>📌 To'lov tartibi</b>
-
-                <br><br>
-
-                1️⃣ Kartaga
-
-                <b>
-                    ${amount.toLocaleString("uz-UZ")}
-                    so'm
-                </b>
-
-                o'tkazing.
-
-                <br><br>
-
-                2️⃣ To'lov chekini
-                <b>botga yuboring.</b>
-
-                <br><br>
-
-                3️⃣ Admin chekni tekshiradi.
-
-                <br><br>
-
-                4️⃣ Admin tasdiqlagandan keyin
-                PRO avtomatik faollashadi.
-
-                <br><br>
-
-                🆔 To'lov ID:
-                <b>#${paymentId}</b>
-
-            </div>
-
-
-            <button
-                class="create-button"
-                style="margin-top:15px;"
-                onclick="returnToBot()"
-            >
-
-                📤 Botga qaytish
-
-            </button>
-
-
-            <button
-                class="cancel-button"
-                onclick="closePaymentModal()"
-            >
-
-                Keyinroq
-
-            </button>
-
-        `;
-
-
-        window.currentCardNumber =
-            cardNumber;
-
-
-        document
-            .getElementById(
-                "paymentModal"
-            )
-            .classList.add("show");
-
+        showMessage(paymentText);
 
     } catch (error) {
 
-        console.error(
-            "PRO PURCHASE ERROR:",
-            error
-        );
-
-
-        closeProModal();
-
+        console.error("PRO purchase error:", error);
 
         showMessage(
-            "❌ Server bilan bog'lanib bo'lmadi."
+            "❌ Server bilan bog‘lanib bo‘lmadi.\n\n" +
+            "Internet yoki serverni tekshiring."
         );
 
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "⭐ PRO sotib olish";
     }
-
-}
-
-
-/* =====================================
-   ESCAPE HTML
-===================================== */
-
-function escapeHtml(
-    value
-) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.textContent =
-        value;
-
-
-    return div.innerHTML;
-
-}
-
-
-/* =====================================
-   KARTA NUSXALASH
-===================================== */
-
-async function copyCard() {
-
-    const cardNumber =
-        window.currentCardNumber;
-
-
-    if (!cardNumber) {
-
-        return;
-
-    }
-
-
-    try {
-
-        await navigator
-            .clipboard
-            .writeText(
-                cardNumber
-            );
-
-
-        showMessage(
-            "✅ Karta raqami nusxalandi!"
-        );
-
-
-    } catch (error) {
-
-        showMessage(
-            "📋 Karta raqamini qo'lda nusxalang."
-        );
-
-    }
-
-}
-
-
-/* =====================================
-   PAYMENT MODAL YOPISH
-===================================== */
-
-function closePaymentModal() {
-
-    document
-        .getElementById(
-            "paymentModal"
-        )
-        .classList.remove("show");
-
-}
-
-
-/* =====================================
-   BOTGA QAYTISH
-===================================== */
-
-function returnToBot() {
-
-    closePaymentModal();
-
-
-    showMessage(
-        "📤 Mini App yopiladi.\n\n" +
-        "Botga qaytgach, to'lov chekini " +
-        "rasm yoki fayl ko'rinishida yuboring.\n\n" +
-        "Admin tekshiradi va tasdiqlaydi."
-    );
-
-
-    setTimeout(
-        function() {
-
-            tg.close();
-
-        },
-        1300
-    );
-
 }
 
 
@@ -1868,159 +1963,470 @@ function returnToBot() {
    TEST YARATISH
 ===================================== */
 
+let currentTestDraft = null;
+
+
 async function continueCreate() {
 
     const testCode =
-        document.getElementById(
-            "testCode"
-        ).value.trim();
-
+        document.getElementById("testCode").value.trim().toUpperCase();
 
     const channel =
-        document.getElementById(
-            "channel"
-        ).value.trim();
-
+        document.getElementById("channel").value.trim();
 
     const duration =
-        document.getElementById(
-            "duration"
-        ).value;
-
+        document.getElementById("duration").value;
 
     const questionCount =
-        document.getElementById(
-            "questionCount"
-        ).value;
-
+        document.getElementById("questionCount").value;
 
     const button =
-        document.getElementById(
-            "continueButton"
-        );
-
+        document.getElementById("continueButton");
 
     if (!testCode) {
-
-        showMessage(
-            "❗ Test kodini kiriting."
-        );
-
+        showMessage("❗ Test kodini kiriting.");
         return;
-
     }
 
-
-    if (
-        testCode.length < 4 ||
-        testCode.length > 10
-    ) {
-
+    if (testCode.length < 4 || testCode.length > 10) {
         showMessage(
-            "❗ Test kodi 4–10 belgidan iborat bo'lishi kerak."
+            "❗ Test kodi 4–10 ta belgidan iborat bo‘lishi kerak."
         );
-
         return;
-
     }
 
+    if (!/^[A-Z0-9]+$/.test(testCode)) {
+        showMessage(
+            "❗ Test kodi faqat harflar va raqamlardan iborat bo‘lishi kerak."
+        );
+        return;
+    }
 
     if (!channel) {
-
         showMessage(
-            "❗ Test e'lon qilinadigan kanalni kiriting."
+            "❗ Test e’lon qilinadigan kanalni kiriting."
         );
-
         return;
-
     }
-
-
-    if (!duration) {
-
-        showMessage(
-            "❗ Test davomiyligini tanlang."
-        );
-
-        return;
-
-    }
-
-
-    if (!questionCount) {
-
-        showMessage(
-            "❗ Savollar sonini tanlang."
-        );
-
-        return;
-
-    }
-
-
-    button.disabled = true;
-
-    button.textContent =
-        "Tekshirilmoqda...";
-
-
-    const proData =
-        await checkProStatus();
-
-
-    button.disabled = false;
-
-    button.textContent =
-        "Davom etish ➜";
-
-
-    if (!proData.success) {
-
-        showMessage(
-            "❌ " +
-            (
-                proData.message ||
-                "Server xatosi."
-            )
-        );
-
-        return;
-
-    }
-
 
     if (
-        !proData.pro &&
-        !proData.admin
+        !channel.startsWith("@") &&
+        !channel.startsWith("https://t.me/")
     ) {
-
-        await openProModal();
-
+        showMessage(
+            "❗ Kanalni @kanal_nomi yoki https://t.me/kanal_nomi ko‘rinishida kiriting."
+        );
         return;
-
     }
 
+    if (!duration) {
+        showMessage("❗ Test davomiyligini tanlang.");
+        return;
+    }
 
-    showMessage(
+    if (!questionCount) {
+        showMessage("❗ Savollar sonini tanlang.");
+        return;
+    }
 
-        "✅ PRO faol!\n\n" +
+    button.disabled = true;
+    button.textContent = "Tekshirilmoqda...";
 
-        "🔑 Test kodi: " +
-        testCode +
+    let proData;
 
-        "\n📢 Kanal: " +
-        channel +
+    try {
+        proData = await checkProStatus();
+    } catch (error) {
+        console.error(error);
+        proData = {
+            success: false,
+            message: "Server bilan bog‘lanib bo‘lmadi."
+        };
+    }
 
-        "\n⏱ Davomiyligi: " +
-        duration +
-        " daqiqa" +
+    button.disabled = false;
+    button.textContent = "Davom etish ➜";
 
-        "\n📝 Savollar: " +
-        questionCount +
-        " ta"
+    if (!proData.success) {
+        showMessage(
+            "❌ " +
+            (proData.message || "PRO holatini aniqlab bo‘lmadi.")
+        );
+        return;
+    }
 
+    if (!proData.pro && !proData.admin) {
+        openProModal();
+        return;
+    }
+
+    currentTestDraft = {
+        code: testCode,
+        channel: channel,
+        duration: Number(duration),
+        question_count: Number(questionCount),
+        questions: []
+    };
+
+    openTestEditor();
+}
+
+
+function openTestEditor() {
+
+    if (!currentTestDraft) {
+        return;
+    }
+
+    const modal =
+        document.getElementById("testEditorModal");
+
+    const info =
+        document.getElementById("testEditorInfo");
+
+    const container =
+        document.getElementById("questionsContainer");
+
+    info.innerHTML = `
+        <div class="editor-top">
+            <div class="editor-top-title">
+                🔑 ${escapeHtml(currentTestDraft.code)}
+            </div>
+            <div class="editor-top-text">
+                📢 ${escapeHtml(currentTestDraft.channel)}<br>
+                ⏱ ${currentTestDraft.duration} daqiqa<br>
+                📝 ${currentTestDraft.question_count} ta savol
+            </div>
+        </div>
+
+        <b>Javoblar tuzilishi:</b><br>
+        1–32 → A/B/C/D<br>
+        33–35 → A/B/C/D/E/F<br>
+        36–45 → aniq javob
+    `;
+
+    container.innerHTML = "";
+
+    for (
+        let i = 1;
+        i <= currentTestDraft.question_count;
+        i++
+    ) {
+        container.insertAdjacentHTML(
+            "beforeend",
+            createQuestionCard(i)
+        );
+    }
+
+    modal.classList.add("show");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function closeTestEditor() {
+    document
+        .getElementById("testEditorModal")
+        .classList.remove("show");
+}
+
+
+function createQuestionCard(number) {
+
+    const letters =
+        number <= 32
+            ? ["A", "B", "C", "D"]
+            : number <= 35
+                ? ["A", "B", "C", "D", "E", "F"]
+                : [];
+
+    if (letters.length > 0) {
+
+        const typeText =
+            letters.length === 4
+                ? "A / B / C / D"
+                : "A / B / C / D / E / F";
+
+        let optionsHtml = "";
+
+        letters.forEach(function(letter) {
+
+            optionsHtml += `
+                <div class="option-row">
+
+                    <div class="option-letter">
+                        ${letter}
+                    </div>
+
+                    <input
+                        class="answer-input"
+                        id="answer_${number}_${letter}"
+                        type="text"
+                        placeholder="${letter} javob"
+                    >
+
+                    <label class="correct-label">
+
+                        <input
+                            class="correct-radio"
+                            type="radio"
+                            name="correct_${number}"
+                            value="${letter}"
+                        >
+
+                        To‘g‘ri
+
+                    </label>
+
+                </div>
+            `;
+        });
+
+        return `
+            <div class="question-card">
+
+                <div class="question-number">
+                    ${number}-savol
+                </div>
+
+                <div class="question-type">
+                    ${typeText}
+                </div>
+
+                <textarea
+                    class="question-input"
+                    id="question_${number}"
+                    placeholder="Savol matnini kiriting..."
+                ></textarea>
+
+                ${optionsHtml}
+
+            </div>
+        `;
+    }
+
+    return `
+        <div class="question-card">
+
+            <div class="question-number">
+                ${number}-savol
+            </div>
+
+            <div class="question-type">
+                Aniq javob
+            </div>
+
+            <textarea
+                class="question-input"
+                id="question_${number}"
+                placeholder="Savol matnini kiriting..."
+            ></textarea>
+
+            <div class="exact-answer-label">
+                To‘g‘ri javob:
+            </div>
+
+            <input
+                class="answer-input"
+                id="exact_${number}"
+                type="text"
+                placeholder="Aniq javobni kiriting..."
+            >
+
+        </div>
+    `;
+}
+
+
+function createTestFromEditor() {
+
+    if (!currentTestDraft) {
+        showMessage("❌ Test ma’lumotlari topilmadi.");
+        return;
+    }
+
+    const questions = [];
+
+    for (
+        let i = 1;
+        i <= currentTestDraft.question_count;
+        i++
+    ) {
+
+        const questionElement =
+            document.getElementById(`question_${i}`);
+
+        const question =
+            questionElement.value.trim();
+
+        if (!question) {
+            showMessage(
+                `❗ ${i}-savol matni kiritilmagan.`
+            );
+            questionElement.focus();
+            return;
+        }
+
+        if (i <= 32) {
+
+            const letters =
+                ["A", "B", "C", "D"];
+
+            const options = {};
+
+            for (const letter of letters) {
+
+                const input =
+                    document.getElementById(
+                        `answer_${i}_${letter}`
+                    );
+
+                const value =
+                    input.value.trim();
+
+                if (!value) {
+                    showMessage(
+                        `❗ ${i}-savolning ${letter} javobi kiritilmagan.`
+                    );
+                    input.focus();
+                    return;
+                }
+
+                options[letter] = value;
+            }
+
+            const correct =
+                document.querySelector(
+                    `input[name="correct_${i}"]:checked`
+                );
+
+            if (!correct) {
+                showMessage(
+                    `❗ ${i}-savol uchun to‘g‘ri javobni belgilang.`
+                );
+                return;
+            }
+
+            questions.push({
+                number: i,
+                type: "multiple_choice",
+                text: question,
+                options: options,
+                correct_answer: correct.value
+            });
+
+            continue;
+        }
+
+        if (i <= 35) {
+
+            const letters =
+                ["A", "B", "C", "D", "E", "F"];
+
+            const options = {};
+
+            for (const letter of letters) {
+
+                const input =
+                    document.getElementById(
+                        `answer_${i}_${letter}`
+                    );
+
+                const value =
+                    input.value.trim();
+
+                if (!value) {
+                    showMessage(
+                        `❗ ${i}-savolning ${letter} javobi kiritilmagan.`
+                    );
+                    input.focus();
+                    return;
+                }
+
+                options[letter] = value;
+            }
+
+            const correct =
+                document.querySelector(
+                    `input[name="correct_${i}"]:checked`
+                );
+
+            if (!correct) {
+                showMessage(
+                    `❗ ${i}-savol uchun to‘g‘ri javobni belgilang.`
+                );
+                return;
+            }
+
+            questions.push({
+                number: i,
+                type: "multiple_choice_6",
+                text: question,
+                options: options,
+                correct_answer: correct.value
+            });
+
+            continue;
+        }
+
+        const exactInput =
+            document.getElementById(`exact_${i}`);
+
+        const exactAnswer =
+            exactInput.value.trim();
+
+        if (!exactAnswer) {
+            showMessage(
+                `❗ ${i}-savol uchun aniq javob kiritilmagan.`
+            );
+            exactInput.focus();
+            return;
+        }
+
+        questions.push({
+            number: i,
+            type: "exact",
+            text: question,
+            correct_answer: exactAnswer
+        });
+    }
+
+    currentTestDraft.questions = questions;
+
+    localStorage.setItem(
+        "mock_test_draft",
+        JSON.stringify(currentTestDraft)
     );
 
+    console.log(
+        "TEST DRAFT:",
+        currentTestDraft
+    );
+
+    closeTestEditor();
+
+    showMessage(
+        "✅ Test muvaffaqiyatli tayyorlandi!\n\n" +
+        "🔑 Kod: " + currentTestDraft.code +
+        "\n📢 Kanal: " + currentTestDraft.channel +
+        "\n⏱ Davomiyligi: " + currentTestDraft.duration + " daqiqa" +
+        "\n📝 Savollar: " + currentTestDraft.questions.length + " ta" +
+        "\n\n🚀 Keyingi bosqichda testni serverga saqlashni ulaymiz."
+    );
+}
+
+
+function escapeHtml(text) {
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
@@ -2030,23 +2436,19 @@ async function continueCreate() {
 
 function goHome() {
 
-    document
-        .getElementById(
-            "homeButton"
-        )
-        .classList.add("active");
+    document.getElementById(
+        "homeButton"
+    ).classList.add("active");
 
 
-    document
-        .getElementById(
-            "profileButton"
-        )
-        .classList.remove("active");
+    document.getElementById(
+        "profileButton"
+    ).classList.remove("active");
 
 
     closeProfile();
+
     closeProModal();
-    closePaymentModal();
 
 
     window.scrollTo(
@@ -2055,7 +2457,6 @@ function goHome() {
             behavior: "smooth"
         }
     );
-
 }
 
 
@@ -2063,9 +2464,7 @@ function goHome() {
    MESSAGE
 ===================================== */
 
-function showMessage(
-    text
-) {
+function showMessage(text) {
 
     document.getElementById(
         "messageText"
@@ -2076,7 +2475,6 @@ function showMessage(
     document.getElementById(
         "messageModal"
     ).classList.add("show");
-
 }
 
 
@@ -2085,18 +2483,15 @@ function closeMessage() {
     document.getElementById(
         "messageModal"
     ).classList.remove("show");
-
 }
 
 
 /* =====================================
-   MODAL OUTSIDE CLICK
+   MODAL TASHQARISIGA BOSILSA YOPISH
 ===================================== */
 
 document
-    .getElementById(
-        "profileModal"
-    )
+    .getElementById("profileModal")
     .addEventListener(
         "click",
         function(event) {
@@ -2106,17 +2501,13 @@ document
             ) {
 
                 closeProfile();
-
             }
-
         }
     );
 
 
 document
-    .getElementById(
-        "proModal"
-    )
+    .getElementById("proModal")
     .addEventListener(
         "click",
         function(event) {
@@ -2126,37 +2517,26 @@ document
             ) {
 
                 closeProModal();
-
             }
-
         }
     );
 
 
 document
-    .getElementById(
-        "paymentModal"
-    )
+    .getElementById("testEditorModal")
     .addEventListener(
         "click",
         function(event) {
 
-            if (
-                event.target === this
-            ) {
-
-                closePaymentModal();
-
+            if (event.target === this) {
+                closeTestEditor();
             }
-
         }
     );
 
 
 document
-    .getElementById(
-        "messageModal"
-    )
+    .getElementById("messageModal")
     .addEventListener(
         "click",
         function(event) {
@@ -2166,9 +2546,7 @@ document
             ) {
 
                 closeMessage();
-
             }
-
         }
     );
 
