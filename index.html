@@ -2,8 +2,7 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Test yaratish</title>
 
@@ -33,8 +32,8 @@
         }
 
         .welcome h1 {
-            font-size: 24px;
             margin: 0 0 8px;
+            font-size: 24px;
         }
 
         .welcome p {
@@ -44,26 +43,47 @@
 
         .card {
             background: white;
-            border-radius: 18px;
             padding: 20px;
-            margin-bottom: 15px;
+            border-radius: 18px;
             box-shadow: 0 3px 15px rgba(0, 0, 0, 0.07);
         }
 
         .card h2 {
-            margin: 0 0 8px;
+            margin: 0 0 20px;
             font-size: 20px;
         }
 
-        .card p {
-            color: #777;
-            margin: 0 0 18px;
-            line-height: 1.5;
+        .field {
+            margin-bottom: 17px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            height: 50px;
+            padding: 0 14px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            outline: none;
+            font-size: 16px;
+            background: white;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #2481cc;
         }
 
         .create-button {
             width: 100%;
-            height: 56px;
+            height: 55px;
             border: 0;
             border-radius: 14px;
             background: #2481cc;
@@ -78,7 +98,7 @@
             margin-top: 15px;
             padding: 15px;
             background: white;
-            border-radius: 15px;
+            border-radius: 14px;
             text-align: center;
         }
 
@@ -87,18 +107,13 @@
             left: 0;
             right: 0;
             bottom: 0;
-
             height: 70px;
-
             background: white;
             border-top: 1px solid #e5e5e5;
-
             display: flex;
             justify-content: center;
-            gap: 50px;
+            gap: 60px;
             align-items: center;
-
-            z-index: 100;
         }
 
         .nav-button {
@@ -111,7 +126,7 @@
 
         .nav-icon {
             display: block;
-            font-size: 23px;
+            font-size: 22px;
             margin-bottom: 3px;
         }
 
@@ -127,31 +142,88 @@
 <div class="container">
 
     <div class="welcome">
-        <h1 id="welcomeText">
-            👋 Assalomu alaykum!
-        </h1>
-
-        <p>
-            Test yaratish platformasiga xush kelibsiz.
-        </p>
+        <h1 id="welcomeText">👋 Assalomu alaykum!</h1>
+        <p>Yangi test yaratish</p>
     </div>
 
 
     <div class="card">
 
-        <h2>
-            ➕ Test yaratish
-        </h2>
+        <h2>➕ Test yaratish</h2>
 
-        <p>
-            O‘zingiz uchun yangi test yarating.
-        </p>
+
+        <div class="field">
+
+            <label>🔑 Test kodi</label>
+
+            <input
+                id="testCode"
+                type="text"
+                maxlength="10"
+                placeholder="Masalan: ABC123"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>📢 Test e’lon qilinadigan kanal</label>
+
+            <input
+                id="channel"
+                type="text"
+                placeholder="@kanal_nomi"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>⏱ Test davomiyligi</label>
+
+            <select id="duration">
+                <option value="">Tanlang</option>
+                <option value="15">15 daqiqa</option>
+                <option value="30">30 daqiqa</option>
+                <option value="45">45 daqiqa</option>
+                <option value="60">60 daqiqa</option>
+                <option value="90">90 daqiqa</option>
+                <option value="120">120 daqiqa</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>📝 Savollar soni</label>
+
+            <select id="questionCount">
+
+                <option value="">Tanlang</option>
+
+                <option value="10">10 ta</option>
+                <option value="20">20 ta</option>
+                <option value="30">30 ta</option>
+                <option value="35">35 ta</option>
+                <option value="40">40 ta</option>
+                <option value="45">45 ta</option>
+
+            </select>
+
+        </div>
+
 
         <button
             class="create-button"
-            onclick="createTest()">
+            onclick="continueCreate()">
 
-            ➕ Test yaratish
+            Davom etish ➜
 
         </button>
 
@@ -163,7 +235,7 @@
 </div>
 
 
-<!-- PASTKI NAVIGATSIYA -->
+<!-- Pastki Mini App navigatsiyasi -->
 
 <div class="bottom-nav">
 
@@ -191,78 +263,137 @@
 
 <script>
 
-    const tg = window.Telegram.WebApp;
+const tg = window.Telegram.WebApp;
 
-    tg.ready();
-    tg.expand();
-
-
-    // Telegram foydalanuvchisi
-
-    const user = tg.initDataUnsafe?.user;
+tg.ready();
+tg.expand();
 
 
-    if (user) {
+/* Telegram foydalanuvchisi */
 
-        let name = user.first_name || "";
+const user = tg.initDataUnsafe?.user;
 
-        if (user.last_name) {
-            name += " " + user.last_name;
-        }
+if (user) {
 
-        document.getElementById("welcomeText").textContent =
-            "👋 Assalomu alaykum, " + name + "!";
+    let name = user.first_name || "";
 
+    if (user.last_name) {
+        name += " " + user.last_name;
+    }
+
+    document.getElementById("welcomeText").textContent =
+        "👋 Assalomu alaykum, " + name + "!";
+
+}
+
+
+/* DAVOM ETISH */
+
+function continueCreate() {
+
+    const testCode =
+        document.getElementById("testCode").value.trim();
+
+    const channel =
+        document.getElementById("channel").value.trim();
+
+    const duration =
+        document.getElementById("duration").value;
+
+    const questionCount =
+        document.getElementById("questionCount").value;
+
+
+    if (!testCode) {
+
+        showMessage("❗ Test kodini kiriting.");
+
+        return;
     }
 
 
-    // TEST YARATISH
-
-    function createTest() {showMessage(
-            "📝 Test yaratish\n\n" +
-            "Keyingi bosqichda bu yerda " +
-            "test yaratish formasi ochiladi."
-        );
-
-    }
-
-
-    // BOSH SAHIFA
-
-    function goHome() {
+    if (testCode.length < 4 || testCode.length > 10) {
 
         showMessage(
-            "🏠 Bosh sahifa"
+            "❗ Test kodi 4–10 ta belgidan iborat bo‘lishi kerak."
         );
 
+        return;
     }
 
 
-    // PROFIL
-
-    function goProfile() {
+    if (!channel) {
 
         showMessage(
-            "👤 Profil\n\n" +
-            "Keyingi bosqichda profilingiz " +
-            "shu yerda bo‘ladi."
+            "❗ Test e’lon qilinadigan kanalni kiriting."
         );
 
+        return;
     }
 
 
-    // XABAR
+    if (!duration) {
 
-    function showMessage(text) {
+        showMessage(
+            "❗ Test davomiyligini tanlang."
+        );
 
-        const message =
-            document.getElementById("message");
-
-        message.textContent = text;
-
-        message.style.display = "block";
-
+        return;
     }
+
+
+    if (!questionCount) {
+
+        showMessage(
+            "❗ Savollar sonini tanlang."
+        );
+
+        return;
+    }
+
+
+    showMessage(
+        "✅ Ma’lumotlar qabul qilindi.\n\n" +
+        "Keyingi bosqichda javoblar kalitini kiritish oynasi ochiladi."
+    );
+
+}
+
+
+/* BOSH SAHIFA */
+
+function goHome() {
+
+    showMessage(
+        "🏠 Siz bosh sahifadasiz."
+    );
+
+}
+
+
+/* PROFIL */
+
+function goProfile() {
+
+    showMessage(
+        "👤 Profil bo‘limi keyingi bosqichda tayyorlanadi."
+    );
+
+}
+
+
+/* XABAR */
+
+function showMessage(text) {
+
+    const message =
+        document.getElementById("message");
+
+    message.textContent = text;
+
+    message.style.display = "block";
+
+}
 
 </script>
 
