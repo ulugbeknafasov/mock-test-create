@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Test yaratish</title>
+    <title>Milliy Sertifikat Tekshirish</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -26,38 +26,39 @@
             padding-bottom: 90px;
             font-family: Arial, sans-serif;
             background: #f5f7fb;
-            color: #222;
+            color: #111;
         }
 
         .container {
-            max-width: 500px;
+            max-width: 520px;
             margin: auto;
         }
 
         .welcome {
-            margin: 10px 5px 25px;
+            margin: 15px 5px 25px;
         }
 
         .welcome h1 {
             margin: 0 0 8px;
-            font-size: 24px;
+            font-size: 26px;
         }
 
         .welcome p {
             margin: 0;
             color: #777;
+            font-size: 16px;
         }
 
         .card {
             background: white;
-            padding: 20px;
-            border-radius: 18px;
-            box-shadow: 0 3px 15px rgba(0,0,0,.07);
+            padding: 22px;
+            border-radius: 20px;
+            box-shadow: 0 4px 18px rgba(0,0,0,.07);
         }
 
         .card h2 {
-            margin: 0 0 20px;
-            font-size: 20px;
+            margin: 0 0 22px;
+            font-size: 23px;
         }
 
         .field {
@@ -67,19 +68,19 @@
         .field label {
             display: block;
             margin-bottom: 8px;
-            font-size: 14px;
             font-weight: bold;
+            font-size: 15px;
         }
 
         .field input,
         .field select {
             width: 100%;
-            height: 50px;
-            padding: 0 14px;
+            height: 52px;
             border: 1px solid #ddd;
-            border-radius: 12px;
-            outline: none;
+            border-radius: 13px;
+            padding: 0 15px;
             font-size: 16px;
+            outline: none;
             background: white;
         }
 
@@ -94,7 +95,7 @@
 
         .create-button {
             width: 100%;
-            height: 55px;
+            height: 54px;
             border: 0;
             border-radius: 14px;
             background: #2481cc;
@@ -106,7 +107,6 @@
 
         .create-button:disabled {
             opacity: .6;
-            cursor: not-allowed;
         }
 
         /* =========================
@@ -120,31 +120,31 @@
             bottom: 0;
             height: 70px;
             background: white;
-            border-top: 1px solid #e5e5e5;
+            border-top: 1px solid #ddd;
             display: flex;
-            justify-content: center;
-            gap: 60px;
             align-items: center;
-            z-index: 20;
+            justify-content: center;
+            gap: 80px;
+            z-index: 50;
         }
 
         .nav-button {
             border: 0;
             background: none;
-            font-size: 14px;
-            color: #555;
+            color: #777;
+            font-size: 13px;
             cursor: pointer;
+        }
+
+        .nav-button.active {
+            color: #2481cc;
+            font-weight: bold;
         }
 
         .nav-icon {
             display: block;
             font-size: 22px;
             margin-bottom: 3px;
-        }
-
-        .active {
-            color: #2481cc;
-            font-weight: bold;
         }
 
         /* =========================
@@ -155,7 +155,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,.55);
+            background: rgba(0,0,0,.58);
             z-index: 100;
             padding: 20px;
             align-items: flex-end;
@@ -168,42 +168,29 @@
 
         .modal-box {
             width: 100%;
-            max-width: 500px;
-            background: white;
-            border-radius: 24px;
-            padding: 24px;
+            max-width: 520px;
             max-height: 90vh;
             overflow-y: auto;
-            animation: modalOpen .2s ease;
-        }
-
-        @keyframes modalOpen {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            background: white;
+            border-radius: 25px;
+            padding: 23px;
         }
 
         .modal-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .modal-header h2 {
             margin: 0;
-            font-size: 23px;
+            font-size: 24px;
         }
 
         .close-button {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border: 0;
             border-radius: 50%;
             background: #f1f1f1;
@@ -217,12 +204,12 @@
 
         .profile-top {
             text-align: center;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
         .profile-avatar {
-            width: 80px;
-            height: 80px;
+            width: 82px;
+            height: 82px;
             margin: auto;
             border-radius: 50%;
             background: #2481cc;
@@ -236,20 +223,19 @@
 
         .profile-name {
             margin-top: 12px;
-            font-size: 20px;
+            font-size: 21px;
             font-weight: bold;
         }
 
         .profile-username {
             margin-top: 5px;
             color: #777;
-            font-size: 14px;
         }
 
         .info-card {
-            background: #f6f8fb;
-            border-radius: 16px;
-            padding: 16px;
+            background: #f5f7fa;
+            border-radius: 15px;
+            padding: 15px;
             margin-bottom: 12px;
         }
 
@@ -264,34 +250,37 @@
             font-weight: bold;
         }
 
+        /* =========================
+           PRO CARD
+        ========================= */
+
         .pro-card {
             background: linear-gradient(
                 135deg,
-                #6c63ff,
+                #6d4aff,
                 #a855f7
             );
             color: white;
             border-radius: 18px;
-            padding: 20px;
+            padding: 19px;
             margin-top: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
         }
 
         .pro-title {
-            font-size: 21px;
+            font-size: 22px;
             font-weight: bold;
             margin-bottom: 8px;
         }
 
         .pro-status {
             font-size: 16px;
-            margin-bottom: 8px;
         }
 
         .pro-time {
-            font-size: 18px;
+            margin-top: 10px;
             font-weight: bold;
-            margin-top: 12px;
+            font-size: 16px;
         }
 
         .pro-button {
@@ -299,50 +288,54 @@
             height: 52px;
             border: 0;
             border-radius: 14px;
-            background: white;
-            color: #6c4de8;
+            background: #6d4aff;
+            color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
         }
 
         /* =========================
-           PRO
+           PRO PLANS
         ========================= */
 
         .pro-intro {
             text-align: center;
             color: #666;
-            margin-bottom: 20px;
-            line-height: 1.4;
+            line-height: 1.45;
+            margin-bottom: 18px;
         }
 
         .tariff {
             border: 1px solid #ddd;
-            border-radius: 17px;
+            border-radius: 18px;
             padding: 17px;
-            margin-bottom: 12px;
-            background: #fff;
+            margin-bottom: 13px;
+            background: white;
         }
 
         .tariff-title {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: bold;
-            margin-bottom: 5px;
         }
 
         .tariff-price {
-            font-size: 22px;
-            font-weight: bold;
-            margin: 8px 0 12px;
             color: #2481cc;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+
+        .tariff-duration {
+            color: #777;
+            margin-bottom: 13px;
         }
 
         .tariff-button {
             width: 100%;
-            height: 46px;
+            height: 48px;
             border: 0;
-            border-radius: 12px;
+            border-radius: 13px;
             background: #2481cc;
             color: white;
             font-size: 15px;
@@ -354,30 +347,34 @@
             width: 100%;
             height: 48px;
             border: 0;
-            border-radius: 12px;
-            background: #f0f0f0;
+            border-radius: 13px;
+            background: #eee;
             color: #444;
             font-size: 15px;
             cursor: pointer;
             margin-top: 5px;
         }
 
+        /* =========================
+           PAYMENT
+        ========================= */
+
         .payment-note {
-            background: #fff8e1;
-            border-radius: 14px;
-            padding: 15px;
+            background: #fff8df;
+            border-radius: 15px;
+            padding: 16px;
+            line-height: 1.55;
             margin-top: 15px;
-            line-height: 1.5;
         }
 
         .copy-button {
             width: 100%;
             height: 45px;
-            margin-top: 8px;
             border: 0;
             border-radius: 12px;
-            background: #eee;
+            background: #e9e9e9;
             font-weight: bold;
+            margin-top: 8px;
             cursor: pointer;
         }
 
@@ -387,8 +384,8 @@
 
         .message-text {
             text-align: center;
-            line-height: 1.5;
             white-space: pre-line;
+            line-height: 1.5;
             margin: 15px 0 20px;
         }
 
@@ -399,9 +396,13 @@
 
 <body>
 
+
 <div class="container">
 
-    <!-- HOME -->
+
+    <!-- =========================
+         HOME
+    ========================= -->
 
     <div class="welcome">
 
@@ -434,7 +435,6 @@
                 type="text"
                 maxlength="10"
                 placeholder="Masalan: ABC123"
-                autocomplete="off"
             >
 
         </div>
@@ -443,14 +443,13 @@
         <div class="field">
 
             <label>
-                📢 Test e’lon qilinadigan kanal
+                📢 Test e'lon qilinadigan kanal
             </label>
 
             <input
                 id="channel"
                 type="text"
                 placeholder="@kanal_nomi"
-                autocomplete="off"
             >
 
         </div>
@@ -551,7 +550,9 @@
 </div>
 
 
-<!-- BOTTOM NAV -->
+<!-- =========================
+     BOTTOM NAV
+========================= -->
 
 <div class="bottom-nav">
 
@@ -587,7 +588,9 @@
 </div>
 
 
-<!-- PROFILE MODAL -->
+<!-- =========================
+     PROFILE MODAL
+========================= -->
 
 <div
     id="profileModal"
@@ -621,7 +624,6 @@
                 U
             </div>
 
-
             <div
                 id="profileName"
                 class="profile-name"
@@ -629,12 +631,11 @@
                 Yuklanmoqda...
             </div>
 
-
             <div
                 id="profileUsername"
                 class="profile-username"
             >
-                @username
+                —
             </div>
 
         </div>
@@ -691,7 +692,9 @@
 </div>
 
 
-<!-- PRO MODAL -->
+<!-- =========================
+     PRO MODAL
+========================= -->
 
 <div
     id="proModal"
@@ -745,7 +748,9 @@
 </div>
 
 
-<!-- PAYMENT MODAL -->
+<!-- =========================
+     PAYMENT MODAL
+========================= -->
 
 <div
     id="paymentModal"
@@ -757,7 +762,7 @@
         <div class="modal-header">
 
             <h2>
-                💳 To‘lov
+                💳 To'lov
             </h2>
 
             <button
@@ -777,7 +782,9 @@
 </div>
 
 
-<!-- MESSAGE MODAL -->
+<!-- =========================
+     MESSAGE MODAL
+========================= -->
 
 <div
     id="messageModal"
@@ -822,8 +829,9 @@
 
 <script>
 
+
 /* =====================================
-   TELEGRAM
+   TELEGRAM WEB APP
 ===================================== */
 
 const tg =
@@ -834,7 +842,7 @@ tg.expand();
 
 
 /* =====================================
-   SERVER
+   SERVER MANZILI
 ===================================== */
 
 const API_BASE =
@@ -842,7 +850,7 @@ const API_BASE =
 
 
 /* =====================================
-   USER
+   TELEGRAM USER
 ===================================== */
 
 const user =
@@ -851,28 +859,30 @@ const user =
 
 if (user) {
 
-    let name =
+    let fullName =
         user.first_name || "";
+
 
     if (user.last_name) {
 
-        name +=
+        fullName +=
             " " + user.last_name;
 
     }
+
 
     document.getElementById(
         "welcomeText"
     ).textContent =
         "👋 Assalomu alaykum, " +
-        name +
+        fullName +
         "!";
 
 
     document.getElementById(
         "profileName"
     ).textContent =
-        name;
+        fullName;
 
 
     document.getElementById(
@@ -906,9 +916,6 @@ if (user) {
    PRO STATUS
 ===================================== */
 
-let currentProData = null;
-
-
 async function checkProStatus() {
 
     try {
@@ -932,17 +939,13 @@ async function checkProStatus() {
             await response.json();
 
 
-        currentProData =
-            data;
-
-
         return data;
 
 
     } catch (error) {
 
         console.error(
-            "PRO server xatosi:",
+            "PRO STATUS ERROR:",
             error
         );
 
@@ -952,7 +955,7 @@ async function checkProStatus() {
             success: false,
 
             message:
-                "Server bilan bog‘lanib bo‘lmadi."
+                "Server bilan bog'lanib bo'lmadi."
 
         };
 
@@ -968,17 +971,23 @@ async function checkProStatus() {
 async function goProfile() {
 
     document
-        .getElementById("profileButton")
-        .classList.add("active");
-
-
-    document
-        .getElementById("homeButton")
+        .getElementById(
+            "homeButton"
+        )
         .classList.remove("active");
 
 
     document
-        .getElementById("profileModal")
+        .getElementById(
+            "profileButton"
+        )
+        .classList.add("active");
+
+
+    document
+        .getElementById(
+            "profileModal"
+        )
         .classList.add("show");
 
 
@@ -989,23 +998,23 @@ async function goProfile() {
 
 async function updateProfile() {
 
-    const statusElement =
+    const status =
         document.getElementById(
             "profileProStatus"
         );
 
 
-    const timeElement =
+    const time =
         document.getElementById(
             "profileProTime"
         );
 
 
-    statusElement.textContent =
+    status.textContent =
         "Tekshirilmoqda...";
 
 
-    timeElement.textContent =
+    time.textContent =
         "—";
 
 
@@ -1015,12 +1024,14 @@ async function updateProfile() {
 
     if (!data.success) {
 
-        statusElement.textContent =
+        status.textContent =
             "❌ Aniqlanmadi";
 
-        timeElement.textContent =
+
+        time.textContent =
             data.message ||
             "Server xatosi";
+
 
         return;
 
@@ -1031,11 +1042,13 @@ async function updateProfile() {
 
     if (data.admin) {
 
-        statusElement.textContent =
+        status.textContent =
             "👑 Admin PRO";
 
-        timeElement.textContent =
+
+        time.textContent =
             "Cheksiz";
+
 
         return;
 
@@ -1046,8 +1059,9 @@ async function updateProfile() {
 
     if (data.pro) {
 
-        statusElement.textContent =
+        status.textContent =
             "✅ PRO faol";
+
 
         if (data.pro_until) {
 
@@ -1057,6 +1071,7 @@ async function updateProfile() {
 
         }
 
+
         return;
 
     }
@@ -1064,10 +1079,11 @@ async function updateProfile() {
 
     /* PRO YO'Q */
 
-    statusElement.textContent =
+    status.textContent =
         "❌ PRO mavjud emas";
 
-    timeElement.textContent =
+
+    time.textContent =
         "⭐ PRO sotib oling";
 
 }
@@ -1087,9 +1103,15 @@ function updateRemainingTime(
         new Date(proUntil);
 
 
-    clearInterval(
+    if (
         window.proTimer
-    );
+    ) {
+
+        clearInterval(
+            window.proTimer
+        );
+
+    }
 
 
     function update() {
@@ -1119,12 +1141,13 @@ function updateRemainingTime(
                 window.proTimer
             );
 
+
             return;
 
         }
 
 
-        const totalSeconds =
+        const seconds =
             Math.floor(
                 difference / 1000
             );
@@ -1132,14 +1155,14 @@ function updateRemainingTime(
 
         const days =
             Math.floor(
-                totalSeconds / 86400
+                seconds / 86400
             );
 
 
         const hours =
             Math.floor(
                 (
-                    totalSeconds % 86400
+                    seconds % 86400
                 ) / 3600
             );
 
@@ -1147,7 +1170,7 @@ function updateRemainingTime(
         const minutes =
             Math.floor(
                 (
-                    totalSeconds % 3600
+                    seconds % 3600
                 ) / 60
             );
 
@@ -1179,40 +1202,48 @@ function updateRemainingTime(
 function closeProfile() {
 
     document
-        .getElementById("profileModal")
+        .getElementById(
+            "profileModal"
+        )
         .classList.remove("show");
 
 
     document
-        .getElementById("profileButton")
+        .getElementById(
+            "profileButton"
+        )
         .classList.remove("active");
 
 
     document
-        .getElementById("homeButton")
+        .getElementById(
+            "homeButton"
+        )
         .classList.add("active");
 
 }
 
 
 /* =====================================
-   PRO TARIFLARI
+   PRO TARIFLARINI OLISH
 ===================================== */
 
 async function openProModal() {
 
     document
-        .getElementById("proModal")
+        .getElementById(
+            "proModal"
+        )
         .classList.add("show");
 
 
-    const plansElement =
+    const container =
         document.getElementById(
             "proPlans"
         );
 
 
-    plansElement.innerHTML = `
+    container.innerHTML = `
 
         <div class="tariff">
 
@@ -1228,10 +1259,7 @@ async function openProModal() {
         const response =
             await fetch(
                 API_BASE +
-                "/api/pro-plans",
-                {
-                    method: "GET"
-                }
+                "/api/pro-plans"
             );
 
 
@@ -1241,18 +1269,19 @@ async function openProModal() {
 
         if (!data.success) {
 
-            plansElement.innerHTML = `
+            container.innerHTML = `
 
                 <div class="tariff">
 
                     ❌ ${
                         data.message ||
-                        "Tariflarni yuklab bo‘lmadi."
+                        "Tariflarni yuklab bo'lmadi."
                     }
 
                 </div>
 
             `;
+
 
             return;
 
@@ -1260,11 +1289,13 @@ async function openProModal() {
 
 
         if (
-            !data.plans ||
+            !Array.isArray(
+                data.plans
+            ) ||
             data.plans.length === 0
         ) {
 
-            plansElement.innerHTML = `
+            container.innerHTML = `
 
                 <div class="tariff">
 
@@ -1274,12 +1305,13 @@ async function openProModal() {
 
             `;
 
+
             return;
 
         }
 
 
-        plansElement.innerHTML = "";
+        container.innerHTML = "";
 
 
         data.plans.forEach(
@@ -1297,7 +1329,7 @@ async function openProModal() {
 
                 const price =
                     Number(
-                        plan.price || 0
+                        plan.price
                     )
                     .toLocaleString(
                         "uz-UZ"
@@ -1316,25 +1348,22 @@ async function openProModal() {
 
                     <div class="tariff-price">
 
-                        ${price} so‘m
+                        ${price} so'm
 
                     </div>
 
 
-                    <div style="
-                        color:#777;
-                        margin-bottom:12px;
-                    ">
+                    <div class="tariff-duration">
 
                         ${plan.duration_days}
-                        kun PRO
+                        kun davomida PRO
 
                     </div>
 
 
                     <button
                         class="tariff-button"
-                        onclick="buyPro(${plan.id})"
+                        onclick="buyPro(${Number(plan.id)})"
                     >
 
                         ⭐ PRO sotib olish
@@ -1344,7 +1373,7 @@ async function openProModal() {
                 `;
 
 
-                plansElement.appendChild(
+                container.appendChild(
                     tariff
                 );
 
@@ -1355,16 +1384,20 @@ async function openProModal() {
     } catch (error) {
 
         console.error(
-            "PRO tarif xatosi:",
+            "PRO PLANS ERROR:",
             error
         );
 
 
-        plansElement.innerHTML = `
+        container.innerHTML = `
 
             <div class="tariff">
 
-                ❌ Server bilan bog‘lanib bo‘lmadi.
+                ❌ Server bilan bog'lanib bo'lmadi.
+
+                <br><br>
+
+                Server ishlayotganini tekshiring.
 
             </div>
 
@@ -1378,7 +1411,9 @@ async function openProModal() {
 function closeProModal() {
 
     document
-        .getElementById("proModal")
+        .getElementById(
+            "proModal"
+        )
         .classList.remove("show");
 
 }
@@ -1390,17 +1425,17 @@ function closeProModal() {
 
 async function buyPro(planId) {
 
-    const plansElement =
+    const container =
         document.getElementById(
             "proPlans"
         );
 
 
-    plansElement.innerHTML = `
+    container.innerHTML = `
 
         <div class="tariff">
 
-            ⏳ To‘lov ma’lumotlari
+            ⏳ To'lov ma'lumotlari
             tayyorlanmoqda...
 
         </div>
@@ -1430,7 +1465,10 @@ async function buyPro(planId) {
 
                     body:
                         JSON.stringify({
-                            plan_id: planId
+
+                            plan_id:
+                                Number(planId)
+
                         })
 
                 }
@@ -1450,7 +1488,7 @@ async function buyPro(planId) {
                 "❌ " +
                 (
                     data.message ||
-                    "To‘lovni boshlashda xatolik."
+                    "To'lovni boshlashda xatolik."
                 )
             );
 
@@ -1464,11 +1502,23 @@ async function buyPro(planId) {
             data.payment;
 
 
+        if (!payment) {
+
+            closeProModal();
+
+
+            showMessage(
+                "❌ Server to'lov ma'lumotlarini yubormadi."
+            );
+
+
+            return;
+
+        }
+
+
         const card =
-            payment.card;
-
-
-        closeProModal();
+            payment.card || {};
 
 
         const amount =
@@ -1477,9 +1527,17 @@ async function buyPro(planId) {
             );
 
 
+        const paymentId =
+            payment.id;
+
+
+        const duration =
+            payment.duration_days;
+
+
         const cardNumber =
             card.card_number ||
-            "Karta sozlanmagan";
+            "Karta mavjud emas";
 
 
         const cardHolder =
@@ -1492,6 +1550,9 @@ async function buyPro(planId) {
             "—";
 
 
+        closeProModal();
+
+
         document.getElementById(
             "paymentContent"
         ).innerHTML = `
@@ -1499,12 +1560,12 @@ async function buyPro(planId) {
             <div class="info-card">
 
                 <div class="info-title">
-                    🆔 To‘lov ID
+                    🆔 To'lov ID
                 </div>
 
                 <div class="info-value">
 
-                    #${payment.id}
+                    #${paymentId}
 
                 </div>
 
@@ -1519,8 +1580,7 @@ async function buyPro(planId) {
 
                 <div class="info-value">
 
-                    ${payment.duration_days}
-                    kun
+                    ${duration} kun
 
                 </div>
 
@@ -1530,13 +1590,13 @@ async function buyPro(planId) {
             <div class="info-card">
 
                 <div class="info-title">
-                    💰 To‘lov summasi
+                    💰 To'lov summasi
                 </div>
 
                 <div class="info-value">
 
                     ${amount.toLocaleString("uz-UZ")}
-                    so‘m
+                    so'm
 
                 </div>
 
@@ -1557,14 +1617,14 @@ async function buyPro(planId) {
                     "
                 >
 
-                    ${cardNumber}
+                    ${escapeHtml(cardNumber)}
 
                 </div>
 
 
                 <button
                     class="copy-button"
-                    onclick="copyCard('${cardNumber}')"
+                    onclick="copyCard()"
                 >
 
                     📋 Karta raqamini nusxalash
@@ -1582,7 +1642,7 @@ async function buyPro(planId) {
 
                 <div class="info-value">
 
-                    ${cardHolder}
+                    ${escapeHtml(cardHolder)}
 
                 </div>
 
@@ -1597,7 +1657,7 @@ async function buyPro(planId) {
 
                 <div class="info-value">
 
-                    ${bankName}
+                    ${escapeHtml(bankName)}
 
                 </div>
 
@@ -1606,20 +1666,22 @@ async function buyPro(planId) {
 
             <div class="payment-note">
 
-                <b>📌 To‘lov tartibi</b>
+                <b>📌 To'lov tartibi</b>
 
                 <br><br>
 
-                1️⃣ Yuqoridagi kartaga
+                1️⃣ Kartaga
+
                 <b>
                     ${amount.toLocaleString("uz-UZ")}
-                    so‘m
+                    so'm
                 </b>
-                o‘tkazing.
+
+                o'tkazing.
 
                 <br><br>
 
-                2️⃣ To‘lov chekini
+                2️⃣ To'lov chekini
                 <b>botga yuboring.</b>
 
                 <br><br>
@@ -1628,13 +1690,13 @@ async function buyPro(planId) {
 
                 <br><br>
 
-                4️⃣ Tasdiqlangandan so‘ng
+                4️⃣ Admin tasdiqlagandan keyin
                 PRO avtomatik faollashadi.
 
                 <br><br>
 
-                🆔 To‘lov ID:
-                <b>#${payment.id}</b>
+                🆔 To'lov ID:
+                <b>#${paymentId}</b>
 
             </div>
 
@@ -1662,6 +1724,10 @@ async function buyPro(planId) {
         `;
 
 
+        window.currentCardNumber =
+            cardNumber;
+
+
         document
             .getElementById(
                 "paymentModal"
@@ -1672,7 +1738,7 @@ async function buyPro(planId) {
     } catch (error) {
 
         console.error(
-            "PRO purchase error:",
+            "PRO PURCHASE ERROR:",
             error
         );
 
@@ -1681,8 +1747,7 @@ async function buyPro(planId) {
 
 
         showMessage(
-            "❌ Server bilan bog‘lanib bo‘lmadi.\n\n" +
-            "Internet yoki serverni tekshiring."
+            "❌ Server bilan bog'lanib bo'lmadi."
         );
 
     }
@@ -1691,18 +1756,52 @@ async function buyPro(planId) {
 
 
 /* =====================================
+   ESCAPE HTML
+===================================== */
+
+function escapeHtml(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================
    KARTA NUSXALASH
 ===================================== */
 
-async function copyCard(
-    cardNumber
-) {
+async function copyCard() {
+
+    const cardNumber =
+        window.currentCardNumber;
+
+
+    if (!cardNumber) {
+
+        return;
+
+    }
+
 
     try {
 
-        await navigator.clipboard.writeText(
-            cardNumber
-        );
+        await navigator
+            .clipboard
+            .writeText(
+                cardNumber
+            );
 
 
         showMessage(
@@ -1713,7 +1812,7 @@ async function copyCard(
     } catch (error) {
 
         showMessage(
-            "📋 Karta raqamini qo‘lda nusxalang."
+            "📋 Karta raqamini qo'lda nusxalang."
         );
 
     }
@@ -1722,7 +1821,7 @@ async function copyCard(
 
 
 /* =====================================
-   TO‘LOV OYNASINI YOPISH
+   PAYMENT MODAL YOPISH
 ===================================== */
 
 function closePaymentModal() {
@@ -1747,9 +1846,9 @@ function returnToBot() {
 
     showMessage(
         "📤 Mini App yopiladi.\n\n" +
-        "Botga kirib, to‘lov chekini " +
-        "rasm yoki fayl ko‘rinishida yuboring.\n\n" +
-        "Admin chekni tekshiradi."
+        "Botga qaytgach, to'lov chekini " +
+        "rasm yoki fayl ko'rinishida yuboring.\n\n" +
+        "Admin tekshiradi va tasdiqlaydi."
     );
 
 
@@ -1759,7 +1858,7 @@ function returnToBot() {
             tg.close();
 
         },
-        1200
+        1300
     );
 
 }
@@ -1801,8 +1900,6 @@ async function continueCreate() {
         );
 
 
-    /* TEST KODI */
-
     if (!testCode) {
 
         showMessage(
@@ -1820,30 +1917,24 @@ async function continueCreate() {
     ) {
 
         showMessage(
-            "❗ Test kodi 4–10 ta " +
-            "belgidan iborat bo‘lishi kerak."
+            "❗ Test kodi 4–10 belgidan iborat bo'lishi kerak."
         );
 
         return;
 
     }
 
-
-    /* KANAL */
 
     if (!channel) {
 
         showMessage(
-            "❗ Test e’lon qilinadigan " +
-            "kanalni kiriting."
+            "❗ Test e'lon qilinadigan kanalni kiriting."
         );
 
         return;
 
     }
 
-
-    /* DAVOMIYLIK */
 
     if (!duration) {
 
@@ -1855,8 +1946,6 @@ async function continueCreate() {
 
     }
 
-
-    /* SAVOLLAR */
 
     if (!questionCount) {
 
@@ -1889,15 +1978,16 @@ async function continueCreate() {
 
         showMessage(
             "❌ " +
-            proData.message
+            (
+                proData.message ||
+                "Server xatosi."
+            )
         );
 
         return;
 
     }
 
-
-    /* PRO YO‘Q */
 
     if (
         !proData.pro &&
@@ -1911,11 +2001,9 @@ async function continueCreate() {
     }
 
 
-    /* PRO BOR */
-
     showMessage(
 
-        "✅ Ma’lumotlar qabul qilindi.\n\n" +
+        "✅ PRO faol!\n\n" +
 
         "🔑 Test kodi: " +
         testCode +
@@ -1929,10 +2017,7 @@ async function continueCreate() {
 
         "\n📝 Savollar: " +
         questionCount +
-        " ta" +
-
-        "\n\n➡️ Keyingi bosqichda " +
-        "javoblar kalitini kiritish oynasi ochiladi."
+        " ta"
 
     );
 
@@ -1964,13 +2049,12 @@ function goHome() {
     closePaymentModal();
 
 
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
+    window.scrollTo(
+        {
+            top: 0,
+            behavior: "smooth"
+        }
+    );
 
 }
 
@@ -2006,11 +2090,13 @@ function closeMessage() {
 
 
 /* =====================================
-   MODAL TASHQARISIGA BOSILSA
+   MODAL OUTSIDE CLICK
 ===================================== */
 
 document
-    .getElementById("profileModal")
+    .getElementById(
+        "profileModal"
+    )
     .addEventListener(
         "click",
         function(event) {
@@ -2028,7 +2114,9 @@ document
 
 
 document
-    .getElementById("proModal")
+    .getElementById(
+        "proModal"
+    )
     .addEventListener(
         "click",
         function(event) {
@@ -2046,7 +2134,9 @@ document
 
 
 document
-    .getElementById("paymentModal")
+    .getElementById(
+        "paymentModal"
+    )
     .addEventListener(
         "click",
         function(event) {
@@ -2064,7 +2154,9 @@ document
 
 
 document
-    .getElementById("messageModal")
+    .getElementById(
+        "messageModal"
+    )
     .addEventListener(
         "click",
         function(event) {
