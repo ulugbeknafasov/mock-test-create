@@ -1286,69 +1286,77 @@ const API_BASE = "https://solution-clean-indexes-claire.trycloudflare.com";
 
 
 /* =====================================
-   USER
+   USER / YAGONA FULL_NAME
 ===================================== */
 
 const user =
     tg.initDataUnsafe?.user;
 
+async function loadSharedProfile() {
+    if (!user) return;
 
-if (user) {
-
-    let name =
-        user.first_name || "";
-
-
-    if (user.last_name) {
-
-        name +=
-            " " + user.last_name;
-    }
-
-
-    document.getElementById(
-        "welcomeText"
-    ).textContent =
-        "👋 Assalomu alaykum, " +
-        name +
-        "!";
-
-
-    document.getElementById(
-        "profileName"
-    ).textContent =
-        name;
-
-
-    document.getElementById(
-        "profileTelegramId"
-    ).textContent =
-        user.id;
-
-
-    document.getElementById(
-        "profileUsername"
-    ).textContent =
+    // Telegram ID, username va vaqtinchalik avatar.
+    document.getElementById("profileTelegramId").textContent = user.id;
+    document.getElementById("profileUsername").textContent =
         user.username
             ? "@" + user.username
             : "Username mavjud emas";
 
+    const telegramFallback =
+        [user.first_name || "", user.last_name || ""].join(" ").trim();
 
-    const firstLetter =
-        (
-            user.first_name ||
-            "U"
-        )
-        .charAt(0)
-        .toUpperCase();
+    // Serverdagi yagona full_name ni olamiz.
+    try {
+        const response = await fetch(
+            API_BASE + "/api/participant/profile",
+            {
+                method: "GET",
+                headers: {
+                    "X-Telegram-Init-Data": tg.initData
+                },
+                cache: "no-store"
+            }
+        );
 
+        const data = await response.json();
 
-    document.getElementById(
-        "profileAvatar"
-    ).textContent =
-        firstLetter;
+        if (response.ok && data.success) {
+            const profile = data.profile || {};
+            const fullName =
+                String(profile.full_name || "").trim() ||
+                telegramFallback ||
+                "Foydalanuvchi";
+
+            document.getElementById("welcomeText").textContent =
+                "👋 Assalomu alaykum, " + fullName + "!";
+
+            document.getElementById("profileName").textContent =
+                fullName;
+
+            document.getElementById("profileAvatar").textContent =
+                fullName.charAt(0).toUpperCase();
+
+            return;
+        }
+    } catch (error) {
+        console.error("Profil yuklash xatosi:", error);
+    }
+
+    // Server vaqtincha javob bermasa, faqat fallback ko'rsatamiz.
+    const fullName =
+        telegramFallback || "Foydalanuvchi";
+
+    document.getElementById("welcomeText").textContent =
+        "👋 Assalomu alaykum, " + fullName + "!";
+
+    document.getElementById("profileName").textContent =
+        fullName;
+
+    document.getElementById("profileAvatar").textContent =
+        fullName.charAt(0).toUpperCase();
 }
 
+loadSharedProfile();
 
 /* =====================================
    PRO STATUS
