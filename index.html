@@ -12,37 +12,7 @@
 
     <title>Test yaratish</title>
 
-    <script src="https://telegram.org/js/telegram-web-app.js">
-/* Nusxa olish / uzun bosish menyusini cheklash */
-document.addEventListener("contextmenu", function (event) {
-    event.preventDefault();
-});
-document.addEventListener("copy", function (event) {
-    event.preventDefault();
-});
-document.addEventListener("cut", function (event) {
-    event.preventDefault();
-});
-document.addEventListener("dragstart", function (event) {
-    event.preventDefault();
-});
-document.addEventListener("selectstart", function (event) {
-    if (!event.target.matches("input, textarea")) {
-        event.preventDefault();
-    }
-});
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const codeInput = document.getElementById("testCode");
-    if (codeInput) {
-        codeInput.addEventListener("input", function () {
-            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-        });
-    }
-});
-
-</script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 
     <style>
@@ -717,14 +687,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .answer-option.selected {
             border-color: #2481cc;
             background: #2481cc;
-        }
-
-        .answer-option.selected::after {
-            content: "";
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #fff;
+            color: #fff;
         }
 
         .answer-option:active {
@@ -1277,6 +1240,30 @@ img {
 
 <script>
 
+/* Nusxa olish / matn belgilashni cheklash */
+document.addEventListener("contextmenu", function (event) {
+    if (!event.target.matches("input, textarea")) event.preventDefault();
+});
+document.addEventListener("copy", function (event) {
+    if (!event.target.matches("input, textarea")) event.preventDefault();
+});
+document.addEventListener("cut", function (event) {
+    if (!event.target.matches("input, textarea")) event.preventDefault();
+});
+document.addEventListener("dragstart", function (event) {
+    event.preventDefault();
+});
+document.addEventListener("selectstart", function (event) {
+    if (!event.target.matches("input, textarea")) event.preventDefault();
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const codeInput = document.getElementById("testCode");
+    if (codeInput) {
+        codeInput.addEventListener("input", function () {
+            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+        });
+    }
+});
 
 /* =====================================
    TELEGRAM
@@ -1296,7 +1283,7 @@ tg.expand();
 ===================================== */
 
 const API_BASE =
-    "https://trunk-source-levy-florists.trycloudflare.com";
+    "https://holly-respondent-powerful-fits.trycloudflare.com";
 
 
 /* =====================================
