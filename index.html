@@ -1324,8 +1324,7 @@ async function loadSharedProfile() {
             const profile = data.profile || {};
             const fullName =
                 String(profile.full_name || "").trim() ||
-                telegramFallback ||
-                "Foydalanuvchi";
+                "Ism-familiya kiritilmagan";
 
             document.getElementById("welcomeText").textContent =
                 "👋 Assalomu alaykum, " + fullName + "!";
@@ -1344,7 +1343,7 @@ async function loadSharedProfile() {
 
     // Server vaqtincha javob bermasa, faqat fallback ko'rsatamiz.
     const fullName =
-        telegramFallback || "Foydalanuvchi";
+        "Ism-familiya kiritilmagan";
 
     document.getElementById("welcomeText").textContent =
         "👋 Assalomu alaykum, " + fullName + "!";
