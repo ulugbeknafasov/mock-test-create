@@ -1282,7 +1282,7 @@ tg.expand();
    SERVER MANZILI
 ===================================== */
 
-const API_BASE = "https://solution-clean-indexes-claire.trycloudflare.com";
+const API_BASE = "https://holly-respondent-powerful-fits.trycloudflare.com";
 
 
 /* =====================================
@@ -1321,7 +1321,9 @@ async function loadSharedProfile() {
         const data = await response.json();
 
         if (response.ok && data.success) {
-            const profile = data.profile || data || {};
+            // Server bu endpointdan full_name ni to'g'ridan-to'g'ri qaytaradi.
+            // Eski format {profile:{full_name:...}} bo'lsa ham ishlasin.
+            const profile = data.profile || data;
             const fullName =
                 String(profile.full_name || data.full_name || "").trim() ||
                 "Ism-familiya kiritilmagan";
