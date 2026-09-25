@@ -715,6 +715,39 @@
             color: #777;
         }
 
+
+        .dual-answer-wrap {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            min-width: 0;
+            padding: 5px 0;
+            box-sizing: border-box;
+        }
+
+        .dual-answer-part {
+            display: grid;
+            grid-template-columns: 28px minmax(0, 1fr);
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .dual-answer-label {
+            display: block;
+            font-weight: 700;
+            font-size: 14px;
+            color: #333;
+            text-align: left;
+        }
+
+        .dual-answer-part .exact-answer {
+            min-width: 0;
+            width: 100%;
+        }
+
         .exact-answer {
             width: 100%;
             height: 40px;
@@ -728,6 +761,12 @@
 
         .exact-answer:focus {
             border-color: #2481cc;
+        }
+
+        @media (max-width: 420px) {
+            .answer-row { grid-template-columns: 30px minmax(0, 1fr); }
+            .dual-answer-part { grid-template-columns: 25px minmax(0, 1fr); }
+            .dual-answer-part .exact-answer { height: 42px; font-size: 14px; }
         }
 
         .answer-save-button {
@@ -1901,26 +1940,28 @@ function openAnswerKey() {
         } else if (i >= 36 && i <= 45) {
             // Milliy sertifikat uslubidagi yopiq savol: bitta savolda 2 ta javob.
             const wrap = document.createElement("div");
-            wrap.style.display = "grid";
-            wrap.style.gap = "8px";
-            wrap.style.flex = "1";
+            wrap.className = "dual-answer-wrap";
 
-            const labelA = document.createElement("div");
+            const partA = document.createElement("div");
+            partA.className = "dual-answer-part";
+            const labelA = document.createElement("span");
             labelA.textContent = "a)";
-            labelA.style.fontWeight = "700";
+            labelA.className = "dual-answer-label";
             const inputA = document.createElement("input");
             inputA.type = "text";
             inputA.className = "exact-answer";
-            inputA.placeholder = "a) javob";
+            inputA.placeholder = "Javob";
             inputA.autocomplete = "off";
 
-            const labelB = document.createElement("div");
+            const partB = document.createElement("div");
+            partB.className = "dual-answer-part";
+            const labelB = document.createElement("span");
             labelB.textContent = "b)";
-            labelB.style.fontWeight = "700";
+            labelB.className = "dual-answer-label";
             const inputB = document.createElement("input");
             inputB.type = "text";
             inputB.className = "exact-answer";
-            inputB.placeholder = "b) javob";
+            inputB.placeholder = "Javob";
             inputB.autocomplete = "off";
 
             const saveParts = function () {
@@ -1929,10 +1970,12 @@ function openAnswerKey() {
             inputA.addEventListener("input", saveParts);
             inputB.addEventListener("input", saveParts);
 
-            wrap.appendChild(labelA);
-            wrap.appendChild(inputA);
-            wrap.appendChild(labelB);
-            wrap.appendChild(inputB);
+            partA.appendChild(labelA);
+            partA.appendChild(inputA);
+            partB.appendChild(labelB);
+            partB.appendChild(inputB);
+            wrap.appendChild(partA);
+            wrap.appendChild(partB);
             row.appendChild(wrap);
         } else {
             const input = document.createElement("input");
