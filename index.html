@@ -827,6 +827,54 @@ img {
     -webkit-user-drag: none;
 }
 
+
+/* FINAL FIX: 36-45 dual answers - generous spacing, no overlap */
+.answer-row.dual-answer-row {
+    display:flex !important;
+    align-items:flex-start !important;
+    min-height:132px !important;
+    height:auto !important;
+    padding:14px 0 18px !important;
+    margin-bottom:8px !important;
+    box-sizing:border-box !important;
+}
+.answer-row.dual-answer-row .answer-number {
+    flex:0 0 38px !important;
+    width:38px !important;
+    line-height:1 !important;
+    padding-top:16px !important;
+}
+.dual-answer-wrap {
+    flex:1 1 auto !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:16px !important;
+    padding:0 !important;
+}
+.dual-answer-part {
+    display:grid !important;
+    grid-template-columns:32px minmax(0,1fr) !important;
+    align-items:center !important;
+    gap:9px !important;
+    min-height:48px !important;
+    width:100% !important;
+}
+.dual-answer-part .exact-answer {
+    height:48px !important;
+    min-height:48px !important;
+}
+.dual-answer-label {
+    line-height:1.2 !important;
+    white-space:nowrap !important;
+}
+@media (max-width:420px){
+    .answer-row.dual-answer-row { min-height:146px !important; padding:14px 0 20px !important; }
+    .answer-row.dual-answer-row .answer-number { flex-basis:34px !important; width:34px !important; padding-top:17px !important; }
+    .dual-answer-wrap { gap:18px !important; }
+    .dual-answer-part { grid-template-columns:28px minmax(0,1fr) !important; gap:8px !important; min-height:50px !important; }
+    .dual-answer-part .exact-answer { height:50px !important; min-height:50px !important; }
+}
+
 </style>
 
 </head>
