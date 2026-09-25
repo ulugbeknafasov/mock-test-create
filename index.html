@@ -1898,6 +1898,42 @@ function openAnswerKey() {
             }
 
             row.appendChild(options);
+        } else if (i >= 36 && i <= 45) {
+            // Milliy sertifikat uslubidagi yopiq savol: bitta savolda 2 ta javob.
+            const wrap = document.createElement("div");
+            wrap.style.display = "grid";
+            wrap.style.gap = "8px";
+            wrap.style.flex = "1";
+
+            const labelA = document.createElement("div");
+            labelA.textContent = "a)";
+            labelA.style.fontWeight = "700";
+            const inputA = document.createElement("input");
+            inputA.type = "text";
+            inputA.className = "exact-answer";
+            inputA.placeholder = "a) javob";
+            inputA.autocomplete = "off";
+
+            const labelB = document.createElement("div");
+            labelB.textContent = "b)";
+            labelB.style.fontWeight = "700";
+            const inputB = document.createElement("input");
+            inputB.type = "text";
+            inputB.className = "exact-answer";
+            inputB.placeholder = "b) javob";
+            inputB.autocomplete = "off";
+
+            const saveParts = function () {
+                window.answerKey[i] = [inputA.value.trim(), inputB.value.trim()];
+            };
+            inputA.addEventListener("input", saveParts);
+            inputB.addEventListener("input", saveParts);
+
+            wrap.appendChild(labelA);
+            wrap.appendChild(inputA);
+            wrap.appendChild(labelB);
+            wrap.appendChild(inputB);
+            row.appendChild(wrap);
         } else {
             const input = document.createElement("input");
             input.type = "text";
@@ -1927,7 +1963,12 @@ async function saveAnswerKey() {
 
     const missing = [];
     for (let i = 1; i <= draft.questionCount; i++) {
-        if (!String(window.answerKey[i] || "").trim()) {
+        if (i >= 36 && i <= 45) {
+            const pair = window.answerKey[i];
+            if (!Array.isArray(pair) || !String(pair[0] || "").trim() || !String(pair[1] || "").trim()) {
+                missing.push(i);
+            }
+        } else if (!String(window.answerKey[i] || "").trim()) {
             missing.push(i);
         }
     }
