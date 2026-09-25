@@ -646,17 +646,34 @@
         }
 
         .answer-row {
-            display: grid;
-            grid-template-columns: 34px 1fr;
-            align-items: center;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
             min-height: 44px;
+            padding: 7px 0;
             border-bottom: 1px solid #eee;
+            box-sizing: border-box;
+        }
+
+        .answer-row.dual-answer-row {
+            align-items: flex-start;
+            min-height: 0;
+            padding: 8px 0 10px;
         }
 
         .answer-number {
+            flex: 0 0 34px;
+            width: 34px;
             font-weight: 700;
             color: #333;
             font-size: 15px;
+            line-height: 40px;
+            box-sizing: border-box;
+        }
+
+        .dual-answer-row .answer-number {
+            line-height: 42px;
         }
 
         .answer-options {
@@ -717,7 +734,8 @@
 
 
         .dual-answer-wrap {
-            width: 100%;
+            flex: 1 1 auto;
+            width: auto;
             display: flex;
             flex-direction: column;
             gap: 7px;
@@ -764,7 +782,8 @@
         }
 
         @media (max-width: 420px) {
-            .answer-row { grid-template-columns: 30px minmax(0, 1fr); }
+            .answer-row { gap: 8px; }
+            .answer-number { flex-basis: 30px; width: 30px; }
             .dual-answer-part { grid-template-columns: 25px minmax(0, 1fr); }
             .dual-answer-part .exact-answer { height: 42px; font-size: 14px; }
         }
@@ -1939,6 +1958,7 @@ function openAnswerKey() {
             row.appendChild(options);
         } else if (i >= 36 && i <= 45) {
             // Milliy sertifikat uslubidagi yopiq savol: bitta savolda 2 ta javob.
+            row.classList.add("dual-answer-row");
             const wrap = document.createElement("div");
             wrap.className = "dual-answer-wrap";
 
